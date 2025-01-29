@@ -5,7 +5,7 @@
 | Name        | CCID   | GitHub Username |
 | ----------- | ------ | --------------- |
 | Vero Bullis | ebullis | Vero883         |
-| [Full Name] | [CCID] | [@username]     |
+| Devon Ragosin | ragosin | zzprimal     |
 | [Full Name] | [CCID] | [@username]     |
 | [Full Name] | [CCID] | [@username]     |
 | [Full Name] | [CCID] | [@username]     |
