@@ -8,7 +8,7 @@
 | Devon Ragosin | ragosin | zzprimal     |
 | Chloe Watts | ckwatts | chloe-watts     |
 | Amal Kadri | ankadri | Kaddz73     |
-| [Full Name] | [CCID] | [@username]     |
+| Robert Chukwuma-Nwosu | rchukwum | rchukwum    |
 | [Full Name] | [CCID] | [@username]     |
 
 ## Project Description
