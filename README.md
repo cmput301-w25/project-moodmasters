@@ -7,7 +7,7 @@
 | Vero Bullis | ebullis | Vero883         |
 | Devon Ragosin | ragosin | zzprimal     |
 | Chloe Watts | ckwatts | chloe-watts     |
-| [Full Name] | [CCID] | [@username]     |
+| Amal Kadri | ankadri | Kaddz73     |
 | [Full Name] | [CCID] | [@username]     |
 | [Full Name] | [CCID] | [@username]     |
 
