@@ -4,12 +4,13 @@
 
 | Name        | CCID   | GitHub Username |
 | ----------- | ------ | --------------- |
-| Elaiza Remo | elaiza |  elaizaremo     |
-| [Full Name] | [CCID] | [@username]     |
-| [Full Name] | [CCID] | [@username]     |
-| [Full Name] | [CCID] | [@username]     |
-| [Full Name] | [CCID] | [@username]     |
-| [Full Name] | [CCID] | [@username]     |
+| Vero Bullis | ebullis | Vero883         |
+| Devon Ragosin | ragosin | zzprimal     |
+| Chloe Watts | ckwatts | chloe-watts     |
+| Amal Kadri | ankadri | Kaddz73     |
+| Robert Chukwuma-Nwosu | rchukwum | rchukwum    |
+| Elaiza Remo | elaiza | elaizaremo  |
+
 
 ## Project Description
 
