@@ -9,7 +9,7 @@
 | Chloe Watts | ckwatts | chloe-watts     |
 | Amal Kadri | ankadri | Kaddz73     |
 | Robert Chukwuma-Nwosu | rchukwum | rchukwum    |
-| [Full Name] | [CCID] | [@username]     |
+| Elaiza Remo | elaiza | elaizaremo  |
 
 ## Project Description
 
