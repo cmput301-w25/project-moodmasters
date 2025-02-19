@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/alter_mood_OK_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/button_color"
+        android:text="OK"
+        android:textSize="24sp"
+        app:iconPadding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/alter_mood_location_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/button_color"
+        android:text="Get Location"
+        android:textSize="16sp"
+        app:iconPadding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/alter_mood_cancel_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/alter_mood_photo_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/light_background_color"
+        android:text="Upload Photo"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        app:cornerRadius="@dimen/material_emphasis_disabled"
+        app:icon="@android:drawable/ic_menu_camera"
+        app:iconGravity="textTop"
+        app:iconPadding="0dp"
+        app:iconSize="100dp"
+        app:iconTint="@color/black"
+        app:iconTintMode="src_in"
+        app:layout_constraintBottom_toTopOf="@+id/alter_mood_location_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alter_mood_enter_reason" />
+
+    <Button
+        android:id="@+id/alter_mood_cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/button_color"
+        android:text="Cancel"
+        android:textSize="24sp"
+        app:iconPadding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/alter_mood_enter_trigger"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/light_background_color"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/alter_mood_trigger_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alter_mood_trigger_label"
+        app:layout_constraintTop_toTopOf="@+id/alter_mood_trigger_label" />
+
+    <EditText
+        android:id="@+id/alter_mood_enter_reason"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/light_background_color"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alter_mood_reason_label" />
+
+    <TextView
+        android:id="@+id/alter_mood_main_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Add Mood"
+        android:textColor="@color/text_color"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/alter_mood_emotion_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Emotional state:"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alter_mood_main_label" />
+
+    <TextView
+        android:id="@+id/alter_mood_trigger_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="Trigger:"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alter_mood_emotion_label" />
+
+    <TextView
+        android:id="@+id/alter_mood_situation_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="Social Situation:"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alter_mood_trigger_label" />
+
+    <TextView
+        android:id="@+id/alter_mood_reason_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="Reason:"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alter_mood_situation_label" />
+
+    <TextView
+        android:id="@+id/alter_mood_location_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Location:"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/alter_mood_location_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/alter_mood_location_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Not Specefied"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/alter_mood_location_label"
+        app:layout_constraintStart_toEndOf="@+id/alter_mood_location_label"
+        app:layout_constraintTop_toTopOf="@+id/alter_mood_location_label" />
+
+    <Spinner
+        android:id="@+id/alter_mood_emotion_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/alter_mood_emotion_label"
+        app:layout_constraintStart_toEndOf="@+id/alter_mood_emotion_label"
+        app:layout_constraintTop_toTopOf="@+id/alter_mood_emotion_label" />
+
+    <Spinner
+        android:id="@+id/alter_mood_situation_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/alter_mood_situation_label"
+        app:layout_constraintStart_toEndOf="@+id/alter_mood_situation_label"
+        app:layout_constraintTop_toTopOf="@+id/alter_mood_situation_label" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

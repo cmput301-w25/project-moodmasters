@@ -27,11 +27,10 @@
         android:backgroundTint="@color/button_color"
         android:text="Change"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/signup_login_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/signup_login_label"
-        app:layout_constraintTop_toTopOf="@+id/signup_login_label"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/signup_login_label" />
 
     <TextView
         android:id="@+id/signup_login_username_label"
