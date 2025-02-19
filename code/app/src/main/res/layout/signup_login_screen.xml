@@ -13,7 +13,7 @@
         android:layout_marginTop="16dp"
         android:text="Sign Up"
         android:textColor="@color/text_color"
-        android:textSize="24sp"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/signup_login_change_button"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,14 +24,13 @@
         android:id="@+id/signup_login_change_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:backgroundTint="@color/button_color"
         android:text="Change"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/signup_login_label"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/signup_login_label"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -48,10 +47,11 @@
 
     <EditText
         android:id="@+id/signup_login_enter_username"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/background_color"
+        android:background="@color/light_background_color"
         android:ems="10"
         android:inputType="text"
         android:textColor="@color/text_color"
