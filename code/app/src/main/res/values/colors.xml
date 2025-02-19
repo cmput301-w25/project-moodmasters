@@ -3,8 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="button_color">#565F73</color>
-    <color name="background_color">@color/material_dynamic_neutral60</color>
-    <color name="light_background_color">@color/material_dynamic_neutral80</color>
-    <color name="screen_color">@android:color/system_accent1_50</color>
+    <color name="background_color">@color/material_dynamic_neutral80</color>
+    <color name="light_background_color">#E2E0EB</color>
+    <color name="screen_color">#EDEEF6</color>
     <color name="text_color">@color/material_dynamic_neutral10</color>
+    <color name="mood_default_color">#838383</color>
 </resources>

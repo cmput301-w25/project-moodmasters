@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/light_background_color"
+        android:background="@color/background_color"
         android:ems="10"
         android:inputType="text"
         android:textColor="@color/text_color"
