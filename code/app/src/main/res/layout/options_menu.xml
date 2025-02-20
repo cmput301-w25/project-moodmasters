@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/screen_color"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/options_logout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
+        android:text="Log Out"
+        android:textSize="16sp"
+        app:cornerRadius="@dimen/material_emphasis_disabled" />
+
+    <Button
+        android:id="@+id/options_follow_requests_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
+        android:text="Follow Requests"
+        android:textSize="16sp"
+        app:cornerRadius="@dimen/material_emphasis_disabled" />
+
+    <Button
+        android:id="@+id/options_ask_to_follow_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
+        android:text="Ask to Follow"
+        android:textSize="16sp"
+        app:cornerRadius="@dimen/material_emphasis_disabled" />
+
+    <Button
+        android:id="@+id/options_followed_moods_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
+        android:text="Moods from People You Follow"
+        android:textSize="16sp"
+        app:cornerRadius="@dimen/material_emphasis_disabled" />
+</LinearLayout>
