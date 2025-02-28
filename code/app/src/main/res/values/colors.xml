@@ -2,4 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="button_color">#565F73</color>
+    <color name="background_color">@color/material_dynamic_neutral80</color>
+    <color name="light_background_color">#E2E0EB</color>
+    <color name="screen_color">#EDEEF6</color>
+    <color name="text_color">@color/material_dynamic_neutral10</color>
+    <color name="mood_default_color">#838383</color>
+    <color name="mood_happy_color">#FFEAA6</color>
+    <color name="mood_sad_color">#A0C6FF</color>
+    <color name="mood_angry_color">#FF9292</color>
+    <color name="mood_scared_color">#B68DFF</color>
+    <color name="mood_disgusted_color">#B8FFB1</color>
+    <color name="mood_confused_color">#E98AFF</color>
+    <color name="mood_ashamed_color">#8FFFE5</color>
 </resources>

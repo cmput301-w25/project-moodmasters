@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MoodMasters</string>
+    <string name="mood_emoji_default">😐</string>
+    <string name="mood_emoji_happy">😊</string>
+    <string name="mood_emoji_sad">😞</string>
+    <string name="mood_emoji_angry">😠</string>
+    <string name="mood_emoji_scared">😨</string>
+    <string name="mood_emoji_disgusted">😖</string>
+    <string name="mood_emoji_confused">🤔</string>
+    <string name="mood_emoji_ashamed">😢</string>
 </resources>
