@@ -15,7 +15,10 @@ public class MVCModel {
     private FirebaseFirestore db;
 
     public enum BackendObject{
-        // TODO: Add enums for backend objects here
+        USER,
+        FOLLOWINGLIST,
+        MOODHISTORYLIST,
+        MOODFOLLOWINGLIST       /*used later for final checkpoint*/
     }
 
     public MVCModel(){
@@ -29,6 +32,12 @@ public class MVCModel {
         }
         dependencies.put(backend_object, new ArrayList<MVCView>());
         // TODO: Add if statements going over BackendObjects enums here to add backend objects
+    }
+    public void removeBackendObject(BackendObject backend_object){
+        if (!backend_objects.containsKey(backend_object)){
+            throw new IllegalArgumentException("Error: Trying to delete non-existent backend object");
+        }
+        // TODO: Add if statements going over BackendObjects enums here to remove backend objects
     }
     public MVCBackend getBackendObject(BackendObject backend_object){
         return backend_objects.get(backend_object);
