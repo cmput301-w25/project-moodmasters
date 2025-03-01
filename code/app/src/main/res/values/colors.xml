@@ -15,4 +15,5 @@
     <color name="mood_disgusted_color">#B8FFB1</color>
     <color name="mood_confused_color">#E98AFF</color>
     <color name="mood_ashamed_color">#8FFFE5</color>
+    <color name="mood_surprised_color">#FFC78F</color>
 </resources>
