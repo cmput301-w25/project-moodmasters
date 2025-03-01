@@ -8,4 +8,5 @@
     <string name="mood_emoji_disgusted">😖</string>
     <string name="mood_emoji_confused">🤔</string>
     <string name="mood_emoji_ashamed">😢</string>
+    <string name="mood_emoji_surprised">😲</string>
 </resources>

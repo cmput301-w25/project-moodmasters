@@ -19,7 +19,7 @@
         app:layout_constraintTop_toBottomOf="@+id/mood_filter_disgusted_checkbox" />
 
     <EditText
-        android:id="@+id/alter_mood_enter_reason2"
+        android:id="@+id/mood_filter_reason_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -66,7 +66,7 @@
         android:layout_marginTop="8dp"
         android:text="Happy"
         android:textColor="@color/text_color"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mood_filter_emotion_label" />
 
@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:text="Sad"
         android:textColor="@color/text_color"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/mood_filter_happy_checkbox"
         app:layout_constraintTop_toTopOf="@+id/mood_filter_happy_checkbox" />
 
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:text="Angry"
         android:textColor="@color/text_color"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/mood_filter_sad_checkbox"
         app:layout_constraintTop_toTopOf="@+id/mood_filter_sad_checkbox" />
 
@@ -96,8 +96,18 @@
         android:layout_height="wrap_content"
         android:text="Scared"
         android:textColor="@color/text_color"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/mood_filter_angry_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/mood_filter_angry_checkbox" />
+
+    <CheckBox
+        android:id="@+id/mood_filter_surprised_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Surprised"
+        android:textColor="@color/text_color"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/mood_filter_scared_checkbox"
         app:layout_constraintTop_toTopOf="@+id/mood_filter_angry_checkbox" />
 
     <CheckBox
@@ -108,7 +118,7 @@
         android:layout_marginTop="8dp"
         android:text="Disgusted"
         android:textColor="@color/text_color"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mood_filter_happy_checkbox" />
 
@@ -118,7 +128,7 @@
         android:layout_height="wrap_content"
         android:text="Confused"
         android:textColor="@color/text_color"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/mood_filter_disgusted_checkbox"
         app:layout_constraintTop_toTopOf="@+id/mood_filter_disgusted_checkbox" />
 
@@ -128,7 +138,7 @@
         android:layout_height="wrap_content"
         android:text="Ashamed"
         android:textColor="@color/text_color"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/mood_filter_confused_checkbox"
         app:layout_constraintTop_toTopOf="@+id/mood_filter_confused_checkbox" />
 </androidx.constraintlayout.widget.ConstraintLayout>
