@@ -2,7 +2,6 @@ package com.example.moodmasters.Objects.ObjectsMisc;
 
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Events.FilterMoodEventList;
 import com.example.moodmasters.MVC.MVCBackendList;
 
 public abstract class MoodEventList extends MVCBackendList<MoodEvent> {

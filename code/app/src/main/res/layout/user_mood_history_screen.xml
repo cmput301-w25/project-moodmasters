@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@color/background_color"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/user_mood_history_add_button"

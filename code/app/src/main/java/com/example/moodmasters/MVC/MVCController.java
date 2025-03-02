@@ -5,18 +5,10 @@ import android.content.Context;
 import java.util.List;
 
 public class MVCController{
-    private Context context;
     private MVCModel model;
 
-    public MVCController(Context new_context){
-        context = new_context;
-        model = new MVCModel();
-    }
     public MVCController(){
         model = new MVCModel();
-    }
-    public void setContext(Context new_context){
-        context = new_context;
     }
     public void createBackendObject(MVCModel.BackendObject create){
         model.createBackendObject(create);
@@ -37,7 +29,7 @@ public class MVCController{
     public void removeBackendView(MVCView view){
         model.removeView(view);
     }
-    public void execute(MVCEvent event){
+    public void execute(MVCEvent event, Context context){
         event.executeEvent(context, model, this);
     }
 }

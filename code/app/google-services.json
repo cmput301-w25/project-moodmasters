@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "749615400084",
+    "project_id": "moodmastersapp",
+    "storage_bucket": "moodmastersapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749615400084:android:5bbb74ee3c348b9d2c2081",
+        "android_client_info": {
+          "package_name": "com.example.moodmasters"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZCLm3Wzm7S82Xqk4gVOuQO6PQA1lfUjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
