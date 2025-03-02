@@ -1,4 +1,4 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Objects.ObjectsMisc;
 
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
