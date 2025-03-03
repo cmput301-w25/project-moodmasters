@@ -7,6 +7,7 @@ import android.widget.ListView;
 
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 
 public class MoodHistoryListView implements MVCView {
@@ -16,7 +17,7 @@ public class MoodHistoryListView implements MVCView {
     public MoodHistoryListView(Context init_context){
         context = init_context;
         mood_history_list = ((MoodHistoryListActivity) context).findViewById(R.id.mood_history_list);
-        controller.addBackendView(this, MVCModel.BackendObject.MOODHISTORYLIST);
+        controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
     }
     public void setListElementClicker(){
         mood_history_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -28,7 +29,7 @@ public class MoodHistoryListView implements MVCView {
     }
 
     public void initialize(MVCModel model){
-        mood_history_adapter = new MoodHistoryArrayAdapter(context, model.getBackendList(MVCModel.BackendObject.MOODHISTORYLIST));
+        mood_history_adapter = new MoodHistoryArrayAdapter(context, model.getBackendList(BackendObject.State.MOODHISTORYLIST));
         mood_history_list.setAdapter(mood_history_adapter);
     }
 

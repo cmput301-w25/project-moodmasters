@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 
 public class SignupLoginScreenActivity extends AppCompatActivity implements MVCView {
@@ -24,6 +25,7 @@ public class SignupLoginScreenActivity extends AppCompatActivity implements MVCV
         EdgeToEdge.enable(this);
         setContentView(R.layout.signup_login_screen);
         // TODO: Add view to model via controller if it is found necessary
+        controller.createBackendObject(BackendObject.State.MOODLIST);
         Button ok_button = findViewById(R.id.signup_login_ok_button);
         ok_button.setOnClickListener(v ->{
             controller.execute(new LoginScreenOkEvent(), this);

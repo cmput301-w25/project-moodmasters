@@ -16,6 +16,7 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class MoodHistoryArrayAdapter extends ArrayAdapter<MoodEvent> implements 
     public MoodHistoryArrayAdapter(Context context, ArrayList<MoodEvent> mood_events) {
         super(context, 0, mood_events);
         this.context = context;
-        controller.addBackendView(this, MVCModel.BackendObject.MOODHISTORYLIST);
+        controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
     }
     public void initialize(MVCModel model){
         return;

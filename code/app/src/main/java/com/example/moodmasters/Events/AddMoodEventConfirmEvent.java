@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCEvent;
@@ -27,7 +28,7 @@ public class AddMoodEventConfirmEvent implements MVCEvent {
         Spinner emotions_spinner = activity.findViewById(R.id.alter_mood_emotion_spinner);
         String emotion_string = emotions_spinner.getSelectedItem().toString().trim();
         Emotion.State emotion = Emotion.fromStringToEmotionState(emotion_string);
-        MoodList mood_list = (MoodList) backend.getBackendObject(MVCModel.BackendObject.MOODLIST);
+        MoodList mood_list = (MoodList) backend.getBackendObject(BackendObject.State.MOODLIST);
 
         EditText trigger_text = activity.findViewById(R.id.alter_mood_enter_trigger);
         String trigger_string = trigger_text.getText().toString().trim();
@@ -46,7 +47,7 @@ public class AddMoodEventConfirmEvent implements MVCEvent {
         format.setTimeZone(TimeZone.getTimeZone(timezone.getDisplayName(false, TimeZone.SHORT)));
         String datetime = format.format(date);
 
-        Participant user = ((Participant) backend.getBackendObject(MVCModel.BackendObject.USER));
+        Participant user = ((Participant) backend.getBackendObject(BackendObject.State.USER));
 
         if (!activity.addDataVerification(reason_string)){
             reason_text.setError("Must be less than 20 characters and only 3 words");
@@ -54,7 +55,7 @@ public class AddMoodEventConfirmEvent implements MVCEvent {
         }
 
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion), user, reason_string, trigger_string, social_situation);
-        backend.addToBackendList(MVCModel.BackendObject.MOODHISTORYLIST, new_mood_event);
+        backend.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
 
     }

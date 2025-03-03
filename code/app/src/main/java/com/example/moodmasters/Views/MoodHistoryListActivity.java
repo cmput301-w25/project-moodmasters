@@ -16,6 +16,7 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.google.api.Backend;
 
@@ -24,13 +25,13 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
     private String username;
     public MoodHistoryListActivity(){
         super();
-        controller.addBackendView(this, MVCModel.BackendObject.USER);
+        controller.addBackendView(this, BackendObject.State.USER);
     }
     public void update(MVCModel model){
         // skip for now
     }
     public void initialize(MVCModel model){
-        Participant user = ((Participant) model.getBackendObject(MVCModel.BackendObject.USER));
+        Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         username = user.getUsername();
     }
     @Override
@@ -41,8 +42,7 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
         TextView username_view = findViewById(R.id.user_mood_history_label);
         username_view.setText(username);
         // TODO: Add view to model via controller if it is found necessary
-        controller.createBackendObject(MVCModel.BackendObject.MOODLIST);
-        controller.createBackendObject(MVCModel.BackendObject.MOODHISTORYLIST);
+        controller.createBackendObject(BackendObject.State.MOODHISTORYLIST);
 
         mood_history_view = new MoodHistoryListView(this);
 
