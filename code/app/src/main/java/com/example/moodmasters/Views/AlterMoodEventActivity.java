@@ -61,6 +61,18 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         // TODO: Add code for editing mood event
     }
 
+    public boolean addDataVerification(String reason_string){
+        if (reason_string.length() > 20){
+            return false;
+        }
+        String regex = "\\W+";
+        String[] words = reason_string.split(regex);
+        if (words.length > 3){
+            return false;
+        }
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

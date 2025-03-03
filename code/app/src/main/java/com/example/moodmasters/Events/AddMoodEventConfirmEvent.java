@@ -19,7 +19,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-
 public class AddMoodEventConfirmEvent implements MVCEvent {
     @Override
     public void executeEvent(Context context, MVCModel backend, MVCController controller) {
@@ -42,12 +41,17 @@ public class AddMoodEventConfirmEvent implements MVCEvent {
 
         long epoch_time = System.currentTimeMillis();           /* Epoch time will be the time stored on the database for easy conversion to different time zones */
         Date date = new Date(epoch_time);
-
         DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
-        format.setTimeZone(TimeZone.getTimeZone("MST"));            /* TODO: change this to timezone of phone and not hardcoded to MST*/
+        TimeZone timezone = TimeZone.getDefault();
+        format.setTimeZone(TimeZone.getTimeZone(timezone.getDisplayName(false, TimeZone.SHORT)));
         String datetime = format.format(date);
 
         Participant user = ((Participant) backend.getBackendObject(MVCModel.BackendObject.USER));
+
+        if (!activity.addDataVerification(reason_string)){
+            reason_text.setError("Must be less than 20 characters and only 3 words");
+            return;
+        }
 
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion), user, reason_string, trigger_string, social_situation);
         backend.addToBackendList(MVCModel.BackendObject.MOODHISTORYLIST, new_mood_event);
