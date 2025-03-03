@@ -1,6 +1,6 @@
 package com.example.moodmasters.Objects.ObjectsMisc;
 
-import com.example.moodmasters.Objects.ObjectsApp.Mood;
+import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.MVC.MVCBackendList;
 
@@ -13,8 +13,8 @@ public abstract class MoodEventList extends MVCBackendList<MoodEvent> {
     public void recentFilterMoodEventList(){
         filter.filterByRecency(object_list);
     }
-    public void emotionFilterMoodEventList(Mood.Emotion emotion){
-        filter.filterByEmotion(object_list, emotion);
+    public void emotionFilterMoodEventList(Emotion.State emotion_state){
+        filter.filterByEmotion(object_list, emotion_state);
     }
     public void wordFilterMoodEventList(String word){
         filter.filterByWords(object_list, word);
@@ -22,8 +22,8 @@ public abstract class MoodEventList extends MVCBackendList<MoodEvent> {
     public void revertRecentFilterMoodEventList(){
         filter.revertFilterByRecency(object_list);
     }
-    public void revertEmotionFilterMoodEventList(Mood.Emotion emotion){
-        filter.revertFilterByEmotion(object_list, emotion);
+    public void revertEmotionFilterMoodEventList(Emotion.State emotion_state){
+        filter.revertFilterByEmotion(object_list, emotion_state);
     }
     public void revertWordFilterMoodEventList(String word){
         filter.revertFilterByWords(object_list, word);

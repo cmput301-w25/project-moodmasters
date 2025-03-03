@@ -2,10 +2,18 @@ package com.example.moodmasters.MVC;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.moodmasters.Events.LoginScreenOkEvent;
+import com.example.moodmasters.Objects.ObjectsApp.Emotion;
+import com.example.moodmasters.Objects.ObjectsApp.Mood;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
+import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+import com.example.moodmasters.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MVCModel {
@@ -15,10 +23,11 @@ public class MVCModel {
     private FirebaseFirestore db;
 
     public enum BackendObject{
-        USER,
+        USER,           /* the currently logged in participant which will be defined as user*/
+        MOODLIST,          /* list that contains all of the 8 possible moods */
         FOLLOWINGLIST,
         MOODHISTORYLIST,
-        MOODFOLLOWINGLIST       /*used later for final checkpoint*/
+        MOODFOLLOWINGLIST       /* used later for final checkpoint */
     }
 
     public MVCModel(){
@@ -31,13 +40,54 @@ public class MVCModel {
             throw new IllegalArgumentException("Error: Trying to add pre-existing backend object");
         }
         dependencies.put(backend_object, new ArrayList<MVCView>());
-        // TODO: Add if statements going over BackendObjects enums here to add backend objects
+        if (backend_object == BackendObject.USER){
+            Participant user = new Participant(LoginScreenOkEvent.getUsername());
+            backend_objects.put(backend_object, user);
+        }
+        else if (backend_object == BackendObject.MOODLIST){
+            Mood happy = new Mood(Emotion.State.HAPPY, R.color.mood_happy_color, R.string.mood_emoji_happy);
+            Mood sad = new Mood(Emotion.State.SAD, R.color.mood_sad_color, R.string.mood_emoji_sad);
+            Mood angry = new Mood(Emotion.State.ANGRY, R.color.mood_angry_color, R.string.mood_emoji_angry);
+            Mood scared = new Mood(Emotion.State.SCARED, R.color.mood_scared_color, R.string.mood_emoji_scared);
+            Mood disgusted = new Mood(Emotion.State.DISGUSTED, R.color.mood_disgusted_color, R.string.mood_emoji_disgusted);
+            Mood confused = new Mood(Emotion.State.CONFUSED, R.color.mood_confused_color, R.string.mood_emoji_confused);
+            Mood ashamed = new Mood(Emotion.State.ASHAMED, R.color.mood_ashamed_color, R.string.mood_emoji_ashamed);
+            Mood surprised = new Mood(Emotion.State.SURPRISED, R.color.mood_surprised_color, R.string.mood_emoji_surprised);
+            List<Mood> init_list = Arrays.asList(happy, sad, angry, scared, disgusted, confused, ashamed, surprised);
+            MoodList mood_list = new MoodList(init_list);
+            backend_objects.put(backend_object, mood_list);
+        }
+        else if (backend_object == BackendObject.FOLLOWINGLIST){
+
+        }
+        else if (backend_object == BackendObject.MOODHISTORYLIST){
+            MoodHistoryList mood_history_list = new MoodHistoryList();          /* should create mood history list via user object but this is fine for now */
+            backend_objects.put(backend_object, mood_history_list);
+        }
+        else if (backend_object == BackendObject.MOODFOLLOWINGLIST){
+            // make sure following list is generated first and use that to generate mood following list
+        }
     }
     public void removeBackendObject(BackendObject backend_object){
         if (!backend_objects.containsKey(backend_object)){
             throw new IllegalArgumentException("Error: Trying to delete non-existent backend object");
         }
-        // TODO: Add if statements going over BackendObjects enums here to remove backend objects
+        // TODO: Add if statements going over BackendObjects enums here to remove backend objects (used on user logout)
+        if (backend_object == BackendObject.USER){
+
+        }
+        else if (backend_object == BackendObject.MOODLIST){
+
+        }
+        else if (backend_object == BackendObject.FOLLOWINGLIST){
+
+        }
+        else if (backend_object == BackendObject.MOODHISTORYLIST){
+
+        }
+        else if (backend_object == BackendObject.MOODFOLLOWINGLIST){
+
+        }
     }
     public MVCBackend getBackendObject(BackendObject backend_object){
         return backend_objects.get(backend_object);

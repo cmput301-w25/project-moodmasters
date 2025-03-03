@@ -1,6 +1,6 @@
 package com.example.moodmasters.Objects.ObjectsMisc;
 
-import com.example.moodmasters.Objects.ObjectsApp.Mood;
+import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 
 import java.util.HashMap;
@@ -18,16 +18,16 @@ public class FilterMoodEventList{
     public void filterByRecency(List<MoodEvent> object_list){
         // TODO: implement filter by recency
     }
-    public void filterByEmotion(List<MoodEvent> object_list, Mood.Emotion emotion){
+    public void filterByEmotion(List<MoodEvent> object_list, Emotion.State emotion_state){
         // TODO: implement filter by emotion
     }
-    public void filterByWords(List<MoodEvent> object_list, String emotion){
+    public void filterByWords(List<MoodEvent> object_list, String word){
         // TODO: implement filter by word
     }
     public void revertFilterByRecency(List<MoodEvent> object_list){
         // TODO: implement reverting filter by recency
     }
-    public void revertFilterByEmotion(List<MoodEvent> object_list, Mood.Emotion emotion){
+    public void revertFilterByEmotion(List<MoodEvent> object_list, Emotion.State emotion_state){
         // TODO: implement reverting of filter by emotion
     }
     public void revertFilterByWords(List<MoodEvent> object_list, String emotion){

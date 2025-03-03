@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCEvent;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.MenuScreenFragment;
+import com.example.moodmasters.Views.MenuScreenFragment;
 
 public class MoodHistoryListMenuEvent implements MVCEvent {
     public static String fragment_tag = "Menu Options";

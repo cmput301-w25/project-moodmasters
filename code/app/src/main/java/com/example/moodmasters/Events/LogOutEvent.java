@@ -1,19 +1,14 @@
 package com.example.moodmasters.Events;
 
-import static com.example.moodmasters.Events.MoodHistoryListMenuEvent.fragment_tag;
-
 import android.content.Context;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCEvent;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.MVC.MVCView;
-import com.example.moodmasters.MenuScreenFragment;
-import com.example.moodmasters.MoodHistoryListActivity;
-import com.example.moodmasters.R;
+import com.example.moodmasters.Views.MenuScreenFragment;
+import com.example.moodmasters.Views.MoodHistoryListActivity;
 
 public class LogOutEvent implements MVCEvent {
     @Override
