@@ -1,6 +1,5 @@
 package com.example.moodmasters.Objects.ObjectsBackend;
 
-import com.example.moodmasters.Objects.ObjectsApp.Participant;
 import com.example.moodmasters.MVC.MVCBackendList;
 import com.google.firebase.firestore.FirebaseFirestore;
 

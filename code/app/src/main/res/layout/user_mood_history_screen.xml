@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@color/background_color"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/user_mood_history_add_button"
@@ -75,8 +76,8 @@
         app:layout_constraintStart_toStartOf="@+id/user_mood_history_toolbar"
         app:layout_constraintTop_toTopOf="@+id/user_mood_history_toolbar" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <ListView
+        android:id="@+id/mood_history_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -86,13 +87,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_mood_history_filter_button">
-
-        <LinearLayout
-            android:id="@+id/user_mood_history_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+    </ListView>
 
     <ImageButton
         android:id="@+id/user_mood_history_menu_button"

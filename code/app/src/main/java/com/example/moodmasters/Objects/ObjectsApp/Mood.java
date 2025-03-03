@@ -9,43 +9,33 @@ package com.example.moodmasters.Objects.ObjectsApp;
  * with the color red, it wouldn't make sense to associate it with a bright yellow for example)
  * */
 public class Mood {
-    private Emotion emotion;
-    private Color color;
-    public enum Emotion{
-        HAPPY,
-        SAD,
-        ANGRY,
-        SCARED,
-        DISGUSTED,
-        CONFUSED,
-        ASHAMED,
-        SUPRISED
-    }
-    public enum Color{
-        YELLOW,
-        BLUE,
-        RED,
-        BLACK,
-        GREEN,
-        PURPLE,
-        PINK,
-        ORANGE
-    }
+    private Emotion.State emotion;
+    private int color;
+    private int emoticon;
 
-    public Mood(Emotion init_emotion, Color init_color){
+    public Mood(Emotion.State init_emotion, int init_color, int init_emoticon){
         color = init_color;
         emotion = init_emotion;
+        emoticon = init_emoticon;
     }
-    public Emotion getEmotion(){
+    public Emotion.State getEmotion(){
         return emotion;
     }
-    public Color getColor(){
+    public int getColor(){
         return color;
     }
-    public void setEmotion(Emotion new_emotion){
+    public int getEmoticon(){ return emoticon;}
+    public void setEmotion(Emotion.State new_emotion){
         emotion = new_emotion;
     }
-    public void setColor(Color new_color){
+    public void setColor(int new_color){
         color = new_color;
     }
+    public void setEmoticon(int new_emoticon){
+        emoticon = new_emoticon;
+    }
+    public String getEmotionString(){
+        return Emotion.getString(emotion);
+    }
+
 }
