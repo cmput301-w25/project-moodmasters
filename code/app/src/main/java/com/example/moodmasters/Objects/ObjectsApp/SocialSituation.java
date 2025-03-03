@@ -13,19 +13,19 @@ public class SocialSituation {
     }
     public static String getString(SocialSituation.State conv_social_state){
         if (conv_social_state == SocialSituation.State.NONE){
-            return "Happy";
+            return "None";
         }
         else if (conv_social_state == SocialSituation.State.ALONE){
-            return "Sad";
+            return "Alone";
         }
         else if (conv_social_state == SocialSituation.State.PAIR){
-            return "Angry";
+            return "Pair";
         }
         else if (conv_social_state == SocialSituation.State.SEVERAL){
-            return "Scared";
+            return "Several";
         }
         else if (conv_social_state == SocialSituation.State.CROWD){
-            return "Disgusted";
+            return "Crowd";
         }
         return "Error";         /* Impossible to get here */
     }

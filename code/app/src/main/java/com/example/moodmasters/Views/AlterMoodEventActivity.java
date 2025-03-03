@@ -43,7 +43,8 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
 
         Spinner social_situations_spinner = findViewById(R.id.alter_social_situation_spinner);
         ArrayAdapter<String> social_situations_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, social_situations_list);
-        emotions_spinner.setAdapter(social_situations_adapter);
+        social_situations_spinner.setAdapter(social_situations_adapter);
+
 
         EditText trigger_text = findViewById(R.id.alter_mood_enter_trigger);
 
@@ -66,8 +67,10 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         EdgeToEdge.enable(this);
         setContentView(R.layout.alter_mood_screen);
         // TODO: Add view to model via controller if it is found necessary
+        /* Will return type of event (add or edit) */
+
         Intent i = getIntent();
-        String event = i.getStringExtra("Event");           /* Will return type of event (add or edit) */
+        String event = i.getStringExtra("Event");
         if (event.equals("AddMoodEvent")) {
             addMoodEventCode();
         }
@@ -82,5 +85,6 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         cancel_button.setOnClickListener(v -> {
             controller.execute(new AlterMoodEventCancelEvent(), this);
         });
+
     }
 }

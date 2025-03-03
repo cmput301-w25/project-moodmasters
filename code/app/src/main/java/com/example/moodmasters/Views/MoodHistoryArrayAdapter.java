@@ -1,6 +1,7 @@
 package com.example.moodmasters.Views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
@@ -52,7 +55,8 @@ public class MoodHistoryArrayAdapter extends ArrayAdapter<MoodEvent> implements 
         datetime_view.setText(mood_event.getDatetime());
         mood_view.setText(mood.getEmotionString());
         emoticon_view.setText(mood.getEmoticon());
-        view.setBackgroundColor(mood.getColor());
+        int background_color = ContextCompat.getColor(context, mood.getColor());
+        view.setBackgroundColor(background_color);
 
         return view;
     }

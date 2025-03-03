@@ -25,6 +25,10 @@
             android:name=".Views.MoodHistoryListActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".Views.AlterMoodEventActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

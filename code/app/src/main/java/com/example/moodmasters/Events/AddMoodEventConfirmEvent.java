@@ -43,7 +43,7 @@ public class AddMoodEventConfirmEvent implements MVCEvent {
         long epoch_time = System.currentTimeMillis();           /* Epoch time will be the time stored on the database for easy conversion to different time zones */
         Date date = new Date(epoch_time);
 
-        DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm:ss");
+        DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
         format.setTimeZone(TimeZone.getTimeZone("MST"));            /* TODO: change this to timezone of phone and not hardcoded to MST*/
         String datetime = format.format(date);
 
