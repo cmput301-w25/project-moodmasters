@@ -33,7 +33,7 @@ public class AddMoodEventConfirmEvent implements MVCEvent {
         EditText trigger_text = activity.findViewById(R.id.alter_mood_enter_trigger);
         String trigger_string = trigger_text.getText().toString().trim();
 
-        Spinner social_situations_spinner = activity.findViewById(R.id.alter_social_situation_spinner);
+        Spinner social_situations_spinner = activity.findViewById(R.id.alter_mood_situation_spinner);
         String social_situation_string = social_situations_spinner.getSelectedItem().toString();
         SocialSituation.State social_situation = SocialSituation.fromStringToSocialState(social_situation_string);
 
