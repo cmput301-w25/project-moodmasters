@@ -56,7 +56,8 @@ public class MVCModel {
 
         }
         else if (backend_object == BackendObject.State.MOODHISTORYLIST){
-            MoodHistoryList mood_history_list = new MoodHistoryList();          /* should create mood history list via user object but this is fine for now */
+            Participant user = ((Participant) this.getBackendObject(BackendObject.State.USER));
+            MoodHistoryList mood_history_list = user.getMoodHistoryList();
             backend_objects.put(backend_object, mood_history_list);
         }
         else if (backend_object == BackendObject.State.MOODFOLLOWINGLIST){

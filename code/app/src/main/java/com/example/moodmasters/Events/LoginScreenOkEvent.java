@@ -3,6 +3,7 @@ package com.example.moodmasters.Events;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCEvent;
@@ -22,9 +23,12 @@ public class LoginScreenOkEvent implements MVCEvent {
         // TODO: Verify user entered proper username in database, just need to make sure field is non-empty and check if the username
         // is already in the database in the Participant.setDatabaseData method, if it isn't add it, else retrieve necessary data from
         // database (more specifically mood history list)
-        EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
-        username = entered_username.getText().toString().trim();
-        backend.createBackendObject(BackendObject.State.USER);
-        context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
+        TextView label = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_label);
+        if (label.getText().equals("Sign Up")) {
+            EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
+            username = entered_username.getText().toString().trim();
+            backend.createBackendObject(BackendObject.State.USER);
+            context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
+        }
     }
 }

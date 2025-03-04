@@ -18,7 +18,7 @@ public class FollowingList extends MVCBackendList<Participant> {
 
     // called when model.createBackendObject(MOODFOLLOWINGLIST) is called
     public MoodFollowingList createFollowingList(){
-        mood_following_list = new MoodFollowingList();
+        mood_following_list = new MoodFollowingList(FirebaseFirestore.getInstance());
         // TODO: Create Mood Following List From participants
         return mood_following_list;
     }
