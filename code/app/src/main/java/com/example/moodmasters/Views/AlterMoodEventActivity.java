@@ -41,7 +41,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         ArrayAdapter<String> emotions_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, emotions_list);
         emotions_spinner.setAdapter(emotions_adapter);
 
-        Spinner social_situations_spinner = findViewById(R.id.alter_social_situation_spinner);
+        Spinner social_situations_spinner = findViewById(R.id.alter_mood_situation_spinner);
         ArrayAdapter<String> social_situations_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, social_situations_list);
         social_situations_spinner.setAdapter(social_situations_adapter);
 
@@ -50,7 +50,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
 
         EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
 
-        Button confirm_button = findViewById(R.id.confirm_button);
+        Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 
         confirm_button.setOnClickListener(v -> {
             controller.execute(new AddMoodEventConfirmEvent(), this);
@@ -93,7 +93,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
             throw new IllegalArgumentException("Error: Didn't provide the proper intent extra on activity creation");
         }
 
-        Button cancel_button = findViewById(R.id.cancel_button);
+        Button cancel_button = findViewById(R.id.alter_mood_cancel_button);
         cancel_button.setOnClickListener(v -> {
             controller.execute(new AlterMoodEventCancelEvent(), this);
         });
