@@ -10,10 +10,10 @@
     <color name="mood_default_color">#838383</color>
     <color name="mood_happy_color">#FFEAA6</color>
     <color name="mood_sad_color">#A0C6FF</color>
-    <color name="mood_angry_color">#E63A3A</color>
-    <color name="mood_scared_color">#A57BF6</color>
+    <color name="mood_angry_color">#FF8080</color>
+    <color name="mood_scared_color">#AE85FF</color>
     <color name="mood_disgusted_color">#B8FFB1</color>
-    <color name="mood_confused_color">#808080</color>
+    <color name="mood_confused_color">#A2A2A2</color>
     <color name="mood_ashamed_color">#E98AFF</color>
-    <color name="mood_surprised_color">#FFA500</color>
+    <color name="mood_surprised_color">#FFCC74</color>
 </resources>
