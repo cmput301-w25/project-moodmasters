@@ -3,6 +3,8 @@ package com.example.moodmasters.Objects.ObjectsBackend;
 import com.example.moodmasters.MVC.MVCBackendList;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -20,10 +22,10 @@ public class MoodList extends MVCBackendList<Mood> {
     public MoodList(List<Mood> init_list){
         super(init_list);
     }
-    public void setDatabaseData(FirebaseFirestore db){
+    public void setDatabaseData(DocumentReference docRef, DocumentSnapshot snapshot){
         // doesn't need database connectivity
     }
-    public void updateDatabaseData(FirebaseFirestore db){
+    public void updateDatabaseData(DocumentReference docRef){
         // doesn't need database connectivity
     }
 
