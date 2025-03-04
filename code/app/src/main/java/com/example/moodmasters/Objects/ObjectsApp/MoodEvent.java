@@ -1,5 +1,6 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
+import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 
 import java.util.HashMap;
@@ -26,10 +27,12 @@ public class MoodEvent {
 
     public MoodEvent(HashMap map){
         datetime = (String) map.get("datetime");
-        mood = (HashMap) map.get("mood");
+        mood = new Mood((HashMap) map.get("mood"));
         //participant = init_participant;
-        epoch_time = init_epoch_time;
-        reason = init_reason;
+        epoch_time = (long) map.get("epochTime");
+        reason = (String) map.get("reason");
+        situation = (SocialSituation.State) map.get("situation");
+        trigger = (String) map.get("trigger");
     }
 
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, String init_reason,

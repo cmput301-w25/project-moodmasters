@@ -44,11 +44,9 @@ public class Participant implements MVCBackend{
             ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
             ArrayList list = (ArrayList) snapshot.get("list");
             for (int i = 0; i < list.size(); i++) {
-                Object a = list.get(i);
-                int b = 1+1;
+                mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
             }
-            //mood_history_list = new MoodHistoryList(mood_array_list, docRef, snapshot);
-            int a = 1 + 1;
+            mood_history_list = new MoodHistoryList(mood_array_list, docRef, snapshot);
         } else {
             mood_history_list = new MoodHistoryList(docRef, snapshot);
             docRef.set(mood_history_list);

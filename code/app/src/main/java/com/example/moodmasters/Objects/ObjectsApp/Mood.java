@@ -1,5 +1,7 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
+import java.util.HashMap;
+
 /**
  * There should be exactly 8 Mood object instances, one for each Emotion, i also
  * put the emotions and colors in order of which should be associated to which
@@ -17,6 +19,11 @@ public class Mood {
         color = init_color;
         emotion = init_emotion;
         emoticon = init_emoticon;
+    }
+    public Mood(HashMap map){
+        color = (int) map.get("color");
+        emotion = (Emotion.State) map.get("emoticon");
+        emoticon = (int) map.get("emoticon");
     }
     public Emotion.State getEmotion(){
         return emotion;
