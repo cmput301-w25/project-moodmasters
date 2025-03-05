@@ -15,8 +15,6 @@ import java.util.Objects;
 
 public class MoodHistoryList extends MoodEventList {
 
-    public MoodHistoryList() {}
-
     public MoodHistoryList(ArrayList<MoodEvent> list, DocumentReference docRef, DocumentSnapshot snapshot) {
         super(list, docRef, snapshot);
     }
@@ -26,11 +24,9 @@ public class MoodHistoryList extends MoodEventList {
     }
 
     public void setDatabaseData(DocumentReference docRef, DocumentSnapshot snapshot){
-        // TODO: Implement getting and possibly setting initial data from database
-
+        // this is done by the Participant class
     }
     public void updateDatabaseData(DocumentReference docRef){
-        // TODO: Implement updating database with added/removed data
         docRef.set(this);
     }
 }

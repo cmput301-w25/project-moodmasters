@@ -29,17 +29,14 @@ import java.util.Objects;
  * */
 public class Participant implements MVCBackend{
     private String username;
-    private DocumentReference docRef;
 
     private MoodHistoryList mood_history_list;          /*needed for generating mood following list of the user*/
 
     public Participant(String init_username){
         username = init_username;
-        //mood_history_list = new MoodHistoryList();
     }
 
     public void setDatabaseData(DocumentReference docRef, DocumentSnapshot snapshot){
-        // TODO: Implement getting and possibly setting initial data from database
         if (snapshot.exists()) {
             ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
             ArrayList list = (ArrayList) snapshot.get("list");
@@ -54,7 +51,6 @@ public class Participant implements MVCBackend{
     }
 
     public void updateDatabaseData(DocumentReference docRef){
-        // TODO: Implement updating database with added/removed data
         docRef.set(mood_history_list);
     }
 
@@ -64,14 +60,6 @@ public class Participant implements MVCBackend{
 
     public void setUsername(String new_username){
         username = new_username;
-    }
-
-    public DocumentReference getDocRef() {
-        return docRef;
-    }
-
-    public void setDocRef(DocumentReference docRef) {
-        this.docRef = docRef;
     }
 
     public MoodHistoryList getMoodHistoryList(){

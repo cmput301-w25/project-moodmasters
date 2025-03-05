@@ -16,9 +16,6 @@ import java.util.NoSuchElementException;
  * */
 public class MoodList extends MVCBackendList<Mood> {
 
-    public MoodList(){
-        super();
-    }
     public MoodList(List<Mood> init_list){
         super(init_list);
     }
