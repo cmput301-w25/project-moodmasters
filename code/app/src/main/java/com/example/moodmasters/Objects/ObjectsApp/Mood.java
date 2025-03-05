@@ -21,9 +21,9 @@ public class Mood {
         emoticon = init_emoticon;
     }
     public Mood(HashMap map){
-        color = (int) map.get("color");
-        emotion = (Emotion.State) map.get("emoticon");
-        emoticon = (int) map.get("emoticon");
+        color = (int)(long) map.get("color");
+        emotion = Emotion.fromStringToEmotionState((String) map.get("emotion"));
+        emoticon = (int)(long) map.get("emoticon");
     }
     public Emotion.State getEmotion(){
         return emotion;

@@ -31,19 +31,19 @@ public class SocialSituation {
     }
 
     public static SocialSituation.State fromStringToSocialState(String social_situation_string){
-        if (social_situation_string.equals("None")){
+        if (social_situation_string.equalsIgnoreCase("None")){
             return SocialSituation.State.NONE;
         }
-        else if (social_situation_string.equals("Alone")){
+        else if (social_situation_string.equalsIgnoreCase("Alone")){
             return SocialSituation.State.ALONE;
         }
-        else if (social_situation_string.equals("Pair")){
+        else if (social_situation_string.equalsIgnoreCase("Pair")){
             return SocialSituation.State.PAIR;
         }
-        else if (social_situation_string.equals("Several")){
+        else if (social_situation_string.equalsIgnoreCase("Several")){
             return SocialSituation.State.SEVERAL;
         }
-        else if (social_situation_string.equals("Crowd")){
+        else if (social_situation_string.equalsIgnoreCase("Crowd")){
             return SocialSituation.State.CROWD;
         }
         else{

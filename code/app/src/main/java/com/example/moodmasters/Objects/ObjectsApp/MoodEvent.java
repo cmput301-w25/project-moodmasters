@@ -31,7 +31,7 @@ public class MoodEvent {
         //participant = init_participant;
         epoch_time = (long) map.get("epochTime");
         reason = (String) map.get("reason");
-        situation = (SocialSituation.State) map.get("situation");
+        situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
         trigger = (String) map.get("trigger");
     }
 
