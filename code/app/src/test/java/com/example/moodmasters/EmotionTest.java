@@ -12,8 +12,6 @@ import java.util.List;
 
 public class EmotionTest {
 
-    private Emotion emotion;
-
     @Test
     public void testGetString() {
         assertEquals("Happy", Emotion.getString(Emotion.State.HAPPY));

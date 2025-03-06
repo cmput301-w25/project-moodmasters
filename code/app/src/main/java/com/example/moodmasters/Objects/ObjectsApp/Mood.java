@@ -41,7 +41,7 @@ public class Mood {
     public void setEmoticon(int new_emoticon){
         emoticon = new_emoticon;
     }
-    public String getEmotionString(){
+    public String getEmotionString() {
         return Emotion.getString(emotion);
     }
 
