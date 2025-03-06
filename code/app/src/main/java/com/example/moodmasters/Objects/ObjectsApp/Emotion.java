@@ -44,28 +44,28 @@ public class Emotion {
     }
 
     public static State fromStringToEmotionState(String emotion_string){
-        if (emotion_string.equals("Happy")){
+        if (emotion_string.equalsIgnoreCase("Happy")){
             return State.HAPPY;
         }
-        else if (emotion_string.equals("Sad")){
+        else if (emotion_string.equalsIgnoreCase("Sad")){
             return State.SAD;
         }
-        else if (emotion_string.equals("Angry")){
+        else if (emotion_string.equalsIgnoreCase("Angry")){
             return State.ANGRY;
         }
-        else if (emotion_string.equals("Scared")){
+        else if (emotion_string.equalsIgnoreCase("Scared")){
             return State.SCARED;
         }
-        else if (emotion_string.equals("Disgusted")){
+        else if (emotion_string.equalsIgnoreCase("Disgusted")){
             return State.DISGUSTED;
         }
-        else if (emotion_string.equals("Confused")){
+        else if (emotion_string.equalsIgnoreCase("Confused")){
             return State.CONFUSED;
         }
-        else if (emotion_string.equals("Ashamed")){
+        else if (emotion_string.equalsIgnoreCase("Ashamed")){
             return State.ASHAMED;
         }
-        else if (emotion_string.equals("Surprised")){
+        else if (emotion_string.equalsIgnoreCase("Surprised")){
             return State.SURPRISED;
         }
         else{
