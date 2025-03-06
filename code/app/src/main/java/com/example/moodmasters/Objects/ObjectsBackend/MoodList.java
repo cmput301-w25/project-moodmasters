@@ -5,14 +5,14 @@ import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- * Just a list that will contain all the 8 moods possible that will be of use during the program
+ * This is a class that contains a list of all the 8 Moods possible that will be of use
+ * during the program.
  * */
 public class MoodList extends MVCBackendList<Mood> {
 

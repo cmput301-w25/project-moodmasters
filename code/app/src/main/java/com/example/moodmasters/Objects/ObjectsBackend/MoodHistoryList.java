@@ -1,18 +1,15 @@
 package com.example.moodmasters.Objects.ObjectsBackend;
 
-import androidx.annotation.NonNull;
-
-import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsMisc.MoodEventList;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
+/**
+ * This is a class that keeps track of MoodEvents in the current user's history.
+ */
 public class MoodHistoryList extends MoodEventList {
 
     public MoodHistoryList(ArrayList<MoodEvent> list, DocumentReference docRef, DocumentSnapshot snapshot) {
