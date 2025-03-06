@@ -1,21 +1,17 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
-import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
-import com.example.moodmasters.Objects.ObjectsBackend.Participant;
-
 import java.util.HashMap;
 
+/**
+ * This is a class that represents a single mood event created by a user.
+ */
 public class MoodEvent {
     private String datetime;
-    private long epoch_time;            /* necessary for storing on database, there might be a better solution as opposed to increasing class size but this is fine for now*/
+    private long epoch_time;
     private Mood mood;
-    // MoodEvent cannot have a Participant attribute.
-    // Problem: since participant Has-A MoodEvent, MoodEvent cannot Have-A participant
-    // (this creates an object cycle).
     private String reason;
     private String trigger;
     private SocialSituation.State situation;
-
 
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, String init_reason){
         datetime = init_datetime;
@@ -24,6 +20,11 @@ public class MoodEvent {
         reason = init_reason;
     }
 
+    /**
+     * MoodEvent constructor.
+     * @param map
+     *  This is a HashMap retrieved from the Firebase database containing mood event information.
+     */
     public MoodEvent(HashMap map){
         datetime = (String) map.get("datetime");
         mood = new Mood((HashMap) map.get("mood"));

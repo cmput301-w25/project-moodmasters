@@ -3,6 +3,9 @@ package com.example.moodmasters.Objects.ObjectsApp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a class that represents all possible social situations that a MoodEvent can have.
+ */
 public class SocialSituation {
     public enum State{
         NONE,

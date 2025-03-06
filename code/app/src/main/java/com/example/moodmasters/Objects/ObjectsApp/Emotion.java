@@ -3,6 +3,9 @@ package com.example.moodmasters.Objects.ObjectsApp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a class that represents all possible emotions that a Mood can have.
+ */
 public class Emotion {
     public enum State {
         HAPPY,

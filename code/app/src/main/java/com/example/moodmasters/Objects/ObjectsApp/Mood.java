@@ -3,12 +3,7 @@ package com.example.moodmasters.Objects.ObjectsApp;
 import java.util.HashMap;
 
 /**
- * There should be exactly 8 Mood object instances, one for each Emotion, i also
- * put the emotions and colors in order of which should be associated to which
- * but this can change with the programmers choice (happy associated with yellow,
- * sad associated with blue, ext), if you change any associations between emotions
- * and colors try to make it make sense (an example would be that angry is usually associated
- * with the color red, it wouldn't make sense to associate it with a bright yellow for example)
+ * This is a class that represents a single mood.
  * */
 public class Mood {
     private Emotion.State emotion;

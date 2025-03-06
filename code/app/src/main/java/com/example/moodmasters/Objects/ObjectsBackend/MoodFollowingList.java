@@ -1,10 +1,7 @@
 package com.example.moodmasters.Objects.ObjectsBackend;
 
-import com.example.moodmasters.Objects.ObjectsMisc.MoodEventList;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 // Not needed for halfway checkpoint
+
 //public class MoodFollowingList extends MoodEventList {
 //    public MoodFollowingList(DocumentReference) {
 //        super(db);
