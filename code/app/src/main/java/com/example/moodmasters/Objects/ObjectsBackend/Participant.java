@@ -65,18 +65,14 @@ public class Participant implements MVCBackend{
     }
 
     /**
-     * This returns the Participant's username.
-     * @return
-     *  Return username.
+     * username getter.
      */
     public String getUsername(){
         return username;
     }
 
     /**
-     * This returns the Participant's mood_history_list.
-     * @return
-     *  Return mood_history_list.
+     * mood_history_list getter.
      */
     public MoodHistoryList getMoodHistoryList(){
         return this.mood_history_list;

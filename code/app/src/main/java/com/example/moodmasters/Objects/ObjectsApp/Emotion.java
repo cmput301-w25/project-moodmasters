@@ -18,6 +18,13 @@ public class Emotion {
         SURPRISED
     }
 
+    /**
+     * This returns the passed emotion State as a String.
+     * @param conv_emotion_state
+     *  This is the emotion as a State to be returned as a string.
+     * @return
+     *  Return the passed emotion State as a String.
+     */
     public static String getString(State conv_emotion_state){
         if (conv_emotion_state == State.HAPPY){
             return "Happy";
@@ -46,6 +53,13 @@ public class Emotion {
         return "Error";
     }
 
+    /**
+     * This returns the passed emotion String as a State.
+     * @param emotion_string
+     *  This is the emotion as a String to be returned as a State.
+     * @return
+     *  Return the passed emotion String as a State.
+     */
     public static State fromStringToEmotionState(String emotion_string){
         if (emotion_string.equalsIgnoreCase("Happy")){
             return State.HAPPY;
@@ -76,6 +90,11 @@ public class Emotion {
         }
     }
 
+    /**
+     * This returns a List of all emotions as Stings
+     * @return
+     *  Return a List containing all emotions as Strings
+     */
     public static List<String> getStringList(){
         List<String> emotion_list = new ArrayList<String>(Emotion.State.values().length);
         int i = 0;
