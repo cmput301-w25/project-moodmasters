@@ -35,10 +35,10 @@ public class Participant implements MVCBackend{
      * Else, a new MoodHistoryList is created and stored in this.mood_history_list and
      * uploaded to the database at doc_ref.
      * @param doc_ref
-     *  This is the DocumentReference which references the document where the Participant's
+     *  This is the DocumentReference which references the document where the user's
      *  data is stored.
      * @param snapshot
-     *  This is the DocumentSnapshot of the document where the Participant's data is stored.
+     *  This is the DocumentSnapshot of the document where the user's data is stored.
      */
     public void setDatabaseData(DocumentReference doc_ref, DocumentSnapshot snapshot){
         if (snapshot.exists()) {   /* Parse existing MoodEvent list */
@@ -56,12 +56,12 @@ public class Participant implements MVCBackend{
 
     /**
      * This handles the updating of MoodHistoryList data into the database.
-     * @param docRef
-     *  This is the DocumentReference which references the document where the Participant's
+     * @param doc_ref
+     *  This is the DocumentReference which references the document where the user's
      *  data is stored.
      */
-    public void updateDatabaseData(DocumentReference docRef){
-        docRef.set(mood_history_list);
+    public void updateDatabaseData(DocumentReference doc_ref){
+        doc_ref.set(mood_history_list);
     }
 
     /**

@@ -16,7 +16,7 @@ public class MoodEvent {
     private SocialSituation.State situation;
 
     /**
-     * MoodEvent constructor
+     * MoodEvent constructor.
      * @param init_datetime
      *  This is the MoodEvent's datetime.
      * @param init_epoch_time

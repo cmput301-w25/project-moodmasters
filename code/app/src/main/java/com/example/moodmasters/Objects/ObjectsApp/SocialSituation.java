@@ -14,6 +14,14 @@ public class SocialSituation {
         SEVERAL,
         CROWD
     }
+
+    /**
+     * This returns the passed situation State as a String.
+     * @param conv_social_state
+     *  This is the situation as a State to be returned as a string.
+     * @return
+     *  Return the passed situation State as a String.
+     */
     public static String getString(SocialSituation.State conv_social_state){
         if (conv_social_state == SocialSituation.State.NONE){
             return "None";
@@ -33,6 +41,13 @@ public class SocialSituation {
         return "Error";         /* Impossible to get here */
     }
 
+    /**
+     * This returns the passed situation String as a State.
+     * @param social_situation_string
+     *  This is the situation as a String to be returned as a State.
+     * @return
+     *  Return the passed situation String as a State.
+     */
     public static SocialSituation.State fromStringToSocialState(String social_situation_string){
         if (social_situation_string.equalsIgnoreCase("None")){
             return SocialSituation.State.NONE;
@@ -54,6 +69,11 @@ public class SocialSituation {
         }
     }
 
+    /**
+     * This returns a List of all situations as Stings
+     * @return
+     *  Return a List containing all situations as Strings
+     */
     public static List<String> getStringList(){
         List<String> social_situation_list = new ArrayList<String>(SocialSituation.State.values().length);
         int i = 0;
