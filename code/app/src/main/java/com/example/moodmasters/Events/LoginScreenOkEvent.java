@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCEvent;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.Objects.ObjectsApp.Mood;
-import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.SignupLoginScreenActivity;
@@ -23,21 +21,19 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-
 public class LoginScreenOkEvent implements MVCEvent {
     private static String username;
     private FirebaseFirestore db;
-    private static CollectionReference participantsRef;
-    private static DocumentReference docRef;
+    private static CollectionReference participants_ref;
+    private static DocumentReference doc_ref;
     public static String getUsername(){
         return username;
     }
     public DocumentReference getDocRef() {
         db = FirebaseFirestore.getInstance();
-        participantsRef = db.collection("participants");
-        docRef = participantsRef.document(username);
-        return docRef;
+        participants_ref = db.collection("participants");
+        doc_ref = participants_ref.document(username);
+        return doc_ref;
     }
     @Override
     public void executeEvent(Context context, MVCModel backend, MVCController controller) {
@@ -54,7 +50,7 @@ public class LoginScreenOkEvent implements MVCEvent {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot snapshot = task.getResult();
-                        backend.getBackendObject(BackendObject.State.USER).setDatabaseData(docRef, snapshot);
+                        backend.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
                         context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
                     }
                 }

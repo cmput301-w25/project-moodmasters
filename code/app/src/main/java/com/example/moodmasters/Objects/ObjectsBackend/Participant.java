@@ -36,17 +36,17 @@ public class Participant implements MVCBackend{
         username = init_username;
     }
 
-    public void setDatabaseData(DocumentReference docRef, DocumentSnapshot snapshot){
+    public void setDatabaseData(DocumentReference doc_ref, DocumentSnapshot snapshot){
         if (snapshot.exists()) {
             ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
             ArrayList list = (ArrayList) snapshot.get("list");
             for (int i = 0; i < list.size(); i++) {
                 mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
             }
-            mood_history_list = new MoodHistoryList(mood_array_list, docRef, snapshot);
+            mood_history_list = new MoodHistoryList(mood_array_list, doc_ref, snapshot);
         } else {
-            mood_history_list = new MoodHistoryList(docRef, snapshot);
-            docRef.set(mood_history_list);
+            mood_history_list = new MoodHistoryList(doc_ref, snapshot);
+            doc_ref.set(mood_history_list);
         }
     }
 
