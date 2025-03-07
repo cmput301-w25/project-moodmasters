@@ -1,5 +1,7 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
+import android.net.Uri;
+
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 
 public class MoodEvent {
@@ -10,6 +12,8 @@ public class MoodEvent {
     private String reason;
     private String trigger;
     private SocialSituation.State situation;
+
+    private Uri photoUri;
 
 
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, Participant init_participant, String init_reason){
@@ -79,4 +83,16 @@ public class MoodEvent {
         situation = new_situation;
     }
 
+    public MoodEvent(Uri photoUri, String moodDescription, String reasonForMood) {
+        this.photoUri = photoUri;
+    }
+
+    // Getter and Setter for photoUri
+    public Uri getPhotoUri() {
+        return photoUri;
+    }
+
+    public void setPhotoUri(Uri photoUri) {
+        this.photoUri = photoUri;
+    }
 }

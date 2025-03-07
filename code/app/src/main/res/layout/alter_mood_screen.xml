@@ -43,6 +43,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alter_mood_enter_reason" />
 
+    <ImageView
+        android:id="@+id/select_photo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_camera"
+        android:contentDescription="@string/select_photo"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_centerInParent="true"/>
+
+
     <Button
         android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
