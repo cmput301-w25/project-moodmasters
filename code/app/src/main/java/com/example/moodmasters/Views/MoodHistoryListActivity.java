@@ -8,17 +8,13 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.Events.MoodHistoryListAddEvent;
 import com.example.moodmasters.Events.MoodHistoryListMenuEvent;
-import com.example.moodmasters.MVC.MVCBackend;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
-import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-import com.google.api.Backend;
 
 public class MoodHistoryListActivity extends AppCompatActivity implements MVCView {
     private MoodHistoryListView mood_history_view;
@@ -47,12 +43,12 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
         mood_history_view = new MoodHistoryListView(this);
 
         ImageButton menu_button = findViewById(R.id.user_mood_history_menu_button);
-        menu_button.setOnClickListener(v ->{
+        menu_button.setOnClickListener(v -> {
             controller.execute(new MoodHistoryListMenuEvent(), this);
         });
 
         Button add_button = findViewById(R.id.user_mood_history_add_button);
-        add_button.setOnClickListener(v ->{
+        add_button.setOnClickListener(v -> {
             controller.execute(new MoodHistoryListAddEvent(), this);
         });
 
@@ -62,6 +58,6 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
         });
 
         // uncomment when you want to implement mood event viewing
-        //mood_history_view.setListElementClicker();
+        mood_history_view.setListElementClicker();
     }
 }
