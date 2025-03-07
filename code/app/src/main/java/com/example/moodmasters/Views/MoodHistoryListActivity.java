@@ -56,6 +56,11 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
             controller.execute(new MoodHistoryListAddEvent(), this);
         });
 
+        Button sortButton = findViewById(R.id.user_mood_history_sort_button);
+        sortButton.setOnClickListener(v -> {
+            mood_history_view.toggleSort();
+        });
+
         // uncomment when you want to implement mood event viewing
         //mood_history_view.setListElementClicker();
     }
