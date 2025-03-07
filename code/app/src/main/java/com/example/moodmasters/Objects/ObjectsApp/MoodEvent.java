@@ -1,8 +1,5 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
-import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
-import com.example.moodmasters.Objects.ObjectsBackend.Participant;
-
 import java.util.HashMap;
 
 public class MoodEvent {
@@ -83,7 +80,7 @@ public class MoodEvent {
     public void setTrigger(String new_trigger){
         trigger = new_trigger;
     }
-    public void setSituation(SocialSituation.State new_situation){
+    public void setSituation(SocialSituation.State new_situation) {
         situation = new_situation;
     }
 
