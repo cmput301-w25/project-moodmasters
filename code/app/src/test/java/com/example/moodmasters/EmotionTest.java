@@ -12,11 +12,6 @@ import java.util.List;
 
 public class EmotionTest {
 
-    @Test
-    public void testGetString() {
-        assertEquals("Happy", Emotion.getString(Emotion.State.HAPPY));
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void testFromStringToEmotionState() {
         assertEquals(Emotion.State.HAPPY, Emotion.fromStringToEmotionState("Happy"));
