@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.moodmasters.MVC.MVCController;
-import com.example.moodmasters.MVC.MVCEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
@@ -22,7 +21,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class LoginScreenOkEvent implements MVCEvent {
+public class LoginScreenOkEvent implements MVCController.MVCEvent {
     private static String username;
     private FirebaseFirestore db;
     private static CollectionReference participants_ref;
@@ -40,7 +39,7 @@ public class LoginScreenOkEvent implements MVCEvent {
     }
 
     @Override
-    public void executeEvent(Context context, MVCModel backend, MVCController controller) {
+    public void executeEvent(Context context, MVCModel model, MVCController controller) {
         // Allow the same action for both Login and Sign Up (minimal changes)
         EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
         TextView label = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_label);
@@ -63,22 +62,22 @@ public class LoginScreenOkEvent implements MVCEvent {
                         if (snapshot.exists()) {
                             Toast.makeText(context, "Username already taken. Please choose another.", Toast.LENGTH_SHORT).show();
                         } else {
-                            backend.createBackendObject(BackendObject.State.USER);
-                            backend.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
+                            model.createBackendObject(BackendObject.State.USER);
+                            model.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
                             context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
+                            entered_username.setText("");
                         }
                     } else {
                         // Login: Check if the username exists
                         if (snapshot.exists()) {
-                            if (backend.getBackendObject(BackendObject.State.USER) == null) {
-                                backend.createBackendObject(BackendObject.State.USER);
+                            if (model.getBackendObject(BackendObject.State.USER) == null) {
+                                model.createBackendObject(BackendObject.State.USER);
                             }
-                            backend.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
+                            model.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
                             context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
-
+                            entered_username.setText("");
                         } else {
                             Toast.makeText(context, "Username not found. Please sign up first.", Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 }
