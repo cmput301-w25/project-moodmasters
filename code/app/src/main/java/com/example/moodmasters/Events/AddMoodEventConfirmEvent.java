@@ -54,7 +54,7 @@ public class AddMoodEventConfirmEvent implements MVCEvent {
             return;
         }
 
-        MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion), user, reason_string, trigger_string, social_situation);
+        MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion), reason_string, trigger_string, social_situation);
         backend.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
 

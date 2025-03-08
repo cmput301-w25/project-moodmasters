@@ -3,6 +3,9 @@ package com.example.moodmasters.Objects.ObjectsApp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a class that represents all possible social situations that a MoodEvent can have.
+ */
 public class SocialSituation {
     public enum State{
         NONE,
@@ -11,6 +14,14 @@ public class SocialSituation {
         SEVERAL,
         CROWD
     }
+
+    /**
+     * This returns the passed situation State as a String.
+     * @param conv_social_state
+     *  This is the situation as a State to be returned as a string.
+     * @return
+     *  Return the passed situation State as a String.
+     */
     public static String getString(SocialSituation.State conv_social_state){
         if (conv_social_state == SocialSituation.State.NONE){
             return "None";
@@ -30,20 +41,27 @@ public class SocialSituation {
         return "Error";         /* Impossible to get here */
     }
 
+    /**
+     * This returns the passed situation String as a State.
+     * @param social_situation_string
+     *  This is the situation as a String to be returned as a State.
+     * @return
+     *  Return the passed situation String as a State.
+     */
     public static SocialSituation.State fromStringToSocialState(String social_situation_string){
-        if (social_situation_string.equals("None")){
+        if (social_situation_string.equalsIgnoreCase("None")){
             return SocialSituation.State.NONE;
         }
-        else if (social_situation_string.equals("Alone")){
+        else if (social_situation_string.equalsIgnoreCase("Alone")){
             return SocialSituation.State.ALONE;
         }
-        else if (social_situation_string.equals("Pair")){
+        else if (social_situation_string.equalsIgnoreCase("Pair")){
             return SocialSituation.State.PAIR;
         }
-        else if (social_situation_string.equals("Several")){
+        else if (social_situation_string.equalsIgnoreCase("Several")){
             return SocialSituation.State.SEVERAL;
         }
-        else if (social_situation_string.equals("Crowd")){
+        else if (social_situation_string.equalsIgnoreCase("Crowd")){
             return SocialSituation.State.CROWD;
         }
         else{
@@ -51,6 +69,11 @@ public class SocialSituation {
         }
     }
 
+    /**
+     * This returns a List of all situations as Stings
+     * @return
+     *  Return a List containing all situations as Strings
+     */
     public static List<String> getStringList(){
         List<String> social_situation_list = new ArrayList<String>(SocialSituation.State.values().length);
         int i = 0;
