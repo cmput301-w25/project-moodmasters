@@ -10,9 +10,8 @@ import org.junit.Test;
 
 public class MoodEventTest {
 
-    MoodEvent mood_event;
-    Mood mood;
-    Long epoch_time;
+    private Mood mood;
+    private Long epoch_time;
 
     @Before
     public void setUp() {
@@ -22,7 +21,7 @@ public class MoodEventTest {
 
     @Test
     public void testConstructor() {
-        mood_event = new MoodEvent(
+        MoodEvent mood_event = new MoodEvent(
                 "Mar 01 2025 | 12:00",
                 epoch_time,
                 mood,

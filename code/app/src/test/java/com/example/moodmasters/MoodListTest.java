@@ -14,8 +14,8 @@ import java.util.List;
 
 public class MoodListTest {
 
-    MoodList mood_list;
-    Mood happy;
+    private MoodList mood_list;
+    private Mood happy;
 
     @Before
     public void setUp() {
