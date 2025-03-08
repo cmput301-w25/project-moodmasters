@@ -65,6 +65,7 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
                             model.createBackendObject(BackendObject.State.USER);
                             model.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
                             context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
+                            entered_username.setText("");
                         }
                     } else {
                         // Login: Check if the username exists
@@ -74,10 +75,9 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
                             }
                             model.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
                             context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
-
+                            entered_username.setText("");
                         } else {
                             Toast.makeText(context, "Username not found. Please sign up first.", Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 }
