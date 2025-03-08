@@ -7,7 +7,6 @@ import android.widget.Spinner;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
 import com.example.moodmasters.MVC.MVCController;
-import com.example.moodmasters.MVC.MVCEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -20,15 +19,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-public class AddMoodEventConfirmEvent implements MVCEvent {
+public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
     @Override
-    public void executeEvent(Context context, MVCModel backend, MVCController controller) {
+    public void executeEvent(Context context, MVCModel model, MVCController controller) {
         AlterMoodEventActivity activity = (AlterMoodEventActivity) context;
 
         Spinner emotions_spinner = activity.findViewById(R.id.alter_mood_emotion_spinner);
         String emotion_string = emotions_spinner.getSelectedItem().toString().trim();
         Emotion.State emotion = Emotion.fromStringToEmotionState(emotion_string);
-        MoodList mood_list = (MoodList) backend.getBackendObject(BackendObject.State.MOODLIST);
+        MoodList mood_list = (MoodList) model.getBackendObject(BackendObject.State.MOODLIST);
 
         EditText trigger_text = activity.findViewById(R.id.alter_mood_enter_trigger);
         String trigger_string = trigger_text.getText().toString().trim();
@@ -47,7 +46,7 @@ public class AddMoodEventConfirmEvent implements MVCEvent {
         format.setTimeZone(TimeZone.getTimeZone(timezone.getDisplayName(false, TimeZone.SHORT)));
         String datetime = format.format(date);
 
-        Participant user = ((Participant) backend.getBackendObject(BackendObject.State.USER));
+        Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
 
         if (!activity.addDataVerification(reason_string)){
             reason_text.setError("Must be less than 20 characters and only 3 words");
@@ -55,7 +54,7 @@ public class AddMoodEventConfirmEvent implements MVCEvent {
         }
 
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion), reason_string, trigger_string, social_situation);
-        backend.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
+        model.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
 
     }
