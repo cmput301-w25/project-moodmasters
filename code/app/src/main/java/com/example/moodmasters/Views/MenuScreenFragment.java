@@ -26,7 +26,7 @@ public class MenuScreenFragment extends DialogFragment implements MVCView {
 
         Button logout_button = view.findViewById(R.id.options_logout_button);
         logout_button.setOnClickListener(v ->{
-            controller.execute(new LogOutEvent(), getContext());
+            controller.execute(new LogOutEvent(), getContext(), null);
         });
         return builder.setView(view).create();
     }

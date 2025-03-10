@@ -1,6 +1,7 @@
 package com.example.moodmasters.Events;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +12,7 @@ import com.example.moodmasters.Views.MenuScreenFragment;
 public class MoodHistoryListMenuEvent implements MVCController.MVCEvent {
     public static String fragment_tag = "Menu Options";
     @Override
-    public void executeEvent(Context context, MVCModel model, MVCController controller) {
+    public void executeEvent(Context context, MVCModel model, MVCController controller, Intent intent) {
         new MenuScreenFragment().show(((AppCompatActivity) context).getSupportFragmentManager(), fragment_tag);
     }
 }

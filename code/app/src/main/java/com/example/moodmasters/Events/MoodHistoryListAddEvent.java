@@ -9,7 +9,7 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Views.MoodHistoryListActivity;
 
 public class MoodHistoryListAddEvent implements MVCController.MVCEvent {
-    public void executeEvent(Context context, MVCModel model, MVCController controller){
+    public void executeEvent(Context context, MVCModel model, MVCController controller, Intent intent){
         Intent i = new Intent((MoodHistoryListActivity) context, AlterMoodEventActivity.class);
         i.putExtra("Event", "AddMoodEvent");
         context.startActivity(i);

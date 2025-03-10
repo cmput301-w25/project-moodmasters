@@ -40,7 +40,7 @@ public class SignupLoginScreenActivity extends AppCompatActivity implements MVCV
         label.setText("Sign Up");
 
         ok_button.setOnClickListener(v -> {
-            controller.execute(new LoginScreenOkEvent(), this);
+            controller.execute(new LoginScreenOkEvent(), this, null);
         });
 
         // Toggle between Login and Sign Up

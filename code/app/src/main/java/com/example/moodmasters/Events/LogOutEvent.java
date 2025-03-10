@@ -1,6 +1,7 @@
 package com.example.moodmasters.Events;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.fragment.app.FragmentManager;
 
@@ -12,7 +13,7 @@ import com.example.moodmasters.Views.MoodHistoryListActivity;
 
 public class LogOutEvent implements MVCController.MVCEvent {
     @Override
-    public void executeEvent(Context context, MVCModel model, MVCController controller) {
+    public void executeEvent(Context context, MVCModel model, MVCController controller, Intent intent) {
         model.removeBackendObject(BackendObject.State.USER);
         model.removeBackendObject(BackendObject.State.MOODHISTORYLIST);
         FragmentManager fragment_manager = ((MoodHistoryListActivity) context).getSupportFragmentManager();

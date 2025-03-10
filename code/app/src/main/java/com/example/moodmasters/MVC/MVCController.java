@@ -1,6 +1,9 @@
 package com.example.moodmasters.MVC;
 
 import android.content.Context;
+import android.content.Intent;
+
+import androidx.annotation.Nullable;
 
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 
@@ -21,12 +24,12 @@ public class MVCController{
     public interface MVCEvent {
         /**
          * This function contains all the code that should be executed on a UI interaction
-         * @param context
-         *  The app context that can be used to bring up new UI elements like fragments and activities
-         * @param model
-         *  The model that the controller can interact with for possible data manipulation
-         * */
-        public void executeEvent(Context context, MVCModel model, MVCController controller);
+         *
+         * @param context The app context that can be used to bring up new UI elements like fragments and activities
+         * @param model   The model that the controller can interact with for possible data manipulation
+         * @param intent  (optional) The intent to be passed to the event
+         */
+        public void executeEvent(Context context, MVCModel model, MVCController controller, @Nullable Intent intent);
     }
 
     private MVCModel model;
@@ -95,12 +98,12 @@ public class MVCController{
     /**
      * Executes a event on UI interaction, takes in the MVCEvent that will contain the code to execute on the
      * UI interaction and also the context of the app for possible bringing up of new UI elements
-     * @param event
-     *  MVCEvent that contains code to execute for UI interaction
-     * @param context
-     *  Context of the app
-     * */
-    public void execute(MVCEvent event, Context context){
-        event.executeEvent(context, model, this);
+     *
+     * @param event   MVCEvent that contains code to execute for UI interaction
+     * @param context Context of the app
+     * @param i (optional) Intent of the event
+     */
+    public void execute(MVCEvent event, Context context, @Nullable Intent i){
+        event.executeEvent(context, model, this, i);
     }
 }

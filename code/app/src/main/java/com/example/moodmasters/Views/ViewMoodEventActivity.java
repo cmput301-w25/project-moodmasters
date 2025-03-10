@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.moodmasters.Events.ViewMoodEventEditEvent;
 import com.example.moodmasters.MVC.MVCModel;
@@ -24,10 +24,10 @@ public class ViewMoodEventActivity extends AppCompatActivity implements MVCView 
     private Context context;
     private List<MoodEvent> mood_list;
     private MoodEvent mood_event;
+    private ViewMoodEventActivity viewMoodEventActivity;
 
-    public ViewMoodEventActivity(Context init_context){
+    public ViewMoodEventActivity(){
         super();
-        context = init_context;
     }
 
     @Override
@@ -45,8 +45,11 @@ public class ViewMoodEventActivity extends AppCompatActivity implements MVCView 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.view_mood_screen);
-        int index = (int) savedInstanceState.get("index");
-        MoodEvent mood_event = mood_list.get(index);
+
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        int index = bundle.getInt("index");
+        mood_event = mood_list.get(index);
 
         Toolbar toolbar = findViewById(R.id.view_mood_toolbar);
         TextView emotion = findViewById(R.id.view_mood_emotion_label);
@@ -68,7 +71,7 @@ public class ViewMoodEventActivity extends AppCompatActivity implements MVCView 
         reason.setText(mood_event.getReason());
 
         edit.setOnClickListener(v -> {
-            controller.execute(new ViewMoodEventEditEvent(), this);
+            controller.execute(new ViewMoodEventEditEvent(), this, null);
         });
     }
 

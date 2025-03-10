@@ -44,12 +44,12 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
 
         ImageButton menu_button = findViewById(R.id.user_mood_history_menu_button);
         menu_button.setOnClickListener(v -> {
-            controller.execute(new MoodHistoryListMenuEvent(), this);
+            controller.execute(new MoodHistoryListMenuEvent(), this, null);
         });
 
         Button add_button = findViewById(R.id.user_mood_history_add_button);
         add_button.setOnClickListener(v -> {
-            controller.execute(new MoodHistoryListAddEvent(), this);
+            controller.execute(new MoodHistoryListAddEvent(), this, null);
         });
 
         Button sortButton = findViewById(R.id.user_mood_history_sort_button);

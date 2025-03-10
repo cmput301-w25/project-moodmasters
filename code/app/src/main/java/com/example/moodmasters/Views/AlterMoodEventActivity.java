@@ -53,7 +53,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 
         confirm_button.setOnClickListener(v -> {
-            controller.execute(new AddMoodEventConfirmEvent(), this);
+            controller.execute(new AddMoodEventConfirmEvent(), this, null);
         });
     }
 
@@ -95,7 +95,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
 
         Button cancel_button = findViewById(R.id.alter_mood_cancel_button);
         cancel_button.setOnClickListener(v -> {
-            controller.execute(new AlterMoodEventCancelEvent(), this);
+            controller.execute(new AlterMoodEventCancelEvent(), this, null);
         });
 
     }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.moodmasters.Events.ViewMoodEventEditEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -31,7 +32,9 @@ public class MoodHistoryListView implements MVCView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //MoodEvent mood_event = mood_history_adapter.getItem(position);
-                context.startActivity(new Intent(context, ViewMoodEventActivity.class));
+                Intent intent = new Intent(context, ViewMoodEventActivity.class);
+                intent.putExtra("index", position);
+                controller.execute(new ViewMoodEventEditEvent(), context, intent);
             }
         });
     }

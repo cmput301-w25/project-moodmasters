@@ -39,7 +39,7 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
     }
 
     @Override
-    public void executeEvent(Context context, MVCModel model, MVCController controller) {
+    public void executeEvent(Context context, MVCModel model, MVCController controller, Intent intent) {
         // Allow the same action for both Login and Sign Up (minimal changes)
         EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
         TextView label = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_label);

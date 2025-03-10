@@ -1,6 +1,7 @@
 package com.example.moodmasters.Events;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,7 +22,7 @@ import java.util.Date;
 import java.util.TimeZone;
 public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
     @Override
-    public void executeEvent(Context context, MVCModel model, MVCController controller) {
+    public void executeEvent(Context context, MVCModel model, MVCController controller, Intent intent) {
         AlterMoodEventActivity activity = (AlterMoodEventActivity) context;
 
         Spinner emotions_spinner = activity.findViewById(R.id.alter_mood_emotion_spinner);
