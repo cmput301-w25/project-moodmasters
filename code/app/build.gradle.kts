@@ -42,6 +42,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
+    implementation(files("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"))
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-core:5.7.0")
     testImplementation("org.mockito:mockito-inline:5.2.0")
