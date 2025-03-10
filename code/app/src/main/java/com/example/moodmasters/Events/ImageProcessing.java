@@ -3,8 +3,13 @@ package com.example.moodmasters.Events;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moodmasters.R;
 
@@ -13,8 +18,40 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ImageProcessing {
+public class ImageProcessing extends AppCompatActivity {
     private static final long MAX_IMAGE_SIZE = 65536;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private ImageView selectedImageView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.alter_mood_screen);
+
+        Button selectImageButton = findViewById(R.id.UploadPhotoButton);
+        selectedImageView = findViewById(R.id.alter_mood_image_view);
+
+        selectImageButton.setOnClickListener(v -> openGallery());
+    }
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            if (imageUri != null) {
+                selectedImageView.setImageURI(imageUri);  // Set the selected image to ImageView
+            } else {
+                Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     private void getImageSize(String imagePath) {
         // Grabs the size of the image
         File imageFile = new File(imagePath);
