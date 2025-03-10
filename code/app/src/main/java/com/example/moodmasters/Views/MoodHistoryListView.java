@@ -1,6 +1,7 @@
 package com.example.moodmasters.Views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,7 +13,6 @@ import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MoodHistoryListView implements MVCView {
@@ -30,7 +30,8 @@ public class MoodHistoryListView implements MVCView {
         mood_history_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: Add code to transition to viewing mood event
+                //MoodEvent mood_event = mood_history_adapter.getItem(position);
+                context.startActivity(new Intent(context, ViewMoodEventActivity.class));
             }
         });
     }
