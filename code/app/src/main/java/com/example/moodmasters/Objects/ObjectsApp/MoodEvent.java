@@ -45,7 +45,7 @@ public class MoodEvent {
      * @param map
      *  This is a HashMap retrieved from the Firebase database containing mood event information.
      */
-    public MoodEvent(HashMap map){
+    public MoodEvent(HashMap map) {
         datetime = (String) map.get("datetime");
         mood = new Mood((HashMap) map.get("mood"));
         epoch_time = (long) map.get("epochTime");
@@ -57,84 +57,84 @@ public class MoodEvent {
     /**
      * datetime getter
      */
-    public String getDatetime(){
+    public String getDatetime() {
         return datetime;
     }
 
     /**
      * epoch_time getter
      */
-    public long getEpochTime(){
+    public long getEpochTime() {
         return epoch_time;
     }
 
     /**
      * mood getter
      */
-    public Mood getMood(){
+    public Mood getMood() {
         return mood;
     }
 
     /**
      * reason getter
      */
-    public String getReason(){
+    public String getReason() {
         return reason;
     }
 
     /**
      * trigger getter
      */
-    public String getTrigger(){
+    public String getTrigger() {
         return trigger;
     }
 
     /**
      * situation getter
      */
-    public SocialSituation.State getSituation(){
+    public SocialSituation.State getSituation() {
         return situation;
     }
 
     /**
      * datetime setter
      */
-    public void setDatetime(String new_datetime){
+    public void setDatetime(String new_datetime) {
         datetime = new_datetime;
     }
 
     /**
      * epoch_time setter
      */
-    public void getEpochTime(long new_epoch_time){
+    public void getEpochTime(long new_epoch_time) {
         epoch_time = new_epoch_time;
     }
 
     /**
      * mood setter
      */
-    public void setMood(Mood new_mood){
+    public void setMood(Mood new_mood) {
         mood = new_mood;
     }
 
     /**
      * reason setter
      */
-    public void setReason(String new_reason){
+    public void setReason(String new_reason) {
         reason = new_reason;
     }
 
     /**
      * trigger setter
      */
-    public void setTrigger(String new_trigger){
+    public void setTrigger(String new_trigger) {
         trigger = new_trigger;
     }
 
     /**
      * situation setter
      */
-    public void setSituation(SocialSituation.State new_situation){
+    public void setSituation(SocialSituation.State new_situation) {
         situation = new_situation;
     }
 
