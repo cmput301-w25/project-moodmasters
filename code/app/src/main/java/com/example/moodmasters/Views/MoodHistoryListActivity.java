@@ -37,7 +37,6 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
         setContentView(R.layout.user_mood_history_screen);
         TextView username_view = findViewById(R.id.user_mood_history_label);
         username_view.setText(username);
-        // TODO: Add view to model via controller if it is found necessary
         controller.createBackendObject(BackendObject.State.MOODHISTORYLIST);
 
         mood_history_view = new MoodHistoryListView(this);

@@ -15,6 +15,7 @@ public class LogOutEvent implements MVCController.MVCEvent {
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         model.removeBackendObject(BackendObject.State.USER);
         model.removeBackendObject(BackendObject.State.MOODHISTORYLIST);
+        model.removeView((MoodHistoryListActivity) context);
         FragmentManager fragment_manager = ((MoodHistoryListActivity) context).getSupportFragmentManager();
         MenuScreenFragment menu_fragment = (MenuScreenFragment) fragment_manager.findFragmentByTag(MoodHistoryListMenuEvent.fragment_tag);
         menu_fragment.dismiss();

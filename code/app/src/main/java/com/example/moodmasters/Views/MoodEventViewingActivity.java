@@ -28,6 +28,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
     private boolean edit_clicked;
     public MoodEventViewingActivity(){
         super();
+        edit_clicked = false;
         displayed_mood_event = MoodHistoryListClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
         position = MoodHistoryListClickMoodEvent.getPosition();
         controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);

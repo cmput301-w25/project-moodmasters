@@ -5,6 +5,7 @@ import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Views.MoodEventViewingActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,7 +21,8 @@ public class DeleteMoodEventConfirmEvent implements MVCController.MVCEvent {
 
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        ((MoodEventViewingActivity) context).finish();
         model.removeFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
+        model.removeView((MoodEventViewingActivity) context);
+        ((MoodEventViewingActivity) context).finish();
     }
 }

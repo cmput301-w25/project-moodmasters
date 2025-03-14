@@ -17,6 +17,7 @@ public class ExitMoodEventViewingEvent implements MVCController.MVCEvent {
 
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
+        model.removeView((MoodEventViewingActivity) context);
         ((MoodEventViewingActivity) context).finish();
     }
 }
