@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.moodmasters.Events.DeleteMoodEventConfirmEvent;
 import com.example.moodmasters.Events.ExitMoodEventViewingEvent;
 import com.example.moodmasters.Events.MoodHistoryListClickMoodEvent;
 import com.example.moodmasters.MVC.MVCModel;
@@ -67,7 +68,10 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         });
 
         delete_button.setOnClickListener(v -> {
-            // TODO: Implement deleting functionality here (create and Event class and give it the MoodEvent member in this class for deletion)
+            if (displayed_mood_event != null) {
+                controller.execute(new DeleteMoodEventConfirmEvent(displayed_mood_event), this);
+                finish();
+            }
         });
     }
 }
