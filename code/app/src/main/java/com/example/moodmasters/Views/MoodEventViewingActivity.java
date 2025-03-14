@@ -25,6 +25,7 @@ import com.example.moodmasters.R;
 public class MoodEventViewingActivity extends AppCompatActivity implements MVCView {
     private MoodEvent displayed_mood_event;
     private int position;
+    private boolean edit_clicked;
     public MoodEventViewingActivity(){
         super();
         displayed_mood_event = MoodHistoryListClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
@@ -32,8 +33,10 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
     }
     public void update(MVCModel model){
-        displayed_mood_event = model.getFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
-        setScreen();
+        if (edit_clicked){
+            displayed_mood_event = model.getFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
+            setScreen();
+        }
     }
     public void initialize(MVCModel model){
         // skip for now
@@ -74,14 +77,13 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         });
 
         edit_button.setOnClickListener(v -> {
+            edit_clicked = true;
             controller.execute(new MoodEventViewingEditEvent(displayed_mood_event, position), this);
         });
 
         delete_button.setOnClickListener(v -> {
-            if (displayed_mood_event != null) {
-                controller.execute(new DeleteMoodEventConfirmEvent(displayed_mood_event), this);
-                finish();
-            }
+            edit_clicked = false;
+            controller.execute(new DeleteMoodEventConfirmEvent(displayed_mood_event, position), this);
         });
     }
 }

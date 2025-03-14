@@ -6,33 +6,21 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
+import com.example.moodmasters.Views.MoodEventViewingActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DeleteMoodEventConfirmEvent implements MVCController.MVCEvent {
     private final MoodEvent moodEvent;
+    private int position;
 
-    public DeleteMoodEventConfirmEvent(MoodEvent moodEvent) {
+    public DeleteMoodEventConfirmEvent(MoodEvent moodEvent, int init_position) {
         this.moodEvent = moodEvent;
+        this.position = init_position;
     }
 
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        // Get the user's MoodHistoryList
-        MoodHistoryList moodHistoryList = (MoodHistoryList) model.getBackendObject(BackendObject.State.MOODHISTORYLIST);
-
-        if (moodHistoryList != null) {
-            // Remove the mood event from local list
-            moodHistoryList.removeObject(moodEvent);
-
-            // Get Firestore instance
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-            // Delete from Firestore
-            db.collection("mood_events")
-                    .document(moodEvent.getEpochTime() + "")
-                    .delete()
-                    .addOnSuccessListener(aVoid -> model.notifyViews(BackendObject.State.MOODHISTORYLIST))
-                    .addOnFailureListener(e -> System.err.println("Error deleting mood event: " + e.getMessage()));
-        }
+        ((MoodEventViewingActivity) context).finish();
+        model.removeFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
     }
 }
