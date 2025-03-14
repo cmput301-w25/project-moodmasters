@@ -32,7 +32,7 @@ public class MoodHistoryListView implements MVCView {
         mood_history_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                controller.execute(new MoodHistoryListClickMoodEvent(mood_history_adapter.getItem(position)), context);
+                controller.execute(new MoodHistoryListClickMoodEvent(mood_history_adapter.getItem(position), position), context);
             }
         });
     }
