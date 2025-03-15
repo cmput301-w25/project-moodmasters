@@ -135,11 +135,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginBottom="16dp"
         android:text="Location:"
         android:textColor="@color/text_color"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="567dp" />
+        app:layout_constraintBottom_toTopOf="@+id/view_mood_edit_button"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/view_mood_location_text"
