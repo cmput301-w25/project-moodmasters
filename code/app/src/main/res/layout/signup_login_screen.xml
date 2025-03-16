@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/screen_color">
 
     <TextView
         android:id="@+id/signup_login_label"
@@ -11,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Sign Up"
+        android:textColor="@color/text_color"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/signup_login_change_button"
@@ -22,6 +24,7 @@
         android:id="@+id/signup_login_change_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
         android:text="Change"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/signup_login_label"
@@ -35,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Username:"
+        android:textColor="@color/text_color"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,9 +50,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:background="@color/background_color"
         android:ems="10"
-        android:hint="Enter Username"
         android:inputType="text"
+        android:textColor="@color/text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,12 +64,12 @@
         android:id="@+id/signup_login_ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="504dp"
+        android:backgroundTint="@color/button_color"
         android:text="OK"
         android:textSize="24sp"
         app:iconPadding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_login_enter_username" />
 </androidx.constraintlayout.widget.ConstraintLayout>
