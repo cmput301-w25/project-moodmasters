@@ -42,49 +42,69 @@ public class EditMoodTest {
         // Specific address for emulated device to access our localHost
         String androidLocalhost = "10.0.2.2";
         int portNumber = 8080;
-        FirebaseFirestore.getInstance().useEmulator(androidLocalhost, portNumber);
+        try{
+            FirebaseFirestore.getInstance().useEmulator(androidLocalhost, portNumber);
+        }
+        catch (Exception ignore){
+
+        }
     }
 
     @Before
     public void navigateToMainScreen() {
-        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_4"));
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
     }
 
     @Test
-    public void testEditMood() {
+    public void testEditMood() throws Exception{
+        Thread.sleep(1000);
         // 1 mood
         onView(withId(R.id.user_mood_history_add_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
         onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
         onView(withText("Sad")).perform(ViewActions.click());
         onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
+
         onView(withText("Sad")).check(matches(isDisplayed()));
 
         // 2 moods
         onView(withId(R.id.user_mood_history_add_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
         onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
         onView(withText("Happy")).perform(ViewActions.click());
         onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
         onView(withText("Happy")).check(matches(isDisplayed()));
         onView(withText("Sad")).check(matches(isDisplayed()));
 
         // Edit one mood
         onView(withText("Sad")).perform(ViewActions.longClick());
+        Thread.sleep(1000);
         onView(withId(R.id.view_mood_edit_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
         onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
         onView(withText("Angry")).perform(ViewActions.click());
         onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
         onView(withId(R.id.view_mood_x_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
         onView(withText("Sad")).check(doesNotExist());
         onView(withText("Angry")).check(matches(isDisplayed()));
         onView(withText("Happy")).check(matches(isDisplayed()));
 
         // Logout/login
         onView(withId(R.id.user_mood_history_menu_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
+        Thread.sleep(1000);
+        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_4"));
+        Thread.sleep(1000);
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
         onView(withText("Sad")).check(doesNotExist());
         onView(withText("Angry")).check(matches(isDisplayed()));
         onView(withText("Happy")).check(matches(isDisplayed()));
