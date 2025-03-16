@@ -68,7 +68,3 @@ jobs:
           api-level: 29
           script: ./gradlew --stacktrace connectedCheck
           working-directory: code
-          
-      - name: print error
-        run: cat ./app/build/reports/androidTests/connected/debug/index.html
-        working-directory: code
