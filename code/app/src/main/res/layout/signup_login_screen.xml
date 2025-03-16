@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/screen_color">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/signup_login_label"
@@ -12,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Sign Up"
-        android:textColor="@color/material_dynamic_neutral10"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/signup_login_change_button"
@@ -24,7 +22,6 @@
         android:id="@+id/signup_login_change_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/button_color"
         android:text="Change"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/signup_login_label"
@@ -38,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Username:"
-        android:textColor="@color/text_color"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,10 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/background_color"
         android:ems="10"
         android:inputType="text"
-        android:textColor="@color/text_color"
         android:textSize="20sp"
         android:hint="Enter Username"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -65,7 +59,6 @@
         android:id="@+id/signup_login_ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/button_color"
         android:text="OK"
         android:textSize="24sp"
         app:iconPadding="16dp"
