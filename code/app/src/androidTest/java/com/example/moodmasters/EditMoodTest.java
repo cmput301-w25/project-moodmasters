@@ -1,6 +1,7 @@
 package com.example.moodmasters;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -53,6 +54,7 @@ public class EditMoodTest {
     @Before
     public void navigateToMainScreen() {
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_4"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
     }
 
@@ -102,6 +104,7 @@ public class EditMoodTest {
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_4"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);

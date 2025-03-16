@@ -1,6 +1,7 @@
 package com.example.moodmasters;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -52,6 +53,7 @@ public class ProfileCreationTest {
     public void testProfileCreation() throws Exception{
         // New profile
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_5"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.user_mood_history_label)).check(matches(withText("user_5")));
@@ -62,6 +64,7 @@ public class ProfileCreationTest {
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_5"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         onView(withId(R.id.user_mood_history_label)).check(doesNotExist());
 
@@ -78,6 +81,7 @@ public class ProfileCreationTest {
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_6"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         onView(withId(R.id.user_mood_history_label)).check(doesNotExist());
     }

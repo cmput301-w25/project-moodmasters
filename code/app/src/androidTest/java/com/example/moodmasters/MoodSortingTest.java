@@ -1,6 +1,7 @@
 package com.example.moodmasters;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -56,6 +57,7 @@ public class MoodSortingTest {
     @Before
     public void navigateToMainScreen() {
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_7"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
     }
     /**

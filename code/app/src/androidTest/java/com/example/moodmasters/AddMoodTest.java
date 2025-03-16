@@ -1,6 +1,7 @@
 package com.example.moodmasters;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -54,6 +55,7 @@ public class AddMoodTest {
     @Before
     public void navigateToMainScreen() {
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
     }
 
@@ -87,6 +89,7 @@ public class AddMoodTest {
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(matches(isDisplayed()));
@@ -100,6 +103,7 @@ public class AddMoodTest {
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_2"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(doesNotExist());
@@ -113,6 +117,7 @@ public class AddMoodTest {
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(matches(isDisplayed()));
@@ -124,6 +129,7 @@ public class AddMoodTest {
         onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
         onView(withText("Scared")).perform(ViewActions.click());
         onView(withId(R.id.alter_mood_enter_reason)).perform(ViewActions.typeText("a b c d"));
+        onView(withId(R.id.alter_mood_enter_reason)).perform(closeSoftKeyboard());
         onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText(R.string.mood_emoji_scared)).check(doesNotExist());
