@@ -2,6 +2,7 @@ package com.example.moodmasters.Views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,14 @@ public class MenuScreenFragment extends DialogFragment implements MVCView {
         logout_button.setOnClickListener(v ->{
             controller.execute(new LogOutEvent(), getContext());
         });
+
+        Button userSearchButton = view.findViewById(R.id.options_follow_requests_button);
+        userSearchButton.setOnClickListener(v -> {
+            dismiss(); // close the menu dialog before opening  UserSearch screen
+            Intent intent = new Intent(getActivity(), UserSearchActivity.class);
+            startActivity(intent);
+        });
+
         return builder.setView(view).create();
     }
 }
