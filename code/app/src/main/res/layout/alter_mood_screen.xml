@@ -42,7 +42,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/background_color"
         android:text="Upload Photo"
-        android:textColor="@color/material_dynamic_neutral60"
+        android:textColor="@color/photo_color"
         android:textSize="20sp"
         app:cornerRadius="2dp"
         app:icon="@android:drawable/ic_menu_camera"
