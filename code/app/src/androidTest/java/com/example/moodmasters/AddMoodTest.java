@@ -120,8 +120,7 @@ public class AddMoodTest {
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        // onView(withText("Happy")).check(matches(isDisplayed()));
-        onView(withText("Happy")).check(doesNotExist());
+        onView(withText("Happy")).check(matches(isDisplayed()));
         onView(withText("Sad")).check(matches(isDisplayed()));
 
         // 4-word reason
