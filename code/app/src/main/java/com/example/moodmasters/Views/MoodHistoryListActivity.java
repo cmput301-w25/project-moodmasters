@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moodmasters.Events.MoodHistoryListAddEvent;
 import com.example.moodmasters.Events.MoodHistoryListMenuEvent;
+import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
@@ -56,7 +57,11 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
             mood_history_view.toggleSort();
         });
 
-        // uncomment when you want to implement mood event viewing
+        Button map_button = findViewById(R.id.user_mood_history_show_map_button);
+        map_button.setOnClickListener(v -> {
+            controller.execute(new MoodHistoryScreenShowMapEvent(), this);
+        });
+
         mood_history_view.setListElementClicker();
     }
 }

@@ -35,6 +35,10 @@
             android:name=".Views.MoodEventViewingActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".Views.MoodEventsMapActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
