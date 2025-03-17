@@ -39,6 +39,9 @@
             android:name=".Views.UserSearchActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".Views.ViewProfileActivity"
+            android:exported="true"
+    />
     </application>
 
 </manifest>

@@ -56,5 +56,15 @@ public class UserSearchActivity extends AppCompatActivity {
             String query = searchInput.getText().toString();
             searchEvent.executeSearch(this, query, searchResultsListView, adapter);
         });
+
+        searchResultsListView.setOnItemClickListener((parent, view, position, id) -> {
+            // Get the username of the selected participant (or any identifier)
+            String selectedUser = (String) parent.getItemAtPosition(position);
+
+            // Create an Intent to navigate to ProfileActivity
+            Intent intent = new Intent(UserSearchActivity.this, ViewProfileActivity.class);
+            intent.putExtra("selectedUser", selectedUser); // Pass the selected username to ProfileActivity
+            startActivity(intent);
+        });
     }
 }
