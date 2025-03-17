@@ -70,7 +70,7 @@ public class DeleteMoodTest {
 
         // Delete one mood
         onView(withText("Sad")).perform(ViewActions.longClick());
-        onView(withId(R.id.view_mood_ok_button)).perform(ViewActions.click());
+        onView(withId(R.id.view_mood_delete_button)).perform(ViewActions.click());
         onView(withText("Sad")).check(doesNotExist());
         onView(withText("Happy")).check(matches(isDisplayed()));
 
