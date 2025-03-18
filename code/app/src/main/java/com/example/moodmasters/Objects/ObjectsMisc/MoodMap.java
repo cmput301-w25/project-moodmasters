@@ -31,4 +31,19 @@ public class MoodMap {
         }
     }
 
+    public GoogleMap getGoogle_map() {
+        return google_map;
+    }
+
+    public void setGoogle_map(GoogleMap google_map) {
+        this.google_map = google_map;
+    }
+
+    public ArrayList<MoodEvent> getMood_events() {
+        return mood_events;
+    }
+
+    public void setMood_events(ArrayList<MoodEvent> mood_events) {
+        this.mood_events = mood_events;
+    }
 }
