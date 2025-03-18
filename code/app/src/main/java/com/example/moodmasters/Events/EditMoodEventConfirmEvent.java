@@ -1,7 +1,7 @@
 package com.example.moodmasters.Events;
 
 import android.content.Context;
-import android.content.Intent;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -15,7 +15,6 @@ import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
-import com.example.moodmasters.Views.MoodEventViewingActivity;
 
 public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
     private MoodEvent mood_event;
@@ -43,6 +42,9 @@ public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
         EditText reason_text = activity.findViewById(R.id.alter_mood_enter_reason);
         String reason_string = reason_text.getText().toString().trim();
 
+        CheckBox check_public = activity.findViewById(R.id.alter_mood_public_checkbox);
+        boolean is_public = check_public.isChecked();
+
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
 
         if (!activity.addDataVerification(reason_string)){
@@ -50,7 +52,7 @@ public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
             return;
         }
         MoodEvent new_mood_event = new MoodEvent(mood_event.getDatetime(), mood_event.getEpochTime(), mood_list.getMood(emotion),
-                                                    reason_string, trigger_string, social_situation);
+                                                    is_public, reason_string, trigger_string, social_situation);
         model.replaceObjectBackendList(BackendObject.State.MOODHISTORYLIST, position, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
     }
