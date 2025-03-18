@@ -14,6 +14,7 @@ public class MoodEvent {
     private String reason;
     private String trigger;
     private SocialSituation.State situation;
+    private boolean is_public;
 
     /**
      * MoodEvent constructor.
@@ -29,15 +30,19 @@ public class MoodEvent {
      *  (optional) This is the MoodEvent's trigger.
      * @param init_situation
      *  (optional) This is the MoodEvent's social situation.
+     * @param init_is_public
+     *  This is the MoodEvent's publicity.
      */
-    public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, @Nullable String init_reason,
-                     @Nullable String init_trigger, @Nullable SocialSituation.State init_situation){
+    public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
+                     @Nullable String init_reason, @Nullable String init_trigger,
+                     @Nullable SocialSituation.State init_situation){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
         reason = init_reason;
         trigger = init_trigger;
         situation = init_situation;
+        is_public = init_is_public;
     }
 
     /**
@@ -52,6 +57,7 @@ public class MoodEvent {
         reason = (String) map.get("reason");
         situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
         trigger = (String) map.get("trigger");
+        is_public = (boolean) map.get("is_public");
     }
 
     /**
@@ -136,6 +142,20 @@ public class MoodEvent {
      */
     public void setSituation(SocialSituation.State new_situation) {
         situation = new_situation;
+    }
+
+    /**
+     * is_public getter
+     */
+    public boolean isIs_public() {
+        return is_public;
+    }
+
+    /**
+     * is_public setter
+     */
+    public void setIs_public(boolean is_public) {
+        this.is_public = is_public;
     }
 
 }
