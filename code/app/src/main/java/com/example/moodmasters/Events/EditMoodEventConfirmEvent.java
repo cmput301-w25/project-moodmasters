@@ -15,6 +15,7 @@ import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
+import com.google.android.gms.maps.model.LatLng;
 
 public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
     private MoodEvent mood_event;
@@ -51,8 +52,13 @@ public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
             reason_text.setError("Must be less than 20 characters and only 3 words");
             return;
         }
+
+        // mock location for testing
+        LatLng location = new LatLng(0, 0);
+
         MoodEvent new_mood_event = new MoodEvent(mood_event.getDatetime(), mood_event.getEpochTime(), mood_list.getMood(emotion),
-                                                    is_public, reason_string, trigger_string, social_situation);
+                                                    is_public, reason_string, trigger_string, social_situation, location,
+                                                    ((Participant) model.getBackendObject(BackendObject.State.USER)).getUsername());
         model.replaceObjectBackendList(BackendObject.State.MOODHISTORYLIST, position, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
     }

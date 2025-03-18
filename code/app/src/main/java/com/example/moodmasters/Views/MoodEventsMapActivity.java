@@ -8,20 +8,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moodmasters.Events.MoodEventsMapBackEvent;
+import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
-import com.example.moodmasters.Objects.ObjectsMisc.MoodEventList;
+import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsMisc.MoodMap;
 import com.example.moodmasters.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class MoodEventsMapActivity extends AppCompatActivity implements OnMapReadyCallback, MVCView {
-    private MoodEventList mood_events;
+    private ArrayList<MoodEvent> mood_events;
     private MoodMap mood_map;
+
+    public MoodEventsMapActivity() {
+        super();
+        mood_events = MoodHistoryScreenShowMapEvent.getMoodEvents();
+    }
 
     @Override
     public void update(MVCModel model) {
@@ -52,8 +58,7 @@ public class MoodEventsMapActivity extends AppCompatActivity implements OnMapRea
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Marker"));
+        mood_map = new MoodMap(googleMap, mood_events);
+        mood_map.displayMoodEvents();
     }
 }

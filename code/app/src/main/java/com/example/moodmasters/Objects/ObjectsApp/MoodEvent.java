@@ -2,6 +2,8 @@ package com.example.moodmasters.Objects.ObjectsApp;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.HashMap;
 
 /**
@@ -15,6 +17,8 @@ public class MoodEvent {
     private String trigger;
     private SocialSituation.State situation;
     private boolean is_public;
+    private LatLng location;
+    private String username;
 
     /**
      * MoodEvent constructor.
@@ -32,10 +36,13 @@ public class MoodEvent {
      *  (optional) This is the MoodEvent's social situation.
      * @param init_is_public
      *  This is the MoodEvent's publicity.
+     * @param init_location
+     *  (optional) This is the MoodEvent's location
      */
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
                      @Nullable String init_reason, @Nullable String init_trigger,
-                     @Nullable SocialSituation.State init_situation){
+                     @Nullable SocialSituation.State init_situation, @Nullable LatLng init_location,
+                     String init_username){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
@@ -43,6 +50,8 @@ public class MoodEvent {
         trigger = init_trigger;
         situation = init_situation;
         is_public = init_is_public;
+        location = init_location;
+        username = init_username;
     }
 
     /**
@@ -58,6 +67,8 @@ public class MoodEvent {
         situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
         trigger = (String) map.get("trigger");
         is_public = (boolean) map.get("is_public");
+        location = (LatLng) map.get("location");
+        username = (String) map.get("username");
     }
 
     /**
@@ -158,4 +169,19 @@ public class MoodEvent {
         this.is_public = is_public;
     }
 
+    public LatLng getLocation() {
+        return location;
+    }
+
+    public void setLocation(LatLng location) {
+        this.location = location;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
