@@ -14,6 +14,7 @@ public class MoodEvent {
     private String reason;
     private String trigger;
     private SocialSituation.State situation;
+    private String location;
 
     /**
      * MoodEvent constructor.
@@ -31,13 +32,17 @@ public class MoodEvent {
      *  (optional) This is the MoodEvent's social situation.
      */
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, @Nullable String init_reason,
-                     @Nullable String init_trigger, @Nullable SocialSituation.State init_situation){
+                     @Nullable String init_trigger, @Nullable SocialSituation.State init_situation, @Nullable String init_location){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
         reason = init_reason;
         trigger = init_trigger;
         situation = init_situation;
+        location = init_location;
+
+
+
     }
 
     /**
@@ -52,6 +57,7 @@ public class MoodEvent {
         reason = (String) map.get("reason");
         situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
         trigger = (String) map.get("trigger");
+        location = (String) map.get("location");
     }
 
     /**
@@ -97,6 +103,14 @@ public class MoodEvent {
     }
 
     /**
+     * location getter
+     */
+    public String getLocation() {
+        return location;
+    }
+
+
+    /**
      * datetime setter
      */
     public void setDatetime(String new_datetime) {
@@ -137,5 +151,14 @@ public class MoodEvent {
     public void setSituation(SocialSituation.State new_situation) {
         situation = new_situation;
     }
+
+    /**
+     * location setter
+     */
+    public void setLocation(String new_location) {
+        location = new_location;
+    }
+
+
 
 }

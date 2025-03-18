@@ -21,13 +21,15 @@ public class MoodEventTest {
 
     @Test
     public void testConstructor() {
+        String validLocation = "Lat: 37.4219999, Lon: -122.0840575";
         MoodEvent mood_event = new MoodEvent(
                 "Mar 01 2025 | 12:00",
                 epoch_time,
                 mood,
                 "reason",
                 "trigger",
-                SocialSituation.State.ALONE
+                SocialSituation.State.ALONE,
+                validLocation
         );
         mood_event = new MoodEvent(
                 "Mar 01 2025 | 12:00",
@@ -35,7 +37,8 @@ public class MoodEventTest {
                 mood,
                 null,
                 "trigger",
-                SocialSituation.State.ALONE
+                SocialSituation.State.ALONE,
+                validLocation
         );
         mood_event = new MoodEvent(
                 "Mar 01 2025 | 12:00",
@@ -43,7 +46,8 @@ public class MoodEventTest {
                 mood,
                 "reason",
                 null,
-                SocialSituation.State.ALONE
+                SocialSituation.State.ALONE,
+                validLocation
         );
         mood_event = new MoodEvent(
                 "Mar 01 2025 | 12:00",
@@ -51,6 +55,7 @@ public class MoodEventTest {
                 mood,
                 "reason",
                 "trigger",
+                null,
                 null
         );
     }

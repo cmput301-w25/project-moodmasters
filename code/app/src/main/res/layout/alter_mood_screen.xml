@@ -32,6 +32,8 @@
         app:layout_constraintBottom_toTopOf="@+id/alter_mood_cancel_button"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+
     <Button
         android:id="@+id/alter_mood_photo_button"
         android:layout_width="0dp"
@@ -182,13 +184,14 @@
         android:id="@+id/alter_mood_location_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="140dp"
         android:text="Not Specefied"
         android:textColor="@color/text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/alter_mood_location_label"
         app:layout_constraintStart_toEndOf="@+id/alter_mood_location_label"
-        app:layout_constraintTop_toTopOf="@+id/alter_mood_location_label" />
+        app:layout_constraintTop_toTopOf="@+id/alter_mood_location_label"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/alter_mood_emotion_spinner"
