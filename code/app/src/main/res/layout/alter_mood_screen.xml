@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     android:background="@color/screen_color">
 
+    <CheckBox
+        android:id="@+id/alter_mood_public_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Public"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/alter_mood_location_label"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/alter_mood_ok_button"
         android:layout_width="wrap_content"
@@ -39,7 +51,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/background_color"
         android:text="Upload Photo"
         android:textColor="@color/photo_color"
@@ -51,7 +63,7 @@
         app:iconSize="100dp"
         app:iconTint="@color/background_color"
         app:iconTintMode="screen"
-        app:layout_constraintBottom_toTopOf="@+id/alter_mood_location_label"
+        app:layout_constraintBottom_toTopOf="@+id/alter_mood_public_checkbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alter_mood_enter_reason" />
