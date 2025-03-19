@@ -53,7 +53,7 @@
         app:layout_constraintTop_toTopOf="@+id/view_mood_toolbar" />
 
     <Button
-        android:id="@+id/view_mood_ok_button"
+        android:id="@+id/view_mood_delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -66,7 +66,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:id="@+id/view_mood_photo_button"
+        android:id="@+id/view_mood_photo_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -75,10 +75,10 @@
         android:layout_marginBottom="16dp"
         android:background="@color/background_color"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/view_mood_location_label"
+        app:layout_constraintBottom_toTopOf="@+id/view_mood_edit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_mood_reason_text"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_location_label"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <Button
@@ -134,13 +134,13 @@
         android:id="@+id/view_mood_location_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Location:"
         android:textColor="@color/text_color"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/view_mood_edit_button"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_reason_text" />
 
     <TextView
         android:id="@+id/view_mood_location_text"
@@ -159,7 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/screen_color"
-        android:tint="@color/text_color"
+        app:tint="@color/text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
