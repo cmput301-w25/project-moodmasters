@@ -4,7 +4,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.CollectionReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class FollowingList {
@@ -37,13 +39,18 @@ public class FollowingList {
     public void sendFollowRequest(String targetUserId) {
         DocumentReference targetRef = db.collection("participants").document(targetUserId)
                 .collection("followRequests").document(userId);
-        targetRef.set(new Object()); // Add requester to follow requests
+        Map<String, Object> requestData = new HashMap<>();
+        requestData.put("userId", userId);  // Store who sent the request
+
+        targetRef.set(requestData); // Add requester to follow requests
     }
 
     // Accept follow request
     public void acceptFollowRequest(String requesterId) {
         DocumentReference requesterRef = followingRef.document(requesterId);
-        requesterRef.set(new Object()); // Move to following list
+        Map<String, Object> emptyData = new HashMap<>();
+        requesterRef.set(emptyData); // Move to following list
+
         followRequestsRef.document(requesterId).delete(); // Remove from requests
     }
 
