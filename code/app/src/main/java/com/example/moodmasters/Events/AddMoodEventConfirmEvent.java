@@ -1,6 +1,7 @@
 package com.example.moodmasters.Events;
 
 import android.content.Context;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -39,6 +40,9 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
         EditText reason_text = activity.findViewById(R.id.alter_mood_enter_reason);
         String reason_string = reason_text.getText().toString().trim();
 
+        CheckBox check_public = activity.findViewById(R.id.alter_mood_public_checkbox);
+        boolean is_public = check_public.isChecked();
+
         long epoch_time = System.currentTimeMillis();           /* Epoch time will be the time stored on the database for easy conversion to different time zones */
         Date date = new Date(epoch_time);
         DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
@@ -53,7 +57,7 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
             return;
         }
 
-        MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion), reason_string, trigger_string, social_situation);
+        MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion), is_public, reason_string, trigger_string, social_situation);
         model.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
 

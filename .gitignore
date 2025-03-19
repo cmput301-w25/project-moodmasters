@@ -44,7 +44,6 @@
 
 # Package Files
 **/*.jar
-!code/gradle/wrapper/gradle-wrapper.jar
 **/*.war
 **/*.nar
 **/*.ear
