@@ -37,6 +37,13 @@ public class MenuScreenFragment extends DialogFragment implements MVCView {
             startActivity(intent);
         });
 
+        Button followRequestsButton = view.findViewById(R.id.options_ask_to_follow_button);
+        followRequestsButton.setOnClickListener(v -> {
+            dismiss();
+            Intent intent = new Intent(getActivity(), FollowRequestsActivity.class);
+            startActivity(intent);
+        });
+
         return builder.setView(view).create();
     }
 }

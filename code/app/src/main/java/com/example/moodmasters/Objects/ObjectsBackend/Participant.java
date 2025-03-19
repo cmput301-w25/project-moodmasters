@@ -7,6 +7,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * This is a class that represents any and all participants for the app. The user will be defined
@@ -18,6 +20,7 @@ import java.util.HashMap;
 public class Participant implements MVCBackend{
     private String username;
     private MoodHistoryList mood_history_list;
+    private FollowingList followingList;
 
     /**
      * Participant constructor.
@@ -25,7 +28,9 @@ public class Participant implements MVCBackend{
      *  This is the Participant's unique username.
      */
     public Participant(String init_username){
+
         username = init_username;
+        this.followingList = new FollowingList(init_username);
     }
 
     /**
@@ -76,5 +81,13 @@ public class Participant implements MVCBackend{
      */
     public MoodHistoryList getMoodHistoryList(){
         return this.mood_history_list;
+    }
+
+    public void fetchFollowRequests(Consumer<List<String>> callback) {
+        followingList.fetchFollowRequests(callback);
+    }
+
+    public FollowingList getFollowingList() {
+        return followingList;
     }
 }

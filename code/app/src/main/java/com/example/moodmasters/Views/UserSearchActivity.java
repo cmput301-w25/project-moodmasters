@@ -6,26 +6,27 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
 
 import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.Events.UserSearchOkEvent;
-import com.example.moodmasters.Objects.ObjectsBackend.Participant; // Import Participant
+import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.R;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
 public class UserSearchActivity extends AppCompatActivity {
-
     private EditText searchInput;
     private ListView searchResultsListView;
     private Button backButton, searchButton;
     private ArrayAdapter<String> adapter;
     private UserSearchOkEvent searchEvent;
-    private Participant currentUser; // Store the current user
+    private Participant currentUser;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +37,18 @@ public class UserSearchActivity extends AppCompatActivity {
         searchResultsListView = findViewById(R.id.searchResultsListView);
         backButton = findViewById(R.id.backButton);
         searchButton = findViewById(R.id.searchButton);
+        db = FirebaseFirestore.getInstance();
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>());
         searchResultsListView.setAdapter(adapter);
 
-        // Retrieve the current participants username
+        // Retrieve the current participant's username
         currentUser = new Participant(LoginScreenOkEvent.getUsername());
 
-        searchEvent = new UserSearchOkEvent(currentUser); // Begin searching
+        searchEvent = new UserSearchOkEvent(currentUser);
 
         // Handle Back Button
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
-
+        backButton.setOnClickListener(v -> finish());
 
         // Handle Search Button
         searchButton.setOnClickListener(v -> {
@@ -58,13 +57,36 @@ public class UserSearchActivity extends AppCompatActivity {
         });
 
         searchResultsListView.setOnItemClickListener((parent, view, position, id) -> {
-            // Get the username of the selected participant (or any identifier)
             String selectedUser = (String) parent.getItemAtPosition(position);
-
-            // Create an Intent to navigate to ProfileActivity
-            Intent intent = new Intent(UserSearchActivity.this, ViewProfileActivity.class);
-            intent.putExtra("selectedUser", selectedUser); // Pass the selected username to ProfileActivity
-            startActivity(intent);
+            checkIfAlreadyFollowing(selectedUser);
         });
+    }
+
+    private void checkIfAlreadyFollowing(String targetUser) {
+        String currentUsername = currentUser.getUsername();
+
+        db.collection("participants")
+                .document(currentUsername)
+                .collection("following")
+                .document(targetUser)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Show Toast: Already following
+                        Toast.makeText(UserSearchActivity.this, "You already follow " + targetUser, Toast.LENGTH_SHORT).show();
+                    } else {
+                        navigateToProfile(targetUser);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // If Firestore fails (collection missing), assume empty and allow navigation
+                    navigateToProfile(targetUser);
+                });
+    }
+
+    private void navigateToProfile(String targetUser) {
+        Intent intent = new Intent(UserSearchActivity.this, ViewProfileActivity.class);
+        intent.putExtra("selectedUser", targetUser);
+        startActivity(intent);
     }
 }
