@@ -47,9 +47,12 @@ public class MVCModel {
      *  Represents the backend object that should be created on a given call to this method
      * */
     public void createBackendObject(BackendObject.State backend_object){
+        /*
         if (backend_objects.get(backend_object) != null){
-            throw new IllegalArgumentException("Error: Trying to add pre-existing backend object " + BackendObject.getString(backend_object));
+            return;
+            //throw new IllegalArgumentException("Error: Trying to add pre-existing backend object " + BackendObject.getString(backend_object));
         }
+         */
         dependencies.put(backend_object, new ArrayList<MVCView>());
         if (backend_object == BackendObject.State.USER){
             Participant user = new Participant(LoginScreenOkEvent.getUsername());
