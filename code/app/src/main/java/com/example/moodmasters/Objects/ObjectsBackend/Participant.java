@@ -7,6 +7,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This is a class that represents any and all participants for the app. The user will be defined
@@ -17,6 +18,7 @@ import java.util.HashMap;
  * */
 public class Participant implements MVCBackend{
     private String username;
+    private String password;
     private MoodHistoryList mood_history_list;
 
     /**
@@ -26,6 +28,10 @@ public class Participant implements MVCBackend{
      */
     public Participant(String init_username){
         username = init_username;
+    }
+    public Participant(String init_username, String init_password){
+        username = init_username;
+        password = init_password;
     }
 
     /**
@@ -44,13 +50,19 @@ public class Participant implements MVCBackend{
         if (snapshot.exists()) {   /* Parse existing MoodEvent list */
             ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
             ArrayList list = (ArrayList) snapshot.get("list");
+            String database_password = (String) snapshot.get("password");
+            if (!database_password.equals(password)){
+                throw new RuntimeException("Wrong Password");           /* Temporary measure till we can refactor database code */
+            }
             for (int i = 0; i < list.size(); i++) {
                 mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
             }
             this.mood_history_list = new MoodHistoryList(mood_array_list, doc_ref, snapshot);
-        } else {  /* Create new MoodEvent list */
+        }
+        else {  /* Create new MoodEvent list */
             this.mood_history_list = new MoodHistoryList(doc_ref, snapshot);
             doc_ref.set(mood_history_list);
+            doc_ref.update("password", password);
         }
     }
 

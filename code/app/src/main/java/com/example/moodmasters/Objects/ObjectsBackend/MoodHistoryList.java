@@ -49,6 +49,6 @@ public class MoodHistoryList extends MoodEventList {
      *  data is stored.
      */
     public void updateDatabaseData(DocumentReference doc_ref){
-        doc_ref.set(this);
+        doc_ref.update("list", this);
     }
 }

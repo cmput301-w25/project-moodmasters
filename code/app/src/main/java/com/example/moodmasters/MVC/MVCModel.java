@@ -55,7 +55,7 @@ public class MVCModel {
          */
         dependencies.put(backend_object, new ArrayList<MVCView>());
         if (backend_object == BackendObject.State.USER){
-            Participant user = new Participant(LoginScreenOkEvent.getUsername());
+            Participant user = new Participant(LoginScreenOkEvent.getUsername(), LoginScreenOkEvent.getPassword());
             backend_objects.put(backend_object, user);
         }
         else if (backend_object == BackendObject.State.MOODLIST){

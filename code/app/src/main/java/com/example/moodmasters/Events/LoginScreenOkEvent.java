@@ -23,12 +23,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginScreenOkEvent implements MVCController.MVCEvent {
     private static String username;
+    private static String password;
     private FirebaseFirestore db;
     private static CollectionReference participants_ref;
     private static DocumentReference doc_ref;
 
     public static String getUsername(){
         return username;
+    }
+    public static String getPassword(){
+        return password;
     }
 
     public DocumentReference getDocRef() {
@@ -42,12 +46,18 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         // Allow the same action for both Login and Sign Up (minimal changes)
         EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
+        EditText entered_password = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_password);
         TextView label = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_label);
         username = entered_username.getText().toString().trim();
+        password = entered_password.getText().toString().trim();
 
 
         if (username.isEmpty()) {
             Toast.makeText(context, "Username cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.isEmpty()){
+            Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -61,22 +71,29 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
                         // Sign Up: Check if the username already exists
                         if (snapshot.exists()) {
                             Toast.makeText(context, "Username already taken. Please choose another.", Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        else {
                             model.createBackendObject(BackendObject.State.USER);
                             model.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
                             context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
                             entered_username.setText("");
                         }
-                    } else {
+                    }
+                    else {
                         // Login: Check if the username exists
                         if (snapshot.exists()) {
-                            if (model.getBackendObject(BackendObject.State.USER) == null) {
-                                model.createBackendObject(BackendObject.State.USER);
+                            model.createBackendObject(BackendObject.State.USER);
+                            try{
+                                model.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
+                                context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
+                                entered_username.setText("");
                             }
-                            model.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
-                            context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
-                            entered_username.setText("");
-                        } else {
+                            catch (Exception ignore){
+                                model.removeBackendObject(BackendObject.State.USER);
+                                Toast.makeText(context, "Wrong password. Please try again", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else {
                             Toast.makeText(context, "Username not found. Please sign up first.", Toast.LENGTH_SHORT).show();
                         }
                     }
