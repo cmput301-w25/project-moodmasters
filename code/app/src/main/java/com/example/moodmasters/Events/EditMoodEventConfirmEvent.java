@@ -33,9 +33,6 @@ public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
         Emotion.State emotion = Emotion.fromStringToEmotionState(emotion_string);
         MoodList mood_list = (MoodList) model.getBackendObject(BackendObject.State.MOODLIST);
 
-        EditText trigger_text = activity.findViewById(R.id.alter_mood_enter_trigger);
-        String trigger_string = trigger_text.getText().toString().trim();
-
         Spinner social_situations_spinner = activity.findViewById(R.id.alter_mood_situation_spinner);
         String social_situation_string = social_situations_spinner.getSelectedItem().toString();
         SocialSituation.State social_situation = SocialSituation.fromStringToSocialState(social_situation_string);
@@ -57,7 +54,7 @@ public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
         LatLng location = new LatLng(0, 0);
 
         MoodEvent new_mood_event = new MoodEvent(mood_event.getDatetime(), mood_event.getEpochTime(), mood_list.getMood(emotion),
-                                                    is_public, reason_string, trigger_string, social_situation, location,
+                                                    is_public, reason_string, social_situation, location,
                                                     ((Participant) model.getBackendObject(BackendObject.State.USER)).getUsername());
         model.replaceObjectBackendList(BackendObject.State.MOODHISTORYLIST, position, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
