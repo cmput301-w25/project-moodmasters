@@ -50,6 +50,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         TextView social_situation_view = findViewById(R.id.view_mood_situation_text);
         TextView trigger_view = findViewById(R.id.view_mood_trigger_text);          /* get rid of this after demo since not needed for final checkpoint */
         TextView reason_view = findViewById(R.id.view_mood_reason_text);
+        TextView public_view = findViewById(R.id.view_mood_publicity_label);
         Mood displayed_mood = displayed_mood_event.getMood();
 
         emoji_view.setText(displayed_mood.getEmoticon());
@@ -60,6 +61,11 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         social_situation_view.setText(SocialSituation.getString(displayed_mood_event.getSituation()));
         trigger_view.setText(displayed_mood_event.getTrigger());
         reason_view.setText(displayed_mood_event.getReason());
+        if (displayed_mood_event.isIs_public()) {
+            public_view.setText("☑ Public");
+        } else {
+            public_view.setText("☒ Private");
+        }
     }
 
     @Override
