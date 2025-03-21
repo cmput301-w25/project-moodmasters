@@ -53,7 +53,7 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
 
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
 
-        if (!activity.addDataVerification(reason_string)){
+        if (activity.addDataVerification(reason_string)){
             reason_text.setError("Must be less than 20 characters and only 3 words");
             return;
         }
