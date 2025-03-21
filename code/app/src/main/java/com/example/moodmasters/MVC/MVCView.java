@@ -6,7 +6,8 @@ package com.example.moodmasters.MVC;
  *
  * */
 public interface MVCView {
-    public final MVCController controller = new MVCController();
+    MVCModel model = new MVCModel();
+    public final MVCController controller = new MVCController(model);
     public abstract void update(MVCModel model);
     public abstract void initialize(MVCModel model);
 }

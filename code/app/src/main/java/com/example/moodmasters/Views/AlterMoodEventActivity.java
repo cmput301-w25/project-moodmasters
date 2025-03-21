@@ -1,11 +1,11 @@
 package com.example.moodmasters.Views;
 
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,76 +13,76 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moodmasters.Events.AddMoodEventConfirmEvent;
 import com.example.moodmasters.Events.AlterMoodEventCancelEvent;
+import com.example.moodmasters.Events.UploadPhotoEvent;
+import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
-import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 
 import java.util.List;
-
+import java.util.Objects;
 
 public class AlterMoodEventActivity extends AppCompatActivity implements MVCView {
-    private static final int CAMERA_REQUEST_CODE = 101;
-    private static final int GALLERY_REQUEST_CODE = 102;
+    private static final int PICK_IMAGE_REQUEST = 102;
+    private static final int REQUEST_IMAGE_CAPTURE = 103;
     private final List<String> emotions_list;
     private final List<String> social_situations_list;
 
-    private MoodEvent moodEvent;
+    // Declare the controller field.
+    private MVCController controller;
 
-    public AlterMoodEventActivity(){
+    public AlterMoodEventActivity() {
         super();
         emotions_list = Emotion.getStringList();
         social_situations_list = SocialSituation.getStringList();
     }
-    public void update(MVCModel model){
+
+    @Override
+    public void update(MVCModel model) {
         // skip for now
     }
-    public void initialize(MVCModel model){
+
+    @Override
+    public void initialize(MVCModel model) {
         // skip for now
     }
 
     public void addMoodEventCode() {
         Spinner emotions_spinner = findViewById(R.id.alter_mood_emotion_spinner);
-        ArrayAdapter<String> emotions_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, emotions_list);
+        ArrayAdapter<String> emotions_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, emotions_list);
         emotions_spinner.setAdapter(emotions_adapter);
 
-        Spinner social_situations_spinner = findViewById(R.id.alter_social_situation_spinner);
-        ArrayAdapter<String> social_situations_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, social_situations_list);
+        Spinner social_situations_spinner = findViewById(R.id.alter_mood_situation_spinner);
+        ArrayAdapter<String> social_situations_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, social_situations_list);
         social_situations_spinner.setAdapter(social_situations_adapter);
 
-
         EditText trigger_text = findViewById(R.id.alter_mood_enter_trigger);
-
         EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
-
-        Button confirm_button = findViewById(R.id.confirm_button);
+        Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 
         confirm_button.setOnClickListener(v -> {
             controller.execute(new AddMoodEventConfirmEvent(), this);
         });
     }
 
-    public void editMoodEventCode(){
+    public void editMoodEventCode() {
         // TODO: Add code for editing mood event
     }
 
-    public boolean addDataVerification(String reason_string){
-        if (reason_string.length() > 20){
+    public boolean addDataVerification(String reason_string) {
+        if (reason_string.length() > 20) {
             return false;
         }
         String regex = "\\W+";
         String[] words = reason_string.split(regex);
-        if (words.length > 3){
-            return false;
-        }
-        return true;
+        return words.length <= 3;
     }
 
     @Override
@@ -90,97 +90,64 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.alter_mood_screen);
-        // TODO: Add view to model via controller if it is found necessary
-        /* Will return type of event (add or edit) */
 
-        ImageView selectPhotoButton = findViewById(R.id.select_photo_button);
-        selectPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPhotoPickerDialog();
-            }
-        });
+        // Initialize the controller with a new model.
+        MVCModel model = new MVCModel();
+        controller = new MVCController(model);
 
+        // Create the backend object for MOODHISTORYLIST as a list.
+        controller.createBackendObject(BackendObject.State.MOODHISTORYLIST);
 
-        Intent i = getIntent();
-        String event = i.getStringExtra("Event");
-        assert event != null;
-        if (event.equals("AddMoodEvent")) {
+        // Determine mode (add or edit) from intent extras.
+        if (Objects.equals(getIntent().getStringExtra("Event"), "AddMoodEvent")) {
             addMoodEventCode();
-        }
-        else if (event.equals("EditMoodEvent")){
+        } else {
             editMoodEventCode();
         }
-        else{
-            throw new IllegalArgumentException("Error: Didn't provide the proper intent extra on activity creation");
-        }
 
-        Button cancel_button = findViewById(R.id.cancel_button);
+        // Set listener for cancel button.
+        Button cancel_button = findViewById(R.id.alter_mood_cancel_button);
         cancel_button.setOnClickListener(v -> {
             controller.execute(new AlterMoodEventCancelEvent(), this);
         });
 
+        // Set listener for the upload photo image.
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        ImageView uploadPhotoImage = findViewById(R.id.alter_mood_upload_photo);
+        uploadPhotoImage.setOnClickListener(v -> {
+            // Show dialog to let user choose between camera or gallery.
+            controller.execute(new UploadPhotoEvent(), this);
+        });
     }
 
-    private void openPhotoPickerDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Photo")
-                .setItems(new CharSequence[] {"Take Photo", "Choose from Gallery"},
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (which == 0) {
-                                    openCamera();  // Open camera to take a photo
-                                } else if (which == 1) {
-                                    openGallery();  // Open gallery to choose a photo
-                                }
-                            }
-                        });
-        builder.show();
+    // Method to open the gallery.
+    public void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    private void openGallery() {
+    // Method to open the camera.
+    public void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA_REQUEST_CODE);
-
-    }
-
-
-    private void openCamera() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            Uri selectedImageUri = data.getData();
-            if (requestCode == CAMERA_REQUEST_CODE) {
-                setImage(selectedImageUri);
-            } else if (requestCode == GALLERY_REQUEST_CODE) {
-                setImage(selectedImageUri);
-            }
+        ImageView uploadPhotoImage = findViewById(R.id.alter_mood_upload_photo);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            // Replace the photo icon with the selected image.
+            uploadPhotoImage.setImageURI(imageUri);
+            // Optionally, upload the photo:
+            new com.example.moodmasters.Events.SavePhotoEvent().savePhoto(imageUri);
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null && data.getExtras() != null) {
+            // For camera capture, get the thumbnail Bitmap.
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            uploadPhotoImage.setImageBitmap(photo);
+            // Optionally, convert the Bitmap to a file/URI and upload it.
         }
     }
-
-    private void setImage(Uri imageUri) {
-        ImageView photoImageView = findViewById(R.id.select_photo_button);
-        photoImageView.setImageURI(imageUri);
-
-        // Set the URI to the mood event
-
-        moodEvent.setPhotoUri(imageUri);  // Assuming 'moodEvent' is the current event object
-    }
-
-    private void displayMoodEvent(MoodEvent moodEvent) {
-        Uri photoUri = moodEvent.getPhotoUri();
-        if (photoUri != null) {
-            ImageView photoImageView = findViewById(R.id.mood_event_photo);
-            photoImageView.setImageURI(photoUri);
-        }
-    }
-
-
-
-
 }

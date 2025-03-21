@@ -39,6 +39,11 @@ public class MoodEvent {
         trigger = init_trigger;
         situation = init_situation;
     }
+
+    public MoodEvent() {
+
+    }
+
     public String getDatetime(){
         return datetime;
     }
@@ -94,5 +99,9 @@ public class MoodEvent {
 
     public void setPhotoUri(Uri photoUri) {
         this.photoUri = photoUri;
+    }
+
+    public String getId() {
+        return "";
     }
 }

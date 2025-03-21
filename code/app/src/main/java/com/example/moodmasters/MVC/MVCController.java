@@ -9,8 +9,8 @@ import java.util.List;
 public class MVCController{
     private MVCModel model;
 
-    public MVCController(){
-        model = new MVCModel();
+    public MVCController(MVCModel model){
+        this.model = new MVCModel();
     }
     public void createBackendObject(BackendObject.State create){
         model.createBackendObject(create);
