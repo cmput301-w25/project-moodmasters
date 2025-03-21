@@ -14,7 +14,6 @@ public class MoodEvent {
     private long epoch_time;
     private Mood mood;
     private String reason;
-    private String trigger;
     private SocialSituation.State situation;
     private boolean is_public;
     private LatLng location;
@@ -30,8 +29,6 @@ public class MoodEvent {
      *  This is the MoodEvent's Mood.
      * @param init_reason
      *  (optional) This is the MoodEvent's reason.
-     * @param init_trigger
-     *  (optional) This is the MoodEvent's trigger.
      * @param init_situation
      *  (optional) This is the MoodEvent's social situation.
      * @param init_is_public
@@ -40,14 +37,13 @@ public class MoodEvent {
      *  (optional) This is the MoodEvent's location
      */
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
-                     @Nullable String init_reason, @Nullable String init_trigger,
+                     @Nullable String init_reason,
                      @Nullable SocialSituation.State init_situation, @Nullable LatLng init_location,
                      String init_username){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
         reason = init_reason;
-        trigger = init_trigger;
         situation = init_situation;
         is_public = init_is_public;
         location = init_location;
@@ -65,7 +61,6 @@ public class MoodEvent {
         epoch_time = (long) map.get("epochTime");
         reason = (String) map.get("reason");
         situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
-        trigger = (String) map.get("trigger");
         is_public = (boolean) map.get("is_public");
         location = (LatLng) map.get("location");
         username = (String) map.get("username");
@@ -97,13 +92,6 @@ public class MoodEvent {
      */
     public String getReason() {
         return reason;
-    }
-
-    /**
-     * trigger getter
-     */
-    public String getTrigger() {
-        return trigger;
     }
 
     /**
@@ -139,13 +127,6 @@ public class MoodEvent {
      */
     public void setReason(String new_reason) {
         reason = new_reason;
-    }
-
-    /**
-     * trigger setter
-     */
-    public void setTrigger(String new_trigger) {
-        trigger = new_trigger;
     }
 
     /**
