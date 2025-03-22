@@ -92,7 +92,6 @@
         android:ems="10"
         android:hint="Enter Reason (Optional)"
         android:inputType="text"
-        android:maxLength="20"
         android:textColor="@color/text_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
