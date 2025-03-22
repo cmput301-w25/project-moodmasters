@@ -62,8 +62,9 @@ public class MoodEvent {
         reason = (String) map.get("reason");
         situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
         is_public = (boolean) map.get("is_public");
-        Map<String, Object> location_map = (HashMap) map.get("location");
-        location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
+        //Map<String, Object> location_map = (HashMap) map.get("location");
+        //location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
+        location = new LatLng((double) 0, (double) 0);
         username = (String) map.get("username");
     }
 

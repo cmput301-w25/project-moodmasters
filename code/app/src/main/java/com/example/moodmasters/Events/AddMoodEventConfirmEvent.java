@@ -45,8 +45,11 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
         Date date = new Date(epoch_time);
         DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
         TimeZone timezone = TimeZone.getDefault();
+        System.out.println(epoch_time);
+        System.out.println(timezone.getDisplayName());
         format.setTimeZone(TimeZone.getTimeZone(timezone.getDisplayName(false, TimeZone.SHORT)));
         String datetime = format.format(date);
+        System.out.println(datetime);
 
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
 

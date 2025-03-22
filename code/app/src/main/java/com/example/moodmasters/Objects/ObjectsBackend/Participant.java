@@ -26,6 +26,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
@@ -73,7 +74,9 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
                         else {
                             last_event.setAction("GoMoodHistoryActivity");
                             mood_history_list = new MoodHistoryList();
-                            doc_ref.set(mood_history_list);
+                            Map<String, Object> map = new HashMap<String, Object>();
+                            map.put("list", mood_history_list.getList());
+                            doc_ref.set(map);
                         }
                     }
                     else {
