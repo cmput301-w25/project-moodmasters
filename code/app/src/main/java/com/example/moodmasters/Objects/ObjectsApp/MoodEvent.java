@@ -68,6 +68,10 @@ public class MoodEvent {
         username = (String) map.get("username");
     }
 
+    public String getStringMoodEvent(){
+        return mood.getEmotionString() + " " +  reason + " " + SocialSituation.getString(situation) + " " + datetime;
+    }
+
     /**
      * datetime getter
      */

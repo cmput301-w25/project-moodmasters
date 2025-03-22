@@ -64,6 +64,7 @@ public class FilterMoodEventList{
          * iterate over the currently non-filtered out mood events and remove them from the list
          * and give them a list of filters that are applied to them
          * */
+        List<MoodEvent> removable_mood_events = new ArrayList<MoodEvent>();
         for (int i = 0; i < object_list.size(); i++){
             MoodEvent mood_event = object_list.get(i);
             long mood_event_time = mood_event.getEpochTime();
@@ -71,9 +72,10 @@ public class FilterMoodEventList{
                 filtered_out.add(mood_event);
                 mood_events_applied_filters.putIfAbsent(mood_event, new ArrayList<String>());
                 mood_events_applied_filters.get(mood_event).add(recent_filter_label);
-                object_list.remove(i);
+                removable_mood_events.add(mood_event);
             }
         }
+        object_list.removeAll(removable_mood_events);
         filtered_mood_events.put(recent_filter_label, filtered_out);
         recency_filter = true;
     }
@@ -89,23 +91,30 @@ public class FilterMoodEventList{
                 filtered_out.add(mood_event);
             }
         }
-
+        System.out.println(object_list.size());
+        List<MoodEvent> removable_mood_events = new ArrayList<MoodEvent>();
         for (int i = 0; i < object_list.size(); i++){
             MoodEvent mood_event = object_list.get(i);
+            System.out.println(mood_event.getMood().getEmotionString());
             Emotion.State mood_event_emotion = mood_event.getMood().getEmotion();
             if (mood_event_emotion == emotion_state){
                 filtered_out.add(mood_event);
                 mood_events_applied_filters.putIfAbsent(mood_event, new ArrayList<String>());
                 mood_events_applied_filters.get(mood_event).add(Emotion.getString(emotion_state));
-                object_list.remove(i);
+                removable_mood_events.add(mood_event);
             }
         }
+        object_list.removeAll(removable_mood_events);
         filtered_mood_events.put(Emotion.getString(emotion_state), filtered_out);
         emotion_filter.add(emotion_state);
     }
     public void filterByWords(List<MoodEvent> object_list, String word){
         List<MoodEvent> filtered_out = new ArrayList<MoodEvent>();
-        Pattern pattern = Pattern.compile("[\\s\\p{Punct}]" + word + "[\\s\\p{Punct}]", Pattern.CASE_INSENSITIVE);
+        String regex = "("+ "[\\s\\p{Punct}]" + word + "[\\s\\p{Punct}]" + ")|" +
+                "(" + "^" + word + "[\\s\\p{Punct}]" + ")|" +
+                "(" + "[\\s\\p{Punct}]" + word + "$" + ")|" +
+                "(" + "^" + word + "$" + ")";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 
         for (Map.Entry<MoodEvent, List<String>> mood_event_filter: mood_events_applied_filters.entrySet()){
             MoodEvent mood_event = mood_event_filter.getKey();
@@ -118,17 +127,22 @@ public class FilterMoodEventList{
             }
         }
 
+        List<MoodEvent> removable_mood_events = new ArrayList<MoodEvent>();
         for (int i = 0; i < object_list.size(); i++){
             MoodEvent mood_event = object_list.get(i);
             String mood_event_reason = mood_event.getReason();
+            //System.out.println(mood_event_reason);
             Matcher matcher = pattern.matcher(mood_event_reason);
+            //  && !mood_event_reason.isEmpty()
             if (matcher.find()){
+                System.out.println(mood_event_reason);
                 filtered_out.add(mood_event);
                 mood_events_applied_filters.putIfAbsent(mood_event, new ArrayList<String>());
                 mood_events_applied_filters.get(mood_event).add(reason_filter_label + word);
-                object_list.remove(i);
+                removable_mood_events.add(mood_event);
             }
         }
+        object_list.removeAll(removable_mood_events);
         filtered_mood_events.put(reason_filter_label + word, filtered_out);
         reason_filter.add(reason_filter_label + word);
     }
@@ -171,6 +185,7 @@ public class FilterMoodEventList{
         List<MoodEvent> reason_mood_events = filtered_mood_events.get(reason_filter_label + word);
         filtered_mood_events.remove(reason_filter_label + word);
         for (MoodEvent mood_event: reason_mood_events){
+            System.out.println(mood_event.getStringMoodEvent());
             List<String> mood_event_applied_filters = mood_events_applied_filters.get(mood_event);
             mood_event_applied_filters.remove(reason_filter_label + word);
             if (mood_event_applied_filters.isEmpty()){
@@ -193,11 +208,23 @@ public class FilterMoodEventList{
                     (filter_key.equals(Emotion.getString(Emotion.State.DISGUSTED)) && mood_event.getMood().getEmotion() == Emotion.State.DISGUSTED) ||
                     (filter_key.equals(Emotion.getString(Emotion.State.CONFUSED)) && mood_event.getMood().getEmotion() == Emotion.State.CONFUSED) ||
                     (filter_key.equals(Emotion.getString(Emotion.State.ASHAMED)) && mood_event.getMood().getEmotion() == Emotion.State.ASHAMED) ||
-                    (filter_key.equals(Emotion.getString(Emotion.State.SURPRISED)) && mood_event.getMood().getEmotion() == Emotion.State.SURPRISED) ||
-                    (mood_event.getReason().contains(filter_key.replaceFirst("^" + reason_filter_label, "")))
+                    (filter_key.equals(Emotion.getString(Emotion.State.SURPRISED)) && mood_event.getMood().getEmotion() == Emotion.State.SURPRISED)
                 ){
                 filter_key_mood_events.add(mood_event);
                 mood_event_applied_filters.add(filter_key);
+            }
+            if (filter_key.startsWith(reason_filter_label + ":")){
+                String word = filter_key.replaceFirst("^" + reason_filter_label, "");
+                String regex = "("+ "[\\s\\p{Punct}]" + word + "[\\s\\p{Punct}]" + ")|" +
+                        "(" + "^" + word + "[\\s\\p{Punct}]" + ")|" +
+                        "(" + "[\\s\\p{Punct}]" + word + "$" + ")|" +
+                        "(" + "^" + word + "$" + ")";
+                Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(mood_event.getReason());
+                if (matcher.find()){
+                    filter_key_mood_events.add(mood_event);
+                    mood_event_applied_filters.add(filter_key);
+                }
             }
         }
         if (mood_event_applied_filters.isEmpty()){
@@ -215,6 +242,7 @@ public class FilterMoodEventList{
     }
     public List<String> getEditedReasonFilter(){
         List<String> edited_reason_filter = new ArrayList<String>();
+        //System.out.println(reason_filter);
         for (String word: reason_filter){
             edited_reason_filter.add(word.replaceFirst("^" + reason_filter_label, ""));
         }
