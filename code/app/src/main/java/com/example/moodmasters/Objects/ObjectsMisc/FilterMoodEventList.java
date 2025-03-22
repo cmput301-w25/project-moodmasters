@@ -91,11 +91,9 @@ public class FilterMoodEventList{
                 filtered_out.add(mood_event);
             }
         }
-        System.out.println(object_list.size());
         List<MoodEvent> removable_mood_events = new ArrayList<MoodEvent>();
         for (int i = 0; i < object_list.size(); i++){
             MoodEvent mood_event = object_list.get(i);
-            System.out.println(mood_event.getMood().getEmotionString());
             Emotion.State mood_event_emotion = mood_event.getMood().getEmotion();
             if (mood_event_emotion == emotion_state){
                 filtered_out.add(mood_event);
@@ -131,11 +129,8 @@ public class FilterMoodEventList{
         for (int i = 0; i < object_list.size(); i++){
             MoodEvent mood_event = object_list.get(i);
             String mood_event_reason = mood_event.getReason();
-            //System.out.println(mood_event_reason);
             Matcher matcher = pattern.matcher(mood_event_reason);
-            //  && !mood_event_reason.isEmpty()
             if (matcher.find()){
-                System.out.println(mood_event_reason);
                 filtered_out.add(mood_event);
                 mood_events_applied_filters.putIfAbsent(mood_event, new ArrayList<String>());
                 mood_events_applied_filters.get(mood_event).add(reason_filter_label + word);
@@ -185,7 +180,6 @@ public class FilterMoodEventList{
         List<MoodEvent> reason_mood_events = filtered_mood_events.get(reason_filter_label + word);
         filtered_mood_events.remove(reason_filter_label + word);
         for (MoodEvent mood_event: reason_mood_events){
-            System.out.println(mood_event.getStringMoodEvent());
             List<String> mood_event_applied_filters = mood_events_applied_filters.get(mood_event);
             mood_event_applied_filters.remove(reason_filter_label + word);
             if (mood_event_applied_filters.isEmpty()){
@@ -242,7 +236,6 @@ public class FilterMoodEventList{
     }
     public List<String> getEditedReasonFilter(){
         List<String> edited_reason_filter = new ArrayList<String>();
-        //System.out.println(reason_filter);
         for (String word: reason_filter){
             edited_reason_filter.add(word.replaceFirst("^" + reason_filter_label, ""));
         }

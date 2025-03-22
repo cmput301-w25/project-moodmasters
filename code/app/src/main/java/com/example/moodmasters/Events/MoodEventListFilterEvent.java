@@ -73,8 +73,6 @@ public class MoodEventListFilterEvent implements MVCController.MVCEvent{
         List<String> current_reasons = new ArrayList<String>(Arrays.asList(reason_text.split(regex)));
         current_reasons.remove("");         /*possibility on empty edit text field*/
         List<String> reasons_filtered = filter.getEditedReasonFilter();
-        System.out.println("Current reasons: " + current_reasons + " " + current_reasons.size());
-        System.out.println("Currently filtered: " + reasons_filtered + " " + reasons_filtered.size());
         for (String word: reasons_filtered){
             if (!current_reasons.contains(word)){
                 mood_event_list.revertWordFilterMoodEventList(word);

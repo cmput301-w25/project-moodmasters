@@ -61,7 +61,6 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
     }
     public void afterDatabaseQuery(){
         EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
-        System.out.println("I AM HERE");
         if (action.equals("SignupError")){
             model.removeBackendObject(BackendObject.State.USER);
             Toast.makeText(context, "Username already taken. Please choose another.", Toast.LENGTH_SHORT).show();
