@@ -101,6 +101,7 @@ public class MVCController{
      *  Context of the app
      * */
     public void execute(MVCEvent event, Context context){
+        model.setLastEvent(event);
         event.executeEvent(context, model, this);
     }
 }

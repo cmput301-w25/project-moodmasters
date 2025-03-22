@@ -2,6 +2,7 @@ package com.example.moodmasters;
 
 import static org.junit.Assert.assertEquals;
 
+import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodList;

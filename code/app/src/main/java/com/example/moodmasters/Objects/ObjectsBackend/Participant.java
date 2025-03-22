@@ -1,13 +1,33 @@
 package com.example.moodmasters.Objects.ObjectsBackend;
 
+import android.content.Intent;
+import android.graphics.ColorSpace;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.MVC.MVCBackend;
+import com.example.moodmasters.MVC.MVCDatabase;
+import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
+import com.example.moodmasters.Views.MoodHistoryListActivity;
+import com.example.moodmasters.Views.SignupLoginScreenActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseError;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 /**
@@ -17,46 +37,64 @@ import java.util.function.Consumer;
  * member by calling setDatabaseData. This member will also be stored in the model as the
  * MOODHISTORYLIST backend object.
  * */
-public class Participant implements MVCBackend{
+public class Participant extends MVCBackend implements MVCDatabase.Set{
     private String username;
     private MoodHistoryList mood_history_list;
     private FollowingList followingList;
 
+    private boolean wait;
     /**
      * Participant constructor.
      * @param init_username
      *  This is the Participant's unique username.
      */
     public Participant(String init_username){
-
         username = init_username;
         this.followingList = new FollowingList(init_username);
     }
 
-    /**
-     * This handles the reading of MoodHistoryList data from the database.
-     * If there is an existing MoodHistoryList at doc_ref in snapshot, the data is parsed
-     * into this.mood_history_list.
-     * Else, a new MoodHistoryList is created and stored in this.mood_history_list and
-     * uploaded to the database at doc_ref.
-     * @param doc_ref
-     *  This is the DocumentReference which references the document where the user's
-     *  data is stored.
-     * @param snapshot
-     *  This is the DocumentSnapshot of the document where the user's data is stored.
-     */
-    public void setDatabaseData(DocumentReference doc_ref, DocumentSnapshot snapshot){
-        if (snapshot.exists()) {   /* Parse existing MoodEvent list */
-            ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
-            ArrayList list = (ArrayList) snapshot.get("list");
-            for (int i = 0; i < list.size(); i++) {
-                mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
+
+    public void setDatabaseData(MVCDatabase database, MVCModel model){
+        LoginScreenOkEvent last_event = (LoginScreenOkEvent) model.getLastEvent();
+        database.addCollection("participants");
+        database.addDocument(LoginScreenOkEvent.getUsername());
+        DocumentReference doc_ref = database.getDocument();
+        doc_ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot snapshot = task.getResult();
+
+                    if (last_event.getSignUp()) {
+                        // Sign Up: Check if the username already exists
+                        if (snapshot.exists()) {
+                            last_event.setAction("SignupError");
+                        }
+                        else {
+                            last_event.setAction("GoMoodHistoryActivity");
+                            mood_history_list = new MoodHistoryList();
+                            doc_ref.set(mood_history_list);
+                        }
+                    }
+                    else {
+                        // Login: Check if the username exists
+                        if (snapshot.exists()) {
+                            last_event.setAction("GoMoodHistoryActivity");
+                            ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
+                            ArrayList list = (ArrayList) snapshot.get("list");
+                            for (int i = 0; i < list.size(); i++) {
+                                mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
+                            }
+                            mood_history_list = new MoodHistoryList(mood_array_list);
+                        }
+                        else {
+                            last_event.setAction("LoginError");
+                        }
+                    }
+                    ((LoginScreenOkEvent) model.getLastEvent()).afterDatabaseQuery();
+                }
             }
-            this.mood_history_list = new MoodHistoryList(mood_array_list, doc_ref, snapshot);
-        } else {  /* Create new MoodEvent list */
-            this.mood_history_list = new MoodHistoryList(doc_ref, snapshot);
-            doc_ref.set(mood_history_list);
-        }
+        });
     }
 
     /**

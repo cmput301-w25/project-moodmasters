@@ -1,6 +1,5 @@
 package com.example.moodmasters.MVC;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,8 +14,6 @@ import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-import com.google.api.Backend;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * Class that represents the Model part of the MVC framework, will be sent messages by the Controller to do certain requests like
@@ -27,7 +24,8 @@ public class MVCModel {
     private ArrayList<MVCView> views;
     private Map<BackendObject.State, MVCBackend> backend_objects;
     private Map<BackendObject.State, List<MVCView>> dependencies;
-    private FirebaseFirestore db;
+    private MVCDatabase database;
+    private MVCController.MVCEvent last_event;
 
     /**
      * Empty constructor for the Model, initializes all members to empty
@@ -36,6 +34,8 @@ public class MVCModel {
         views = new ArrayList<MVCView>();
         backend_objects = new HashMap<BackendObject.State, MVCBackend>();
         dependencies = new HashMap<BackendObject.State, List<MVCView>>();
+        database = new MVCDatabase();
+
     }
     /**
      * Creates a backend object in the Model, currently there are 5 backend objects all represented as
@@ -57,6 +57,7 @@ public class MVCModel {
         if (backend_object == BackendObject.State.USER){
             Participant user = new Participant(LoginScreenOkEvent.getUsername());
             backend_objects.put(backend_object, user);
+            user.setDatabaseData(database, this);
         }
         else if (backend_object == BackendObject.State.MOODLIST){
             Mood happy = new Mood(Emotion.State.HAPPY, R.color.mood_happy_color, R.string.mood_emoji_happy);
@@ -164,6 +165,13 @@ public class MVCModel {
             v.update( this );
         }
     }
+
+    public void setLastEvent(MVCController.MVCEvent new_event){
+        last_event = new_event;
+    }
+    public MVCController.MVCEvent getLastEvent(){
+        return last_event;
+    }
     /**
      * Adds a new object to a backend object only if that backend object is a List, if it isn't a exception is
      * thrown
@@ -179,7 +187,7 @@ public class MVCModel {
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         obj_list.addObject(object);
-        // TODO: update database
+        obj_list.addDatabaseData(database, object);
         notifyViews(backend_object);
     }
     /**
@@ -197,7 +205,7 @@ public class MVCModel {
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         obj_list.removeObject(object);
-        // TODO: update database
+        obj_list.removeDatabaseData(database, object);
         notifyViews(backend_object);
     }
     /**
@@ -214,8 +222,9 @@ public class MVCModel {
             throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
         MVCBackendList obj_list = (MVCBackendList) obj;
+        Object object = obj_list.getObjectPosition(position);
         obj_list.removeObject(position);
-        // TODO: update database
+        obj_list.removeDatabaseData(database, object);
         notifyViews(backend_object);
     }
     /**
@@ -250,8 +259,10 @@ public class MVCModel {
             throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
+        Object old_object = obj_list.getObjectPosition(position);
         obj_list.replaceObjectPosition(position, new_object);
-        // TODO: update database
+        obj_list.removeDatabaseData(database, old_object);
+        obj_list.addDatabaseData(database, new_object);
         notifyViews(backend_object);
     }
     /**

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moodmasters.Events.MoodEventListShowFilterEvent;
 import com.example.moodmasters.Events.MoodHistoryListAddEvent;
 import com.example.moodmasters.Events.MoodHistoryListMenuEvent;
 import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
@@ -49,7 +50,6 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
                 true,
                 "",
-                "",
                 SocialSituation.State.NONE,
                 new LatLng(20, 20),
                 "user_1"));
@@ -58,7 +58,6 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
                 true,
                 "",
-                "",
                 SocialSituation.State.NONE,
                 new LatLng(25, 25),
                 "user_2"));
@@ -66,7 +65,6 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 1742099444745L,
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
                 true,
-                "",
                 "",
                 SocialSituation.State.NONE,
                 new LatLng(30, 30),
@@ -93,9 +91,14 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
             controller.execute(new MoodHistoryListAddEvent(), this);
         });
 
-        Button sortButton = findViewById(R.id.user_mood_history_sort_button);
-        sortButton.setOnClickListener(v -> {
+        Button sort_button = findViewById(R.id.user_mood_history_sort_button);
+        sort_button.setOnClickListener(v -> {
             mood_history_view.toggleSort();
+        });
+
+        Button filter_button = findViewById(R.id.user_mood_history_filter_button);
+        filter_button.setOnClickListener(v -> {
+            controller.execute(new MoodEventListShowFilterEvent(), this);
         });
 
         Button map_button = findViewById(R.id.user_mood_history_show_map_button);

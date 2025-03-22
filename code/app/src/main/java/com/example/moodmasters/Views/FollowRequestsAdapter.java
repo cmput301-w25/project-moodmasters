@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
+import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -16,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.List;
 
-public class FollowRequestsAdapter extends BaseAdapter {
+public class FollowRequestsAdapter extends BaseAdapter{
     private Context context;
     private List<String> requests;
     private FirebaseFirestore db;

@@ -32,7 +32,6 @@ public class SignupLoginScreenActivity extends AppCompatActivity implements MVCV
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.signup_login_screen);
-
         controller.createBackendObject(BackendObject.State.MOODLIST);
 
         Button ok_button = findViewById(R.id.signup_login_ok_button);

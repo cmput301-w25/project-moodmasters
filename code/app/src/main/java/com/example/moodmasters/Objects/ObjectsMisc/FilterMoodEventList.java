@@ -1,8 +1,11 @@
 package com.example.moodmasters.Objects.ObjectsMisc;
 
+import android.icu.util.Calendar;
+
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +28,18 @@ public class FilterMoodEventList{
         // TODO: implement filter by word
     }
     public void revertFilterByRecency(List<MoodEvent> object_list){
-        // TODO: implement reverting filter by recency
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        long week_start_time = cal.getTimeInMillis()*1000;
+        List<MoodEvent> filtered_out = new ArrayList<MoodEvent>();
+        for (int i = 0; i < object_list.size(); i++){
+            MoodEvent mood_event = object_list.get(i);
+            long mood_event_time = mood_event.getEpochTime();
+            if (week_start_time > mood_event_time){
+                filtered_out.add(mood_event);
+                object_list.remove(i);
+            }
+        }
     }
     public void revertFilterByEmotion(List<MoodEvent> object_list, Emotion.State emotion_state){
         // TODO: implement reverting of filter by emotion

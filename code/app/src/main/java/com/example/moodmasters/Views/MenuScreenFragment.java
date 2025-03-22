@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.moodmasters.Events.LogOutEvent;
@@ -21,6 +22,8 @@ public class MenuScreenFragment extends DialogFragment implements MVCView {
     public void initialize(MVCModel model){
         // skip for now
     }
+
+    @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getLayoutInflater().inflate(R.layout.options_menu, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

@@ -17,13 +17,8 @@ public abstract class MoodEventList extends MVCBackendList<MoodEvent> {
     public MoodEventList() {
         filter = new FilterMoodEventList();
     }
-
-    public MoodEventList(ArrayList<MoodEvent> list, DocumentReference docRef, DocumentSnapshot snapshot){
-        super(list, docRef, snapshot);
-        filter = new FilterMoodEventList();
-    }
-    public MoodEventList(DocumentReference docRef, DocumentSnapshot snapshot){
-        super(docRef, snapshot);
+    public MoodEventList(ArrayList<MoodEvent> list) {
+        super(list);
         filter = new FilterMoodEventList();
     }
     public void recentFilterMoodEventList(){
