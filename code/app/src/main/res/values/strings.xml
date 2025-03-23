@@ -9,4 +9,13 @@
     <string name="mood_emoji_confused">🤔</string>
     <string name="mood_emoji_ashamed">😢</string>
     <string name="mood_emoji_surprised">😲</string>
+    <string name="select_photo" />
+    <string name="add_edit_mood_event">Add/Edit Mood Event</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_photos">Select Photo</string>
+    <string name="ok">OK</string>
+    <string name="get_location">Get Location</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="upload_from_gallery">Upload from Gallery</string>
+    <string name="take_photo">Take Photo</string>
 </resources>
