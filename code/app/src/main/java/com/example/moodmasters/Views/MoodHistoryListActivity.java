@@ -49,7 +49,6 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
                 true,
                 "",
-                "",
                 SocialSituation.State.NONE,
                 new LatLng(20, 20),
                 "user_1"));
@@ -58,7 +57,6 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
                 true,
                 "",
-                "",
                 SocialSituation.State.NONE,
                 new LatLng(25, 25),
                 "user_2"));
@@ -66,7 +64,6 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 1742099444745L,
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
                 true,
-                "",
                 "",
                 SocialSituation.State.NONE,
                 new LatLng(30, 30),
