@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
@@ -25,9 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * finished
  * */
 public class MVCModel {
-    private final ArrayList<MVCView> views;
-    private final Map<BackendObject.State, MVCBackend> backend_objects;
-    private final Map<BackendObject.State, List<MVCView>> dependencies;
+    private ArrayList<MVCView> views;
+    private Map<BackendObject.State, MVCBackend> backend_objects;
+    private Map<BackendObject.State, List<MVCView>> dependencies;
     private FirebaseFirestore db;
 
     /**
@@ -38,7 +37,6 @@ public class MVCModel {
         backend_objects = new HashMap<BackendObject.State, MVCBackend>();
         dependencies = new HashMap<BackendObject.State, List<MVCView>>();
     }
-  
     /**
      * Creates a backend object in the Model, currently there are 5 backend objects all represented as
      * elements of the enum BackendObject.State, some of these objects will only be created once and stay
@@ -98,10 +96,6 @@ public class MVCModel {
         backend_objects.remove(backend_object);
         dependencies.remove(backend_object);
     }
-
-    public MVCBackend getBackendObject(BackendObject.State backend_object){
-        return backend_objects.get(backend_object);
-    }
     /**
      * Return a pre-existing backend object to the caller of this method
      * @param backend_object
@@ -153,7 +147,7 @@ public class MVCModel {
         if (!views.contains(new_view)){
             throw new IllegalArgumentException("Error: View does not exist in the backend");
         }
-        Objects.requireNonNull(dependencies.get(backend_object)).add(new_view);
+        dependencies.get(backend_object).add(new_view);
     }
     /**
      * Calls the update method on all the Views the Model knows of to notify them to update, this is only
@@ -166,9 +160,8 @@ public class MVCModel {
             throw new IllegalArgumentException("Error: Backend object " + BackendObject.getString(backend_object) + " does not exist yet");
         }
         List<MVCView> update_views = dependencies.get(backend_object);
-        assert update_views != null;
         for (MVCView v : update_views){
-            v.update(this);
+            v.update( this );
         }
     }
     /**
@@ -184,7 +177,7 @@ public class MVCModel {
         if (!(obj instanceof MVCBackendList)){
             throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
-        MVCBackendList<T> obj_list = (MVCBackendList<T>) obj;
+        MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         obj_list.addObject(object);
         // TODO: update database
         notifyViews(backend_object);
@@ -200,9 +193,9 @@ public class MVCModel {
     public <T> void removeFromBackendList(BackendObject.State backend_object, T object){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
-            throw new IllegalArgumentException("Error: Trying to remove object from non-list backend object " + BackendObject.getString(backend_object));
+            throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
-        MVCBackendList<T> obj_list = (MVCBackendList<T>) obj;
+        MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         obj_list.removeObject(object);
         // TODO: update database
         notifyViews(backend_object);
@@ -218,7 +211,7 @@ public class MVCModel {
     public void removeFromBackendList(BackendObject.State backend_object, int position){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
-            throw new IllegalArgumentException("Error: Trying to remove object from non-list backend object " + BackendObject.getString(backend_object));
+            throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
         MVCBackendList obj_list = (MVCBackendList) obj;
         obj_list.removeObject(position);
@@ -236,9 +229,9 @@ public class MVCModel {
     public <T> T getFromBackendList(BackendObject.State backend_object, int position){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
-            throw new IllegalArgumentException("Error: Trying to get object from non-list backend object " + BackendObject.getString(backend_object));
+            throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
-        MVCBackendList<T> obj_list = (MVCBackendList<T>) obj;
+        MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         return obj_list.getObjectPosition(position);
     }
     /**
@@ -254,9 +247,9 @@ public class MVCModel {
     public <T> void replaceObjectBackendList(BackendObject.State backend_object, int position, T new_object){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
-            throw new IllegalArgumentException("Error: Trying to replace object in non-list backend object " + BackendObject.getString(backend_object));
+            throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
-        MVCBackendList<T> obj_list = (MVCBackendList<T>) obj;
+        MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         obj_list.replaceObjectPosition(position, new_object);
         // TODO: update database
         notifyViews(backend_object);
@@ -269,58 +262,10 @@ public class MVCModel {
     public <T> ArrayList<T> getBackendList(BackendObject.State backend_object){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
-            throw new IllegalArgumentException("Error: Trying to get list from non-list backend object " + BackendObject.getString(backend_object));
+            throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
-        MVCBackendList<T> obj_list = (MVCBackendList<T>) obj;
+        MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         return obj_list.getList();
     }
 
-    // A simple concrete implementation of MVCBackendList using an ArrayList.
-    private static class MVCBackendListImpl<T> extends MVCBackendList<T> {
-        private ArrayList<T> list;
-
-        public MVCBackendListImpl() {
-            list = new ArrayList<>();
-        }
-
-        @Override
-        public void addObject(T object) {
-            list.add(object);
-        }
-
-        @Override
-        public void removeObject(T object) {
-            list.remove(object);
-        }
-
-        @Override
-        public void removeObject(int position) {
-            list.remove(position);
-        }
-
-        @Override
-        public T getObjectPosition(int position) {
-            return list.get(position);
-        }
-
-        @Override
-        public void replaceObjectPosition(int position, T new_object) {
-            list.set(position, new_object);
-        }
-
-        @Override
-        public ArrayList<T> getList() {
-            return list;
-        }
-
-        @Override
-        public void setDatabaseData(FirebaseFirestore db) {
-            // Not implemented.
-        }
-
-        @Override
-        public void updateDatabaseData(FirebaseFirestore db) {
-            // Not implemented.
-        }
-    }
 }

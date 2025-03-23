@@ -1,18 +1,14 @@
 package com.example.moodmasters.Events;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
+import com.example.moodmasters.Views.AlterMoodEventActivity;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.R;
-import com.example.moodmasters.Views.AlterMoodEventActivity;
-import com.example.moodmasters.Views.MoodHistoryListActivity;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
@@ -30,12 +26,7 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         AlterMoodEventActivity activity = (AlterMoodEventActivity) context;
 
-        // Retrieve and check the emotion spinner.
         Spinner emotions_spinner = activity.findViewById(R.id.alter_mood_emotion_spinner);
-        if (emotions_spinner == null) {
-            // Log an error if needed.
-            return;
-        }
         String emotion_string = emotions_spinner.getSelectedItem().toString().trim();
         Emotion.State emotion = Emotion.fromStringToEmotionState(emotion_string);
         MoodList mood_list = (MoodList) model.getBackendObject(BackendObject.State.MOODLIST);
@@ -44,20 +35,19 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
         String social_situation_string = social_situations_spinner.getSelectedItem().toString();
         SocialSituation.State social_situation = SocialSituation.fromStringToSocialState(social_situation_string);
 
-        // Get reason input.
         EditText reason_text = activity.findViewById(R.id.alter_mood_enter_reason);
         String reason_string = reason_text.getText().toString().trim();
+
         CheckBox check_public = activity.findViewById(R.id.alter_mood_public_checkbox);
         boolean is_public = check_public.isChecked();
 
         long epoch_time = System.currentTimeMillis();           /* Epoch time will be the time stored on the database for easy conversion to different time zones */
-
         Date date = new Date(epoch_time);
-        @SuppressLint("SimpleDateFormat")
         DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
         TimeZone timezone = TimeZone.getDefault();
         format.setTimeZone(TimeZone.getTimeZone(timezone.getDisplayName(false, TimeZone.SHORT)));
         String datetime = format.format(date);
+
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
 
         if (activity.addDataVerification(reason_string)){
@@ -74,9 +64,5 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
         model.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
 
-        // Navigate explicitly to MoodHistoryListActivity and finish the current activity.
-        Intent intent = new Intent(context, MoodHistoryListActivity.class);
-        context.startActivity(intent);
-        activity.finish();
     }
 }

@@ -3,7 +3,6 @@ package com.example.moodmasters.Events;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.EditText;
-import android.widget.Toast;
 import android.widget.TextView;
 import android.widget.Toast;
 

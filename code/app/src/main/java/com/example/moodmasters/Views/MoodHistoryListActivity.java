@@ -10,11 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moodmasters.Events.MoodHistoryListAddEvent;
 import com.example.moodmasters.Events.MoodHistoryListMenuEvent;
-import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.MVC.MVCView;
-import com.example.moodmasters.Objects.ObjectsBackend.Participant;
-import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.R;
 import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
@@ -32,21 +27,17 @@ import java.util.ArrayList;
 public class MoodHistoryListActivity extends AppCompatActivity implements MVCView {
     private MoodHistoryListView mood_history_view;
     private String username;
-    
+
     // mock MoodEvent ArrayList for testing
     private ArrayList<MoodEvent> mock_mood_events;
 
     public MoodHistoryListActivity(){
         super();
-        // Avoid calling controller.addBackendView here; do it in onCreate instead.
+        controller.addBackendView(this, BackendObject.State.USER);
     }
-
-    @Override
     public void update(MVCModel model){
-        // Skip for now.
+        // skip for now
     }
-
-    @Override
     public void initialize(MVCModel model){
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         username = user.getUsername();
@@ -78,40 +69,23 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 new LatLng(30, 30),
                 "user_3"));
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.user_mood_history_screen);
-
-        // Add backend view for USER if the controller is available.
-        if(controller != null) {
-            controller.addBackendView(this, BackendObject.State.USER);
-        }
-
-        // Set the username text; if username is still null, use a fallback message.
         TextView username_view = findViewById(R.id.user_mood_history_label);
         username_view.setText(username);
         controller.createBackendObject(BackendObject.State.MOODHISTORYLIST);
 
-        // Initialize the mood history view.
         mood_history_view = new MoodHistoryListView(this);
 
-        // Set listener for the menu button.
         ImageButton menu_button = findViewById(R.id.user_mood_history_menu_button);
-        if(menu_button != null && controller != null) {
-            menu_button.setOnClickListener(v -> {
-                controller.execute(new MoodHistoryListMenuEvent(), this);
-            });
-        }
         menu_button.setOnClickListener(v -> {
             controller.execute(new MoodHistoryListMenuEvent(), this);
         });
 
-        // Set listener for the add button.
         Button add_button = findViewById(R.id.user_mood_history_add_button);
-
         add_button.setOnClickListener(v -> {
             controller.execute(new MoodHistoryListAddEvent(), this);
         });

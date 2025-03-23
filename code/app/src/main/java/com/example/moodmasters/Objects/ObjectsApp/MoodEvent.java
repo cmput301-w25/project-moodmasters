@@ -1,8 +1,5 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
-import android.net.Uri;
-
-import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -21,10 +18,7 @@ public class MoodEvent {
     private boolean is_public;
     private LatLng location;
     private String username;
-    private Uri photoUri;
 
-
-    public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, Participant init_participant, String init_reason){
     /**
      * MoodEvent constructor.
      * @param init_datetime
@@ -45,7 +39,7 @@ public class MoodEvent {
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
                      @Nullable String init_reason,
                      @Nullable SocialSituation.State init_situation, @Nullable LatLng init_location,
-                     String init_username, Uri init_uri){
+                     String init_username){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
@@ -54,7 +48,6 @@ public class MoodEvent {
         is_public = init_is_public;
         location = init_location;
         username = init_username;
-        photoUri = init_uri;
     }
 
     /**
@@ -143,18 +136,6 @@ public class MoodEvent {
         situation = new_situation;
     }
 
-    // Getter and Setter for photoUri
-    public Uri getPhotoUri() {
-        return photoUri;
-    }
-
-    public void setPhotoUri(Uri photoUri) {
-        this.photoUri = photoUri;
-    }
-
-    public String getId() {
-        return "";
-    }
     /**
      * is_public getter
      */
