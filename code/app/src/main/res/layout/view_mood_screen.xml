@@ -70,7 +70,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@color/background_color"
@@ -78,7 +78,7 @@
         app:layout_constraintBottom_toTopOf="@+id/view_mood_edit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_mood_location_label"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_publicity_label"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <Button
@@ -141,6 +141,17 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_mood_reason_text" />
+
+    <TextView
+        android:id="@+id/view_mood_publicity_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="☑ Public"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/view_mood_location_label"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_location_label" />
 
     <TextView
         android:id="@+id/view_mood_location_text"

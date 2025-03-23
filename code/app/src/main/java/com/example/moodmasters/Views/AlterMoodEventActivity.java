@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -89,6 +90,9 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
 
         EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
         reason_text.setText(current_mood_event.getReason());
+
+        CheckBox check_public = findViewById(R.id.alter_mood_public_checkbox);
+        check_public.setChecked(current_mood_event.isIs_public());
 
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 
