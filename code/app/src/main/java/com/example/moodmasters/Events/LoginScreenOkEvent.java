@@ -29,6 +29,7 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
     private String action;
     private Context context;
     private MVCModel model;
+    private boolean activity_launched = false;
 
     public static String getUsername(){
         return username;
@@ -39,6 +40,9 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
 
     public void setAction(String new_action){
         action = new_action;
+    }
+    public boolean getActivityLaunched(){
+        return activity_launched;
     }
 
     @Override
@@ -70,11 +74,14 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
             Toast.makeText(context, "Username not found. Please sign up first.", Toast.LENGTH_SHORT).show();
         }
         else if (action.equals("GoMoodHistoryActivity")){
+            activity_launched = true;
             context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
             entered_username.setText("");
         }
         else{
             throw new InvalidParameterException("Error: invalid action in LoginScreenOkEvent");
         }
+        System.out.println("AFTERDATABASEQUERY");
+        model.createBackendObject(BackendObject.State.FOLLOWINGLIST);
     }
 }

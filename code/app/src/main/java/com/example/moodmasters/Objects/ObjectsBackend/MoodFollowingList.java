@@ -2,15 +2,26 @@ package com.example.moodmasters.Objects.ObjectsBackend;
 
 // Not needed for halfway checkpoint
 
-//public class MoodFollowingList extends MoodEventList {
-//    public MoodFollowingList(DocumentReference) {
-//        super(db);
-//    }
-//
-//    public void setDatabaseData(FirebaseFirestore db){
-//        // TODO: Implement getting and possibly setting initial data from database
-//    }
-//    public void updateDatabaseData(FirebaseFirestore db){
-//        // TODO: Implement updating database with added/removed data
-//    }
-//}
+import com.example.moodmasters.MVC.MVCDatabase;
+import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsMisc.MoodEventList;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+
+public class MoodFollowingList extends MoodEventList {
+    public MoodFollowingList(ArrayList<MoodEvent> list) {
+        super(list);
+    }
+    public MoodFollowingList() {
+        super();
+    }
+    public void removeDatabaseData(MVCDatabase database, Object object){
+        // not needed for mood following list
+    }
+    public void addDatabaseData(MVCDatabase database, Object object){
+        // not needed for mood following list
+    }
+}

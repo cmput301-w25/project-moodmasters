@@ -8,12 +8,10 @@ import android.widget.EditText;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
-import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Objects.ObjectsMisc.FilterMoodEventList;
 import com.example.moodmasters.Objects.ObjectsMisc.MoodEventList;
 import com.example.moodmasters.R;
-import com.example.moodmasters.Views.FilterMoodEventFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MoodEventListFilterEvent implements MVCController.MVCEvent{
+public class MoodHistoryListFilterEvent implements MVCController.MVCEvent{
     private View fragment_view;
-    public MoodEventListFilterEvent(View init_fragment_view){
+    public MoodHistoryListFilterEvent(View init_fragment_view){
         fragment_view = init_fragment_view;
     }
     @Override

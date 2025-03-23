@@ -1,19 +1,28 @@
 package com.example.moodmasters.Objects.ObjectsBackend;
 
+import androidx.annotation.NonNull;
+
+import com.example.moodmasters.MVC.MVCBackend;
+import com.example.moodmasters.MVC.MVCDatabase;
+import com.example.moodmasters.MVC.MVCModel;
+import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class FollowingList {
+public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDatabase.Update{
     private FirebaseFirestore db;
     private String userId;
     private CollectionReference followingRef;
     private CollectionReference followRequestsRef;
+    private List<Participant> following_list;
 
     public FollowingList(String userId) {
         this.db = FirebaseFirestore.getInstance();
@@ -23,52 +32,49 @@ public class FollowingList {
     }
 
     // Fetch list of following users
-    public void fetchFollowing(Consumer<List<String>> callback) {
+    public void fetchFollowing() {
         followingRef.get().addOnCompleteListener(task -> {
-            List<String> following = new ArrayList<>();
+            following_list = new ArrayList<>();
             if (task.isSuccessful()) {
-                for (var document : task.getResult()) {
-                    following.add(document.getId());
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    following_list.add(new Participant(document.getId()));
                 }
             }
-            callback.accept(following);
         });
     }
 
-    // Send follow request
-    public void sendFollowRequest(String targetUserId) {
-        DocumentReference targetRef = db.collection("participants").document(targetUserId)
-                .collection("followRequests").document(userId);
-        Map<String, Object> requestData = new HashMap<>();
-        requestData.put("userId", userId);  // Store who sent the request
-
-        targetRef.set(requestData); // Add requester to follow requests
-    }
-
-    // Accept follow request
-    public void acceptFollowRequest(String requesterId) {
-        DocumentReference requesterRef = followingRef.document(requesterId);
-        Map<String, Object> emptyData = new HashMap<>();
-        requesterRef.set(emptyData); // Move to following list
-
-        followRequestsRef.document(requesterId).delete(); // Remove from requests
-    }
-
-    // Reject follow request
-    public void rejectFollowRequest(String requesterId) {
-        followRequestsRef.document(requesterId).delete();
-    }
-
-    // Fetch follow requests
-    public void fetchFollowRequests(Consumer<List<String>> callback) {
-        followRequestsRef.get().addOnCompleteListener(task -> {
-            List<String> requesters = new ArrayList<>();
+    @Override
+    public void setDatabaseData(MVCDatabase database, MVCModel model){
+        System.out.println("EXECUTED");
+        followingRef.get().addOnCompleteListener(task -> {
+            following_list = new ArrayList<>();
             if (task.isSuccessful()) {
-                for (var document : task.getResult()) {
-                    requesters.add(document.getId());
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    following_list.add(new Participant(document.getId()));
                 }
+                updateDatabaseData(database, model);
             }
-            callback.accept(requesters);
         });
     }
+
+    @Override
+    public void updateDatabaseData(MVCDatabase database, MVCModel model) {
+        for (Participant followee: following_list){
+            System.out.println("HELLO WORLD " + followee.getUsername());
+            followee.setDatabaseData2(database, model);
+        }
+    }
+
+    public MoodFollowingList getMoodFollowingList(){
+        ArrayList<MoodEvent> followees_recent_mood_events = new ArrayList<MoodEvent>();
+        for (Participant participant: following_list){
+            MoodHistoryList participant_history_list = participant.getMoodHistoryList();
+            List<MoodEvent> folowee_history_list = participant_history_list.getList();
+            folowee_history_list.sort((a, b) -> Long.compare(a.getEpochTime(), b.getEpochTime()));
+            int upper_bound = Math.min(3, folowee_history_list.size());         /*hard coded to 3 for now, need to update later*/
+            followees_recent_mood_events.addAll(folowee_history_list.subList(0, upper_bound));
+        }
+        return new MoodFollowingList(followees_recent_mood_events);
+    }
+
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,7 +19,6 @@ import com.example.moodmasters.Events.MoodEventViewingEditEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
-import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.R;
@@ -78,6 +78,9 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         social_situations_spinner.setAdapter(social_situations_adapter);
         int social_default_pos = social_situations_adapter.getPosition(SocialSituation.getString(current_mood_event.getSituation()));
         social_situations_spinner.setSelection(social_default_pos);
+
+        CheckBox public_status_check_box = findViewById(R.id.alter_mood_public_checkbox);
+        public_status_check_box.setChecked(current_mood_event.getIsPublic());
 
         EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
         reason_text.setText(current_mood_event.getReason());

@@ -56,12 +56,13 @@ public class MoodEvent {
      *  This is a HashMap retrieved from the Firebase database containing mood event information.
      */
     public MoodEvent(HashMap map) {
+        map.forEach((key, value) -> System.out.println(key + ":" + value));
         datetime = (String) map.get("datetime");
         mood = new Mood((HashMap) map.get("mood"));
         epoch_time = (long) map.get("epochTime");
         reason = (String) map.get("reason");
         situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
-        is_public = (boolean) map.get("is_public");
+        is_public = (boolean) map.get("isPublic");
         Map<String, Object> location_map = (HashMap) map.get("location");
         location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
         username = (String) map.get("username");
@@ -144,14 +145,14 @@ public class MoodEvent {
     /**
      * is_public getter
      */
-    public boolean isIs_public() {
+    public boolean getIsPublic() {
         return is_public;
     }
 
     /**
      * is_public setter
      */
-    public void setIs_public(boolean is_public) {
+    public void setIsPublic(boolean is_public) {
         this.is_public = is_public;
     }
 

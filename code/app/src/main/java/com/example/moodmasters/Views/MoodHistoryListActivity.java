@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Events.MoodEventListShowFilterEvent;
+import com.example.moodmasters.Events.MoodHistoryListShowFilterEvent;
 import com.example.moodmasters.Events.MoodHistoryListAddEvent;
 import com.example.moodmasters.Events.MoodHistoryListMenuEvent;
 import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
@@ -98,7 +98,7 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
 
         Button filter_button = findViewById(R.id.user_mood_history_filter_button);
         filter_button.setOnClickListener(v -> {
-            controller.execute(new MoodEventListShowFilterEvent(), this);
+            controller.execute(new MoodHistoryListShowFilterEvent(), this);
         });
 
         Button map_button = findViewById(R.id.user_mood_history_show_map_button);
@@ -108,5 +108,9 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
         });
 
         mood_history_view.setListElementClicker();
+    }
+
+    public MoodHistoryListView getMoodHistoryListView(){
+        return mood_history_view;
     }
 }

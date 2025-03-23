@@ -13,19 +13,20 @@ import java.util.ArrayList;
  * This is a class that keeps track of MoodEvents in the current user's history.
  */
 public class MoodHistoryList extends MoodEventList {
-
-    public MoodHistoryList(ArrayList<MoodEvent> list) {
+    private Participant participant;            /*wtf is vero talking about circular references are completely fine in java*/
+    public MoodHistoryList(ArrayList<MoodEvent> list, Participant init_participant) {
         super(list);
+        participant = init_participant;
     }
     public MoodHistoryList() {
         super();
     }
     public void removeDatabaseData(MVCDatabase database, Object object){
-        DocumentReference doc_ref = database.getDocument();
+        DocumentReference doc_ref = database.getDocument(participant.getUsername());
         doc_ref.update("list", FieldValue.arrayRemove(object));
     }
     public void addDatabaseData(MVCDatabase database, Object object){
-        DocumentReference doc_ref = database.getDocument();
+        DocumentReference doc_ref = database.getDocument(participant.getUsername());
         doc_ref.update("list", FieldValue.arrayUnion(object));
     }
 }

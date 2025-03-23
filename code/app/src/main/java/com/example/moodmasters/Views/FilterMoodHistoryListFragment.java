@@ -1,10 +1,7 @@
 package com.example.moodmasters.Views;
 
-import static com.example.moodmasters.MVC.MVCView.controller;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,8 +10,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.moodmasters.Events.MoodEventListFilterEvent;
-import com.example.moodmasters.MVC.MVCController;
+import com.example.moodmasters.Events.MoodHistoryListFilterEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
@@ -22,10 +18,9 @@ import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class FilterMoodEventFragment extends DialogFragment implements MVCView {
+public class FilterMoodHistoryListFragment extends DialogFragment implements MVCView {
     private List<String> reason_filter_applied;
     private List<Emotion.State> emotion_filter_applied;
     private boolean recency_filter_applied;
@@ -70,7 +65,7 @@ public class FilterMoodEventFragment extends DialogFragment implements MVCView {
         return builder.setView(view)
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Add", (dialog, which) -> {
-                    controller.execute(new MoodEventListFilterEvent(view), getContext());
+                    controller.execute(new MoodHistoryListFilterEvent(view), getContext());
                 })
                 .create();
     }

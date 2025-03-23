@@ -9,18 +9,27 @@ import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Views.MoodHistoryListActivity;
 import com.example.moodmasters.Views.MoodEventViewingActivity;
 
-public class MoodHistoryListClickMoodEvent implements MVCController.MVCEvent{
+public class MoodEventListClickMoodEvent implements MVCController.MVCEvent{
+    public enum MoodList{
+        MOODFOLLOWINGLIST,
+        MOODHISTORYLIST
+    }
     private static MoodEvent mood_event;
     private static int position;
-    public MoodHistoryListClickMoodEvent(MoodEvent init_mood_event, int init_position){
+    private static MoodList mood_list_type;
+    public MoodEventListClickMoodEvent(MoodEvent init_mood_event, int init_position, MoodList init_mood_list_type){
         mood_event = init_mood_event;
         position = init_position;
+        mood_list_type = init_mood_list_type;
     }
     public static MoodEvent getMoodEvent(){
         return mood_event;
     }
     public static int getPosition(){
         return position;
+    }
+    public static MoodList getMoodListType(){
+        return mood_list_type;
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {

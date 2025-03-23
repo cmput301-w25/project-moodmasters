@@ -9,6 +9,8 @@ import java.util.Map;
 import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
+import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodFollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
@@ -73,7 +75,9 @@ public class MVCModel {
             backend_objects.put(backend_object, mood_list);
         }
         else if (backend_object == BackendObject.State.FOLLOWINGLIST){
-            // Not needed yet
+            FollowingList follow_list = ((Participant) backend_objects.get(BackendObject.State.USER)).getFollowingList();
+            follow_list.setDatabaseData(database, this);
+            backend_objects.put(backend_object, follow_list);
         }
         else if (backend_object == BackendObject.State.MOODHISTORYLIST){
             Participant user = ((Participant) this.getBackendObject(BackendObject.State.USER));
@@ -81,8 +85,9 @@ public class MVCModel {
             backend_objects.put(backend_object, mood_history_list);
         }
         else if (backend_object == BackendObject.State.MOODFOLLOWINGLIST){
-            // Not needed yet
-            // make sure following list is generated first and use that to generate mood following list
+            FollowingList following_list = (FollowingList) backend_objects.get(BackendObject.State.FOLLOWINGLIST);
+            backend_objects.put(backend_object, following_list.getMoodFollowingList());
+            System.out.println(following_list.getMoodFollowingList().getList().size());
         }
     }
     /**
@@ -96,6 +101,11 @@ public class MVCModel {
         }
         backend_objects.remove(backend_object);
         dependencies.remove(backend_object);
+    }
+
+    public boolean existsBackendObject(BackendObject.State backend_object){
+        MVCBackend object = backend_objects.get(backend_object);
+        return object != null;
     }
     /**
      * Return a pre-existing backend object to the caller of this method

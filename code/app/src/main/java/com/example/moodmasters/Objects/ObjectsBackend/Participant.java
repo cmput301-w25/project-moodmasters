@@ -42,8 +42,6 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
     private String username;
     private MoodHistoryList mood_history_list;
     private FollowingList followingList;
-
-    private boolean wait;
     /**
      * Participant constructor.
      * @param init_username
@@ -58,8 +56,8 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
     public void setDatabaseData(MVCDatabase database, MVCModel model){
         LoginScreenOkEvent last_event = (LoginScreenOkEvent) model.getLastEvent();
         database.addCollection("participants");
-        database.addDocument(LoginScreenOkEvent.getUsername());
-        DocumentReference doc_ref = database.getDocument();
+        database.addDocument(username);
+        DocumentReference doc_ref = database.getDocument(username);
         doc_ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -88,13 +86,45 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
                             for (int i = 0; i < list.size(); i++) {
                                 mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
                             }
-                            mood_history_list = new MoodHistoryList(mood_array_list);
+                            mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
                         }
                         else {
                             last_event.setAction("LoginError");
                         }
                     }
+                    // not ideal but will work for now, adding multithreading would be better
                     ((LoginScreenOkEvent) model.getLastEvent()).afterDatabaseQuery();
+                }
+            }
+        });
+    }
+
+    /*
+    * just temporary for now while i add multithreading
+    * */
+    public void setDatabaseData2(MVCDatabase database, MVCModel model){
+        database.addCollection("participants");
+        database.addDocument(username);
+        DocumentReference doc_ref = database.getDocument(username);
+        doc_ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (snapshot.exists()) {
+                        ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
+                        ArrayList list = (ArrayList) snapshot.get("list");
+                        for (int i = 0; i < list.size(); i++) {
+                            mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
+                        }
+                        mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
+                    }
+                    else{
+                        mood_history_list = new MoodHistoryList();
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("list", mood_history_list.getList());
+                        doc_ref.set(map);
+                    }
                 }
             }
         });
@@ -122,10 +152,6 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
      */
     public MoodHistoryList getMoodHistoryList(){
         return this.mood_history_list;
-    }
-
-    public void fetchFollowRequests(Consumer<List<String>> callback) {
-        followingList.fetchFollowRequests(callback);
     }
 
     public FollowingList getFollowingList() {
