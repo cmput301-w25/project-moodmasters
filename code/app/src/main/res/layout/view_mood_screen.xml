@@ -70,15 +70,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@color/background_color"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/view_mood_location_label"
+        app:layout_constraintBottom_toTopOf="@+id/view_mood_edit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_mood_reason_text"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_publicity_label"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <Button
@@ -95,28 +95,16 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/view_mood_trigger_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Trigger:"
-        android:textColor="@color/text_color"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_mood_toolbar" />
-
-    <TextView
         android:id="@+id/view_mood_situation_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="Social Situation:"
         android:textColor="@color/text_color"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_mood_trigger_label" />
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_toolbar" />
 
     <TextView
         android:id="@+id/view_mood_reason_label"
@@ -135,11 +123,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="Location:"
         android:textColor="@color/text_color"
         android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/view_mood_reason_text"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="567dp" />
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_reason_text" />
+
+    <TextView
+        android:id="@+id/view_mood_publicity_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="☑ Public"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/view_mood_location_label"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_location_label" />
 
     <TextView
         android:id="@+id/view_mood_location_text"
@@ -158,21 +159,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/screen_color"
-        android:tint="@color/text_color"
+        app:tint="@color/text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
-
-    <TextView
-        android:id="@+id/view_mood_trigger_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="[Trigger]"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view_mood_trigger_label"
-        app:layout_constraintStart_toEndOf="@+id/view_mood_trigger_label"
-        app:layout_constraintTop_toTopOf="@+id/view_mood_trigger_label" />
 
     <TextView
         android:id="@+id/view_mood_situation_text"

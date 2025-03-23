@@ -1,13 +1,29 @@
 package com.example.moodmasters.Objects.ObjectsMisc;
 
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
+import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.MVC.MVCBackendList;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class MoodEventList extends MVCBackendList<MoodEvent> {
     private final FilterMoodEventList filter;
-    public MoodEventList(){
-        super();
+    
+    public MoodEventList() {
+        filter = new FilterMoodEventList();
+    }
+
+    public MoodEventList(ArrayList<MoodEvent> list, DocumentReference docRef, DocumentSnapshot snapshot){
+        super(list, docRef, snapshot);
+        filter = new FilterMoodEventList();
+    }
+    public MoodEventList(DocumentReference docRef, DocumentSnapshot snapshot){
+        super(docRef, snapshot);
         filter = new FilterMoodEventList();
     }
     public void recentFilterMoodEventList(){

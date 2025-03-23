@@ -3,93 +3,144 @@ package com.example.moodmasters.Objects.ObjectsApp;
 import android.net.Uri;
 
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+import androidx.annotation.Nullable;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.HashMap;
+
+/**
+ * This is a class that represents a single mood event created by a user.
+ */
 public class MoodEvent {
     private String datetime;
-    private long epoch_time;            /* necessary for storing on database, there might be a better solution as opposed to increasing class size but this is fine for now*/
+    private long epoch_time;
     private Mood mood;
-    private Participant participant;        /*Member isn't really necessary for halfway milestone but will be for map implementation*/
     private String reason;
-    private String trigger;
     private SocialSituation.State situation;
-
+    private boolean is_public;
+    private LatLng location;
+    private String username;
     private Uri photoUri;
 
 
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, Participant init_participant, String init_reason){
+    /**
+     * MoodEvent constructor.
+     * @param init_datetime
+     *  This is the MoodEvent's datetime.
+     * @param init_epoch_time
+     *  This is the MoodEvent's epoch time.
+     * @param init_mood
+     *  This is the MoodEvent's Mood.
+     * @param init_reason
+     *  (optional) This is the MoodEvent's reason.
+     * @param init_situation
+     *  (optional) This is the MoodEvent's social situation.
+     * @param init_is_public
+     *  This is the MoodEvent's publicity.
+     * @param init_location
+     *  (optional) This is the MoodEvent's location
+     */
+    public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
+                     @Nullable String init_reason,
+                     @Nullable SocialSituation.State init_situation, @Nullable LatLng init_location,
+                     String init_username, Uri init_uri){
         datetime = init_datetime;
         mood = init_mood;
-        participant = init_participant;
         epoch_time = init_epoch_time;
         reason = init_reason;
-    }
-    public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, Participant init_participant, String init_reason,
-                     String init_trigger){
-        this(init_datetime, init_epoch_time, init_mood, init_participant, init_reason);
-        trigger = init_trigger;
-    }
-    public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, Participant init_participant, String init_reason,
-                     SocialSituation.State init_situation){
-        this(init_datetime, init_epoch_time, init_mood, init_participant, init_reason);
         situation = init_situation;
-    }
-    public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, Participant init_participant, String init_reason,
-                     String init_trigger, SocialSituation.State init_situation){
-        this(init_datetime, init_epoch_time, init_mood, init_participant, init_reason);
-        trigger = init_trigger;
-        situation = init_situation;
+        is_public = init_is_public;
+        location = init_location;
+        username = init_username;
+        photoUri = init_uri;
     }
 
-    public MoodEvent() {
-
+    /**
+     * MoodEvent constructor.
+     * @param map
+     *  This is a HashMap retrieved from the Firebase database containing mood event information.
+     */
+    public MoodEvent(HashMap map) {
+        datetime = (String) map.get("datetime");
+        mood = new Mood((HashMap) map.get("mood"));
+        epoch_time = (long) map.get("epochTime");
+        reason = (String) map.get("reason");
+        situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
+        is_public = (boolean) map.get("is_public");
+        location = (LatLng) map.get("location");
+        username = (String) map.get("username");
     }
 
-    public String getDatetime(){
+    /**
+     * datetime getter
+     */
+    public String getDatetime() {
         return datetime;
     }
-    public long getEpochTime(){
+
+    /**
+     * epoch_time getter
+     */
+    public long getEpochTime() {
         return epoch_time;
     }
-    public Mood getMood(){
+
+    /**
+     * mood getter
+     */
+    public Mood getMood() {
         return mood;
     }
-    public Participant getParticipant(){
-        return participant;
-    }
-    public String getReason(){
+
+    /**
+     * reason getter
+     */
+    public String getReason() {
         return reason;
     }
-    public String getTrigger(){
-        return trigger;
-    }
-    public SocialSituation.State getSituation(){
+
+    /**
+     * situation getter
+     */
+    public SocialSituation.State getSituation() {
         return situation;
     }
 
-    public void setDatetime(String new_datetime){
+    /**
+     * datetime setter
+     */
+    public void setDatetime(String new_datetime) {
         datetime = new_datetime;
     }
-    public void getEpochTime(long new_epoch_time){
+
+    /**
+     * epoch_time setter
+     */
+    public void getEpochTime(long new_epoch_time) {
         epoch_time = new_epoch_time;
     }
-    public void setMood(Mood new_mood){
+
+    /**
+     * mood setter
+     */
+    public void setMood(Mood new_mood) {
         mood = new_mood;
     }
-    public void setParticipant(Participant new_participant){
-        participant = new_participant;
-    }
-    public void setReason(String new_reason){
+
+    /**
+     * reason setter
+     */
+    public void setReason(String new_reason) {
         reason = new_reason;
     }
-    public void setTrigger(String new_trigger){
-        trigger = new_trigger;
-    }
-    public void setSituation(SocialSituation.State new_situation){
-        situation = new_situation;
-    }
 
-    public MoodEvent(Uri photoUri, String moodDescription, String reasonForMood) {
-        this.photoUri = photoUri;
+    /**
+     * situation setter
+     */
+    public void setSituation(SocialSituation.State new_situation) {
+        situation = new_situation;
     }
 
     // Getter and Setter for photoUri
@@ -103,5 +154,34 @@ public class MoodEvent {
 
     public String getId() {
         return "";
+    }
+    /**
+     * is_public getter
+     */
+    public boolean isIs_public() {
+        return is_public;
+    }
+
+    /**
+     * is_public setter
+     */
+    public void setIs_public(boolean is_public) {
+        this.is_public = is_public;
+    }
+
+    public LatLng getLocation() {
+        return location;
+    }
+
+    public void setLocation(LatLng location) {
+        this.location = location;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

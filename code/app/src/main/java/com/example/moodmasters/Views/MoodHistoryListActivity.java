@@ -15,12 +15,27 @@ import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
+import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
+import com.example.moodmasters.MVC.MVCModel;
+import com.example.moodmasters.MVC.MVCView;
+import com.example.moodmasters.Objects.ObjectsApp.Emotion;
+import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
+import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
+import com.example.moodmasters.R;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
 
 public class MoodHistoryListActivity extends AppCompatActivity implements MVCView {
     private MoodHistoryListView mood_history_view;
     private String username;
+    
+    // mock MoodEvent ArrayList for testing
+    private ArrayList<MoodEvent> mock_mood_events;
 
-    // Removed the controller call from the constructor
     public MoodHistoryListActivity(){
         super();
         // Avoid calling controller.addBackendView here; do it in onCreate instead.
@@ -33,12 +48,35 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
 
     @Override
     public void initialize(MVCModel model){
-        Participant user = (Participant) model.getBackendObject(BackendObject.State.USER);
-        if(user != null){
-            username = user.getUsername();
-        } else {
-            username = "Unknown"; // Fallback if user is null.
-        }
+        Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
+        username = user.getUsername();
+
+        // mock MoodEvent ArrayList for testing
+        mock_mood_events = new ArrayList<>();
+        mock_mood_events.add(new MoodEvent("Mar 15 2025 | 21:30",
+                1742099444745L,
+                ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
+                true,
+                "",
+                SocialSituation.State.NONE,
+                new LatLng(20, 20),
+                "user_1"));
+        mock_mood_events.add(new MoodEvent("Mar 15 2025 | 21:30",
+                1742099444745L,
+                ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
+                true,
+                "",
+                SocialSituation.State.NONE,
+                new LatLng(25, 25),
+                "user_2"));
+        mock_mood_events.add(new MoodEvent("Mar 15 2025 | 21:30",
+                1742099444745L,
+                ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
+                true,
+                "",
+                SocialSituation.State.NONE,
+                new LatLng(30, 30),
+                "user_3"));
     }
 
     @Override
@@ -54,16 +92,8 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
 
         // Set the username text; if username is still null, use a fallback message.
         TextView username_view = findViewById(R.id.user_mood_history_label);
-        if(username != null) {
-            username_view.setText(username);
-        } else {
-            username_view.setText("No username");
-        }
-
-        // Create the backend object for the mood history list.
-        if(controller != null) {
-            controller.createBackendObject(BackendObject.State.MOODHISTORYLIST);
-        }
+        username_view.setText(username);
+        controller.createBackendObject(BackendObject.State.MOODHISTORYLIST);
 
         // Initialize the mood history view.
         mood_history_view = new MoodHistoryListView(this);
@@ -75,16 +105,28 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 controller.execute(new MoodHistoryListMenuEvent(), this);
             });
         }
+        menu_button.setOnClickListener(v -> {
+            controller.execute(new MoodHistoryListMenuEvent(), this);
+        });
 
         // Set listener for the add button.
         Button add_button = findViewById(R.id.user_mood_history_add_button);
-        if(add_button != null && controller != null) {
-            add_button.setOnClickListener(v -> {
-                controller.execute(new MoodHistoryListAddEvent(), this);
-            });
-        }
 
-        // Uncomment when you want to implement mood event viewing:
-        // mood_history_view.setListElementClicker();
+        add_button.setOnClickListener(v -> {
+            controller.execute(new MoodHistoryListAddEvent(), this);
+        });
+
+        Button sortButton = findViewById(R.id.user_mood_history_sort_button);
+        sortButton.setOnClickListener(v -> {
+            mood_history_view.toggleSort();
+        });
+
+        Button map_button = findViewById(R.id.user_mood_history_show_map_button);
+        map_button.setOnClickListener(v -> {
+            // TODO: Replace mock_mood_events with appropriate MoodEvent ArrayList
+            controller.execute(new MoodHistoryScreenShowMapEvent(mock_mood_events), this);
+        });
+
+        mood_history_view.setListElementClicker();
     }
 }

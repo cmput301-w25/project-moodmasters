@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,9 +21,12 @@ import com.example.moodmasters.Events.AddMoodEventConfirmEvent;
 import com.example.moodmasters.Events.AlterMoodEventCancelEvent;
 import com.example.moodmasters.Events.UploadPhotoEvent;
 import com.example.moodmasters.MVC.MVCController;
+import com.example.moodmasters.Events.EditMoodEventConfirmEvent;
+import com.example.moodmasters.Events.MoodEventViewingEditEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
+import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
@@ -55,16 +60,19 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
     }
 
     public void addMoodEventCode() {
+        TextView label_view = findViewById(R.id.alter_mood_main_label);
+        label_view.setText("Add MoodEvent");
+
         Spinner emotions_spinner = findViewById(R.id.alter_mood_emotion_spinner);
         ArrayAdapter<String> emotions_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, emotions_list);
         emotions_spinner.setAdapter(emotions_adapter);
 
         Spinner social_situations_spinner = findViewById(R.id.alter_mood_situation_spinner);
-        ArrayAdapter<String> social_situations_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, social_situations_list);
+        ArrayAdapter<String> social_situations_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, social_situations_list);
         social_situations_spinner.setAdapter(social_situations_adapter);
 
-        EditText trigger_text = findViewById(R.id.alter_mood_enter_trigger);
         EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
+
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 
         confirm_button.setOnClickListener(v -> {
@@ -72,17 +80,40 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         });
     }
 
-    public void editMoodEventCode() {
-        // TODO: Add code for editing mood event
+    public void editMoodEventCode(){
+        TextView label_view = findViewById(R.id.alter_mood_main_label);
+        label_view.setText("Edit MoodEvent");
+
+        MoodEvent current_mood_event = MoodEventViewingEditEvent.getMoodEvent();
+        int position = MoodEventViewingEditEvent.getPosition();
+
+        Spinner emotions_spinner = findViewById(R.id.alter_mood_emotion_spinner);
+        ArrayAdapter<String> emotions_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, emotions_list);
+        emotions_spinner.setAdapter(emotions_adapter);
+        int emotion_default_pos = emotions_adapter.getPosition(current_mood_event.getMood().getEmotionString());
+        emotions_spinner.setSelection(emotion_default_pos);
+
+        Spinner social_situations_spinner = findViewById(R.id.alter_mood_situation_spinner);
+        ArrayAdapter<String> social_situations_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, social_situations_list);
+        social_situations_spinner.setAdapter(social_situations_adapter);
+        int social_default_pos = social_situations_adapter.getPosition(SocialSituation.getString(current_mood_event.getSituation()));
+        social_situations_spinner.setSelection(social_default_pos);
+
+        EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
+        reason_text.setText(current_mood_event.getReason());
+
+        CheckBox check_public = findViewById(R.id.alter_mood_public_checkbox);
+        check_public.setChecked(current_mood_event.isIs_public());
+
+        Button confirm_button = findViewById(R.id.alter_mood_ok_button);
+
+        confirm_button.setOnClickListener(v -> {
+            controller.execute(new EditMoodEventConfirmEvent(current_mood_event, position), this);
+        });
     }
 
-    public boolean addDataVerification(String reason_string) {
-        if (reason_string.length() > 20) {
-            return false;
-        }
-        String regex = "\\W+";
-        String[] words = reason_string.split(regex);
-        return words.length <= 3;
+    public boolean addDataVerification(String reason_string){
+        return reason_string.length() > 200;
     }
 
     @Override
@@ -105,7 +136,6 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
             editMoodEventCode();
         }
 
-        // Set listener for cancel button.
         Button cancel_button = findViewById(R.id.alter_mood_cancel_button);
         cancel_button.setOnClickListener(v -> {
             controller.execute(new AlterMoodEventCancelEvent(), this);
