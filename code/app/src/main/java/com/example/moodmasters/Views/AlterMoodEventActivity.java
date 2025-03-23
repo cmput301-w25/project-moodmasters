@@ -19,7 +19,6 @@ import com.example.moodmasters.Events.MoodEventViewingEditEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
-import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.R;
@@ -102,15 +101,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
     }
 
     public boolean addDataVerification(String reason_string){
-        if (reason_string.length() > 20){
-            return false;
-        }
-        String regex = "\\W+";
-        String[] words = reason_string.split(regex);
-        if (words.length > 3){
-            return false;
-        }
-        return true;
+        return reason_string.length() > 200;
     }
 
     @Override
