@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class MoodFollowingList extends MoodEventList {
+    private static final int mood_events_per_participant = 3;
     public MoodFollowingList(ArrayList<MoodEvent> list) {
         super(list);
     }
@@ -23,5 +24,8 @@ public class MoodFollowingList extends MoodEventList {
     }
     public void addDatabaseData(MVCDatabase database, Object object){
         // not needed for mood following list
+    }
+    public static int getMoodEventsPerParticipant(){
+        return mood_events_per_participant;
     }
 }

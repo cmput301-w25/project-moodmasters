@@ -83,7 +83,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         reason_text.setText(current_mood_event.getReason());
 
         CheckBox check_public = findViewById(R.id.alter_mood_public_checkbox);
-        check_public.setChecked(current_mood_event.isIs_public());
+        check_public.setChecked(current_mood_event.getIsPublic());
 
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 

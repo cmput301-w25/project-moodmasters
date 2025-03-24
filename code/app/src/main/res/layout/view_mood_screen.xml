@@ -6,6 +6,33 @@
     android:layout_height="match_parent"
     android:background="@color/screen_color">
 
+    <TextView
+        android:id="@+id/view_mood_creator_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="13dp"
+        android:text="[Participant]"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/view_mood_toolbar"
+        app:layout_constraintStart_toEndOf="@+id/view_mood_creator_label"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/view_mood_creator_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="12dp"
+        android:text="Creator:"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/view_mood_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/view_mood_toolbar"
         android:layout_width="0dp"
@@ -68,7 +95,7 @@
     <ImageView
         android:id="@+id/view_mood_photo_view"
         android:layout_width="396dp"
-        android:layout_height="334dp"
+        android:layout_height="273dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -79,6 +106,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_mood_publicity_label"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <Button

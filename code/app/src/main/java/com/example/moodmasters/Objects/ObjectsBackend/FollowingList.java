@@ -88,10 +88,20 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
         ArrayList<MoodEvent> followees_recent_mood_events = new ArrayList<MoodEvent>();
         for (Participant participant: following_list){
             MoodHistoryList participant_history_list = participant.getMoodHistoryList();
-            List<MoodEvent> folowee_history_list = participant_history_list.getList();
-            folowee_history_list.sort((a, b) -> Long.compare(a.getEpochTime(), b.getEpochTime()));
-            int upper_bound = Math.min(3, folowee_history_list.size());         /*hard coded to 3 for now, need to update later*/
-            followees_recent_mood_events.addAll(folowee_history_list.subList(0, upper_bound));
+            List<MoodEvent> followee_history_list = participant_history_list.getList();
+            followee_history_list.sort((a, b) -> Long.compare(a.getEpochTime(), b.getEpochTime()));
+            List<MoodEvent> most_recent_mood_events = new ArrayList<MoodEvent>();
+            int i = 0;
+            for (MoodEvent mood_event: followee_history_list){
+                if (mood_event.getIsPublic()){
+                    most_recent_mood_events.add(mood_event);
+                    i++;
+                }
+                if (i == MoodFollowingList.getMoodEventsPerParticipant()){
+                    break;
+                }
+            }
+            followees_recent_mood_events.addAll(most_recent_mood_events);
         }
         return new MoodFollowingList(followees_recent_mood_events);
     }
