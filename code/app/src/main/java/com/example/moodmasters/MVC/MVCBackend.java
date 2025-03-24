@@ -12,19 +12,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * adding a mood event to their mood history list).
  *
  * */
-public interface MVCBackend {
-    /**
-     * Setup the initial interaction with the database if it's necessary
-     * @param snapshot
-     *  Snapshot for fast interaction with document
-     * @param docRef
-     *  The database document needed for setup
-     * */
-    public void setDatabaseData(DocumentReference docRef, DocumentSnapshot snapshot); // necessary
-    /**
-     * Update database with gotten data
-     * @param docRef
-     *  The database document needed for updating
-     * */
-    public void updateDatabaseData(DocumentReference docRef);
+public class MVCBackend{
 }
+

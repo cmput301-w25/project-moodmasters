@@ -1,6 +1,8 @@
 package com.example.moodmasters.Objects.ObjectsBackend;
 
 import com.example.moodmasters.MVC.MVCBackendList;
+import com.example.moodmasters.MVC.MVCDatabase;
+import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.google.firebase.firestore.DocumentReference;
@@ -25,11 +27,11 @@ public class MoodList extends MVCBackendList<Mood> {
         super(init_list);
     }
 
-    public void setDatabaseData(DocumentReference docRef, DocumentSnapshot snapshot){
+    public void addDatabaseData(MVCDatabase database, Object object){
         // doesn't need database connectivity
     }
 
-    public void updateDatabaseData(DocumentReference docRef){
+    public void removeDatabaseData(MVCDatabase database, Object object){
         // doesn't need database connectivity
     }
 
@@ -61,4 +63,5 @@ public class MoodList extends MVCBackendList<Mood> {
         }
         return emotion_names;
     }
+
 }

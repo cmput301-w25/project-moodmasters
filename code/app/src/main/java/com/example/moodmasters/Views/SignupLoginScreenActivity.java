@@ -12,7 +12,10 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-
+/**
+ * Startup activity for the app that allows a user to signup or login and access the app
+ *
+ * */
 public class SignupLoginScreenActivity extends AppCompatActivity implements MVCView {
     private boolean isSignUp = true;
 
@@ -29,7 +32,6 @@ public class SignupLoginScreenActivity extends AppCompatActivity implements MVCV
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.signup_login_screen);
-
         controller.createBackendObject(BackendObject.State.MOODLIST);
 
         Button ok_button = findViewById(R.id.signup_login_ok_button);

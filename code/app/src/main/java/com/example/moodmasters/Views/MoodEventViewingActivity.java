@@ -1,6 +1,8 @@
 package com.example.moodmasters.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.moodmasters.Events.DeleteMoodEventConfirmEvent;
 import com.example.moodmasters.Events.ExitMoodEventViewingEvent;
 import com.example.moodmasters.Events.MoodEventViewingEditEvent;
+import com.example.moodmasters.Events.MoodFollowingListClickMoodEvent;
 import com.example.moodmasters.Events.MoodHistoryListClickMoodEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
@@ -26,15 +29,13 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
     private MoodEvent displayed_mood_event;
     private int position;
     private boolean edit_clicked;
+    private String mood_event_list;
     public MoodEventViewingActivity(){
         super();
         edit_clicked = false;
-        displayed_mood_event = MoodHistoryListClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
-        position = MoodHistoryListClickMoodEvent.getPosition();
-        controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
     }
     public void update(MVCModel model){
-        if (edit_clicked){
+        if (edit_clicked && mood_event_list.equals("MoodHistoryList")){
             displayed_mood_event = model.getFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
             setScreen();
         }
@@ -71,6 +72,23 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.view_mood_screen);
+
+        Intent i = getIntent();
+        mood_event_list = i.getStringExtra("MoodEventList");
+        if (mood_event_list.equals("MoodHistoryList")){
+            displayed_mood_event = MoodHistoryListClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
+            position = MoodHistoryListClickMoodEvent.getPosition();
+            controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
+        }
+        else if (mood_event_list.equals("MoodFollowingList")){
+            displayed_mood_event = MoodFollowingListClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
+            position = MoodFollowingListClickMoodEvent.getPosition();
+            controller.addBackendView(this, BackendObject.State.MOODFOLLOWINGLIST);
+        }
+        else{
+            throw new IllegalArgumentException("Error: invalid string extra given to MoodEventViewingActivity");
+        }
+
         setScreen();
 
         ImageButton exit_button = findViewById(R.id.view_mood_x_button);
@@ -80,15 +98,19 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         exit_button.setOnClickListener(v -> {
             controller.execute(new ExitMoodEventViewingEvent(), this);
         });
-
-        edit_button.setOnClickListener(v -> {
-            edit_clicked = true;
-            controller.execute(new MoodEventViewingEditEvent(displayed_mood_event, position), this);
-        });
-
-        delete_button.setOnClickListener(v -> {
-            edit_clicked = false;
-            controller.execute(new DeleteMoodEventConfirmEvent(displayed_mood_event, position), this);
-        });
+        if (mood_event_list.equals("MoodHistoryList")){
+            edit_button.setOnClickListener(v -> {
+                edit_clicked = true;
+                controller.execute(new MoodEventViewingEditEvent(displayed_mood_event, position), this);
+            });
+            delete_button.setOnClickListener(v -> {
+                edit_clicked = false;
+                controller.execute(new DeleteMoodEventConfirmEvent(displayed_mood_event, position), this);
+            });
+        }
+        else if (mood_event_list.equals("MoodFollowingList")){
+            ((ViewManager) edit_button.getParent()).removeView(edit_button);
+            ((ViewManager) delete_button.getParent()).removeView(delete_button);
+        }
     }
 }

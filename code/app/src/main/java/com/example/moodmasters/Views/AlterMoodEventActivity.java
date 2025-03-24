@@ -53,8 +53,6 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         ArrayAdapter<String> social_situations_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, social_situations_list);
         social_situations_spinner.setAdapter(social_situations_adapter);
 
-        EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
-
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 
         confirm_button.setOnClickListener(v -> {

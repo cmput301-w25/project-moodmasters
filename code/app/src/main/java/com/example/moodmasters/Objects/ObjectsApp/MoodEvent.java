@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This is a class that represents a single mood event created by a user.
@@ -37,9 +38,8 @@ public class MoodEvent {
      *  (optional) This is the MoodEvent's location
      */
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
-                     @Nullable String init_reason,
-                     @Nullable SocialSituation.State init_situation, @Nullable LatLng init_location,
-                     String init_username){
+                     @Nullable String init_reason, @Nullable SocialSituation.State init_situation,
+                     @Nullable LatLng init_location, String init_username){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
@@ -56,6 +56,7 @@ public class MoodEvent {
      *  This is a HashMap retrieved from the Firebase database containing mood event information.
      */
     public MoodEvent(HashMap map) {
+        // map.forEach((key, value) -> System.out.println(key + ":" + value));
         datetime = (String) map.get("datetime");
         mood = new Mood((HashMap) map.get("mood"));
         epoch_time = (long) map.get("epochTime");
@@ -65,6 +66,10 @@ public class MoodEvent {
         HashMap location_map = (HashMap) map.get("location");
         location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
         username = (String) map.get("username");
+    }
+
+    public String getStringMoodEvent(){
+        return mood.getEmotionString() + " " +  reason + " " + SocialSituation.getString(situation) + " " + datetime;
     }
 
     /**
@@ -140,14 +145,14 @@ public class MoodEvent {
     /**
      * is_public getter
      */
-    public boolean isIs_public() {
+    public boolean getIsPublic() {
         return is_public;
     }
 
     /**
      * is_public setter
      */
-    public void setIs_public(boolean is_public) {
+    public void setIsPublic(boolean is_public) {
         this.is_public = is_public;
     }
 
