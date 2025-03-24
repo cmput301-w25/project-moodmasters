@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_color">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/view_mood_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/mood_default_color"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_x_button" />
+
+    <ImageButton
+        android:id="@+id/view_mood_x_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/screen_color"
+        app:tint="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+    <TextView
+        android:id="@+id/view_mood_date_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Jan 1 | 00:00"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_mood_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_mood_toolbar" />
+
+    <TextView
+        android:id="@+id/view_mood_emoji_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/mood_emoji_default"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_mood_toolbar"
+        app:layout_constraintStart_toStartOf="@+id/view_mood_toolbar"
+        app:layout_constraintTop_toTopOf="@+id/view_mood_toolbar" />
+
+    <TextView
+        android:id="@+id/view_mood_emotion_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Mood"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_mood_toolbar"
+        app:layout_constraintStart_toEndOf="@+id/view_mood_emoji_label"
+        app:layout_constraintTop_toTopOf="@+id/view_mood_toolbar" />
+
+    <ListView
+        android:id="@+id/view_mood_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_emotion_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view_mood_button" />
+
+    <!-- Button under the ListView -->
+    <Button
+        android:id="@+id/view_mood_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add a Comment"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/button_color"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
