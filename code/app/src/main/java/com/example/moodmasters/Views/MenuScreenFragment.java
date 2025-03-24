@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.moodmasters.Events.LogOutEvent;
+import com.example.moodmasters.Events.UserSearchEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.R;
@@ -30,12 +31,6 @@ public class MenuScreenFragment extends DialogFragment implements MVCView {
             controller.execute(new LogOutEvent(), getContext());
         });
 
-        Button userSearchButton = view.findViewById(R.id.options_follow_requests_button);
-        userSearchButton.setOnClickListener(v -> {
-            dismiss(); // close the menu dialog before opening  UserSearch screen
-            Intent intent = new Intent(getActivity(), UserSearchActivity.class);
-            startActivity(intent);
-        });
 
         Button followRequestsButton = view.findViewById(R.id.options_ask_to_follow_button);
         followRequestsButton.setOnClickListener(v -> {

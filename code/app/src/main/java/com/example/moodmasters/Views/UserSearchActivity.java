@@ -5,15 +5,18 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moodmasters.Events.ChangeActivityEvent;
 import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.Events.UserSearchOkEvent;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -22,7 +25,10 @@ import java.util.ArrayList;
 public class UserSearchActivity extends AppCompatActivity {
     private EditText searchInput;
     private ListView searchResultsListView;
-    private Button backButton, searchButton;
+
+
+    private Button searchButton;
+    private ImageButton backButton;
     private ArrayAdapter<String> adapter;
     private UserSearchOkEvent searchEvent;
     private Participant currentUser;
@@ -32,7 +38,6 @@ public class UserSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_search_screen);
-
         searchInput = findViewById(R.id.searchInput);
         searchResultsListView = findViewById(R.id.searchResultsListView);
         backButton = findViewById(R.id.backButton);
@@ -44,12 +49,8 @@ public class UserSearchActivity extends AppCompatActivity {
 
         // Retrieve the current participant's username
         currentUser = new Participant(LoginScreenOkEvent.getUsername());
-
         searchEvent = new UserSearchOkEvent(currentUser);
-
-        // Handle Back Button
         backButton.setOnClickListener(v -> finish());
-
         // Handle Search Button
         searchButton.setOnClickListener(v -> {
             String query = searchInput.getText().toString();

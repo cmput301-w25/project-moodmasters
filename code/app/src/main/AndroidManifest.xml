@@ -51,6 +51,7 @@
         </activity>
         <activity android:name=".Views.FollowRequestsActivity"
             android:exported="true"/>
+        <activity android:name=".Views.MoodFollowingListActivity" />
     </application>
 
 </manifest>

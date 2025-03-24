@@ -8,9 +8,12 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moodmasters.Events.ChangeActivityEvent;
+import com.example.moodmasters.Events.LogOutEvent;
 import com.example.moodmasters.Events.MoodHistoryListAddEvent;
 import com.example.moodmasters.Events.MoodHistoryListMenuEvent;
 import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
+import com.example.moodmasters.Events.UserSearchEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
@@ -21,10 +24,11 @@ import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class MoodHistoryListActivity extends AppCompatActivity implements MVCView {
+public class MoodHistoryListActivity extends ChangeActivityEvent implements MVCView {
     private MoodHistoryListView mood_history_view;
     private String username;
 
@@ -71,6 +75,7 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 SocialSituation.State.NONE,
                 new LatLng(30, 30),
                 "user_3"));
+        setMoodEventList(mock_mood_events);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,25 +88,17 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
 
         mood_history_view = new MoodHistoryListView(this);
 
-        ImageButton menu_button = findViewById(R.id.user_mood_history_menu_button);
-        menu_button.setOnClickListener(v -> {
-            controller.execute(new MoodHistoryListMenuEvent(), this);
-        });
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation_view);
+        setupBottomNav(nav, R.id.home_button);
 
-        Button add_button = findViewById(R.id.user_mood_history_add_button);
+        ImageButton add_button = findViewById(R.id.user_mood_history_add_button);
         add_button.setOnClickListener(v -> {
             controller.execute(new MoodHistoryListAddEvent(), this);
         });
 
-        Button sortButton = findViewById(R.id.user_mood_history_sort_button);
+        ImageButton sortButton = findViewById(R.id.user_mood_history_sort_button);
         sortButton.setOnClickListener(v -> {
             mood_history_view.toggleSort();
-        });
-
-        Button map_button = findViewById(R.id.user_mood_history_show_map_button);
-        map_button.setOnClickListener(v -> {
-            // TODO: Replace mock_mood_events with appropriate MoodEvent ArrayList
-            controller.execute(new MoodHistoryScreenShowMapEvent(mock_mood_events), this);
         });
 
         mood_history_view.setListElementClicker();

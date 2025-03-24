@@ -15,64 +15,26 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/user_mood_history_add_button"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/button_color"
-        android:text="+"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/user_mood_history_filter_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/button_color"
-        android:text="Filter"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_mood_history_toolbar" />
-
-    <Button
-        android:id="@+id/user_mood_history_show_map_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/button_color"
-        android:text="Show Map"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/user_mood_history_sort_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/button_color"
-        android:text="▼ Sort"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_mood_history_toolbar" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu"/>
+
 
     <TextView
         android:id="@+id/user_mood_history_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="Username"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/text_color"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/user_mood_history_toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/user_mood_history_toolbar"
         app:layout_constraintStart_toStartOf="@+id/user_mood_history_toolbar"
         app:layout_constraintTop_toTopOf="@+id/user_mood_history_toolbar" />
 
@@ -81,22 +43,52 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
         android:background="@color/background_color"
-        app:layout_constraintBottom_toTopOf="@+id/user_mood_history_show_map_button"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_mood_history_filter_button">
     </ListView>
 
     <ImageButton
-        android:id="@+id/user_mood_history_menu_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/button_color"
-        app:layout_constraintBottom_toBottomOf="@+id/user_mood_history_toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/user_mood_history_toolbar"
-        app:layout_constraintTop_toTopOf="@+id/user_mood_history_toolbar"
-        app:srcCompat="@android:drawable/ic_dialog_dialer" />
+        android:id="@+id/user_mood_history_filter_button"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Filter Mood List"
+        android:src="@drawable/filter_mood_list_icon"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_mood_history_toolbar" />
+
+    <ImageButton
+        android:id="@+id/user_mood_history_sort_button"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Sort Mood List"
+        android:src="@drawable/sort_mood_list_icon"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_mood_history_toolbar" />
+
+    <ImageButton
+        android:id="@+id/user_mood_history_add_button"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Add a Mood"
+        android:src="@drawable/add_mood_icon"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/mood_history_list"
+        app:layout_constraintEnd_toStartOf="@+id/user_mood_history_sort_button"
+        app:layout_constraintStart_toEndOf="@+id/user_mood_history_filter_button"
+        app:layout_constraintTop_toBottomOf="@+id/user_mood_history_toolbar" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

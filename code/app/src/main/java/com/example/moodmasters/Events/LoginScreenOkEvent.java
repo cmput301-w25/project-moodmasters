@@ -42,7 +42,7 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         // Allow the same action for both Login and Sign Up (minimal changes)
         EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
-        TextView label = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_label);
+        TextView label = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_ok_button);
         username = entered_username.getText().toString().trim();
 
 

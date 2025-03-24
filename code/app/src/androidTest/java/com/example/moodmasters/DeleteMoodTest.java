@@ -90,8 +90,7 @@ public class DeleteMoodTest {
         onView(withText("Happy")).check(matches(isDisplayed()));
 
         // Logout/login
-        onView(withId(R.id.user_mood_history_menu_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
