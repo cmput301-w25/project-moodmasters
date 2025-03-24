@@ -65,6 +65,7 @@ public class MoodEvent {
 
         epoch_time = (long) map.get("epochTime");
 
+        // add support for phones with possibly different timezones than the one of the mood event poster
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(epoch_time);
         DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
