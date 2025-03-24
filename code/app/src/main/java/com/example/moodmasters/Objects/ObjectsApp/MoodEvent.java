@@ -1,9 +1,13 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
+import android.icu.util.Calendar;
+
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,14 +61,24 @@ public class MoodEvent {
      */
     public MoodEvent(HashMap map) {
         // map.forEach((key, value) -> System.out.println(key + ":" + value));
-        datetime = (String) map.get("datetime");
         mood = new Mood((HashMap) map.get("mood"));
+
         epoch_time = (long) map.get("epochTime");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(epoch_time);
+        DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
+        datetime = format.format(calendar.getTime());
+
         reason = (String) map.get("reason");
+
         situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
+
         is_public = (boolean) map.get("isPublic");
+
         HashMap location_map = (HashMap) map.get("location");
         location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
+
         username = (String) map.get("username");
     }
 

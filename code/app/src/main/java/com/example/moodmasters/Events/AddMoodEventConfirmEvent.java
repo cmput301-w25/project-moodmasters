@@ -1,6 +1,7 @@
 package com.example.moodmasters.Events;
 
 import android.content.Context;
+import android.icu.util.Calendar;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -42,16 +43,10 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
         boolean is_public = check_public.isChecked();
 
         long epoch_time = System.currentTimeMillis();           /* Epoch time will be the time stored on the database for easy conversion to different time zones */
-        Date date = new Date(epoch_time);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(epoch_time);
         DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
-        TimeZone timezone = TimeZone.getDefault();
-        System.out.println(epoch_time);
-        System.out.println(timezone.getDisplayName());
-        format.setTimeZone(TimeZone.getTimeZone(timezone.getDisplayName(false, TimeZone.SHORT)));
-        String datetime = format.format(date);
-        System.out.println(datetime);
-
-        Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
+        String datetime = format.format(calendar.getTime());
 
         if (activity.addDataVerification(reason_string)){
             reason_text.setError("Must be less than 20 characters and only 3 words");
@@ -61,9 +56,9 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
         // mock location for testing
         LatLng location = new LatLng(0, 0);
 
+        Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion),
-                is_public, reason_string, social_situation, location,
-                ((Participant) model.getBackendObject(BackendObject.State.USER)).getUsername());
+                is_public, reason_string, social_situation, location, user.getUsername());
         model.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
 
