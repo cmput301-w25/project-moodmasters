@@ -56,7 +56,7 @@ public class MoodEvent {
      *  This is a HashMap retrieved from the Firebase database containing mood event information.
      */
     public MoodEvent(HashMap map) {
-        map.forEach((key, value) -> System.out.println(key + ":" + value));
+        // map.forEach((key, value) -> System.out.println(key + ":" + value));
         datetime = (String) map.get("datetime");
         mood = new Mood((HashMap) map.get("mood"));
         epoch_time = (long) map.get("epochTime");

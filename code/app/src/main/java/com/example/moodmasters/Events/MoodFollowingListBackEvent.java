@@ -10,7 +10,7 @@ import com.example.moodmasters.Views.MoodFollowingListActivity;
 public class MoodFollowingListBackEvent implements MVCController.MVCEvent {
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        model.removeBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
+        //model.removeBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
         MoodFollowingListActivity mood_following_list = (MoodFollowingListActivity) context;
         model.removeView(mood_following_list);
         model.removeView(mood_following_list.getMoodFollowingListView());

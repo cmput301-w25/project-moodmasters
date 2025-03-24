@@ -6,7 +6,9 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
 import com.example.moodmasters.Events.MoodFollowingListShowFilterEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
@@ -43,9 +45,11 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
         setContentView(R.layout.user_mood_following_screen);
         TextView username_view = findViewById(R.id.user_mood_following_label);
         username_view.setText(username);
+        /*
         if (!controller.existsBackendObject(BackendObject.State.MOODFOLLOWINGLIST)){
             controller.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
         }
+         */
         mood_following_view = new MoodFollowingListView(this);
 
         Button sort_button = findViewById(R.id.user_mood_following_sort_button);
@@ -63,6 +67,10 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
             controller.execute(new MoodFollowingListBackEvent(), this);
         });
 
+        SwipeRefreshLayout swipe_container = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        swipe_container.setOnRefreshListener(() -> {
+            controller.execute(new MoodFollowingListRefreshEvent(), this);
+        });
         mood_following_view.setListElementClicker();
     }
 

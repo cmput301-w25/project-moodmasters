@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.moodmasters.Events.MoodEventListClickMoodEvent;
+import com.example.moodmasters.Events.MoodHistoryListClickMoodEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -31,7 +31,7 @@ public class MoodHistoryListView implements MVCView {
         mood_history_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                controller.execute(new MoodEventListClickMoodEvent(mood_history_adapter.getItem(position), position, MoodEventListClickMoodEvent.MoodList.MOODHISTORYLIST), context);
+                controller.execute(new MoodHistoryListClickMoodEvent(mood_history_adapter.getItem(position), position), context);
             }
         });
     }

@@ -7,7 +7,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.moodmasters.Events.LoginScreenOkEvent;
+import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
 import com.example.moodmasters.MVC.MVCBackend;
+import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCDatabase;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +105,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
     /*
     * just temporary for now while i add multithreading
     * */
-    public void setDatabaseData2(MVCDatabase database, MVCModel model){
+    public void setDatabaseData2(MVCDatabase database, MVCModel model, int index){
         database.addCollection("participants");
         database.addDocument(username);
         DocumentReference doc_ref = database.getDocument(username);
@@ -120,10 +123,21 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
                         mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
                     }
                     else{
-                        mood_history_list = new MoodHistoryList();
-                        Map<String, Object> map = new HashMap<String, Object>();
-                        map.put("list", mood_history_list.getList());
-                        doc_ref.set(map);
+                        throw new InvalidParameterException("Error: user in following list does not exist");
+                    }
+                    FollowingList.temp_bool_list[index] = true;
+                    if (!Arrays.asList(FollowingList.temp_bool_list).contains(false)){
+                        model.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
+                        Arrays.fill(FollowingList.temp_bool_list, false);
+                        try{
+                            MoodFollowingListRefreshEvent last_event = (MoodFollowingListRefreshEvent) model.getLastEvent();
+                            model.notifyViews(BackendObject.State.MOODFOLLOWINGLIST);
+                            last_event.updateSwipeContainer();
+                        }
+                        catch (Exception ignore){
+
+                        }
+
                     }
                 }
             }

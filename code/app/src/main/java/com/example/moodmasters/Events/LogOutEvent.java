@@ -16,6 +16,7 @@ public class LogOutEvent implements MVCController.MVCEvent {
         model.removeBackendObject(BackendObject.State.USER);
         model.removeBackendObject(BackendObject.State.MOODHISTORYLIST);
         model.removeBackendObject(BackendObject.State.FOLLOWINGLIST);
+        model.removeBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
         MoodHistoryListActivity mood_history_list = (MoodHistoryListActivity) context;
         model.removeView(mood_history_list);
         model.removeView(mood_history_list.getMoodHistoryListView());

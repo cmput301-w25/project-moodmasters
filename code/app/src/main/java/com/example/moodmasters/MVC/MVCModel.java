@@ -55,7 +55,7 @@ public class MVCModel {
             //throw new IllegalArgumentException("Error: Trying to add pre-existing backend object " + BackendObject.getString(backend_object));
         }
          */
-        dependencies.put(backend_object, new ArrayList<MVCView>());
+        dependencies.putIfAbsent(backend_object, new ArrayList<MVCView>());
         if (backend_object == BackendObject.State.USER){
             Participant user = new Participant(LoginScreenOkEvent.getUsername());
             backend_objects.put(backend_object, user);
@@ -87,7 +87,6 @@ public class MVCModel {
         else if (backend_object == BackendObject.State.MOODFOLLOWINGLIST){
             FollowingList following_list = (FollowingList) backend_objects.get(BackendObject.State.FOLLOWINGLIST);
             backend_objects.put(backend_object, following_list.getMoodFollowingList());
-            System.out.println(following_list.getMoodFollowingList().getList().size());
         }
     }
     /**
@@ -283,7 +282,7 @@ public class MVCModel {
     public <T> ArrayList<T> getBackendList(BackendObject.State backend_object){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
-            throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
+            throw new IllegalArgumentException("Error: Trying to get non-list backend object " + BackendObject.getString(backend_object));
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         return obj_list.getList();

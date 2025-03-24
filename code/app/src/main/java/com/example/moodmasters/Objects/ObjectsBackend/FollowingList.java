@@ -2,16 +2,19 @@ package com.example.moodmasters.Objects.ObjectsBackend;
 
 import androidx.annotation.NonNull;
 
+import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
 import com.example.moodmasters.MVC.MVCBackend;
 import com.example.moodmasters.MVC.MVCDatabase;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,8 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
     private CollectionReference followingRef;
     private CollectionReference followRequestsRef;
     private List<Participant> following_list;
+    public static Boolean[] temp_bool_list; // temporary to support this synchronous model to tell when the mood following list is ready
+
 
     public FollowingList(String userId) {
         this.db = FirebaseFirestore.getInstance();
@@ -45,7 +50,6 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
 
     @Override
     public void setDatabaseData(MVCDatabase database, MVCModel model){
-        System.out.println("EXECUTED");
         followingRef.get().addOnCompleteListener(task -> {
             following_list = new ArrayList<>();
             if (task.isSuccessful()) {
@@ -59,10 +63,25 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
 
     @Override
     public void updateDatabaseData(MVCDatabase database, MVCModel model) {
-        for (Participant followee: following_list){
-            System.out.println("HELLO WORLD " + followee.getUsername());
-            followee.setDatabaseData2(database, model);
+        if (following_list.size() == 0){
+            model.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
+            try{
+                MoodFollowingListRefreshEvent last_event = (MoodFollowingListRefreshEvent) model.getLastEvent();
+                model.notifyViews(BackendObject.State.MOODFOLLOWINGLIST);
+                last_event.updateSwipeContainer();
+            }
+            catch (Exception ignore){
+
+            }
+            return;
         }
+        temp_bool_list = new Boolean[following_list.size()];
+        Arrays.fill(temp_bool_list, false);
+        for (int i = 0; i < following_list.size(); i++){
+            Participant followee = following_list.get(i);
+            followee.setDatabaseData2(database, model, i);
+        }
+
     }
 
     public MoodFollowingList getMoodFollowingList(){
