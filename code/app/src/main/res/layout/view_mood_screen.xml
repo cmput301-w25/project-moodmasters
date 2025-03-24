@@ -79,6 +79,7 @@
         app:layout_constraintStart_toEndOf="@+id/view_mood_emoji_label"
         app:layout_constraintTop_toTopOf="@+id/view_mood_toolbar" />
 
+
     <Button
         android:id="@+id/view_mood_delete_button"
         android:layout_width="wrap_content"
@@ -108,6 +109,22 @@
         app:layout_constraintTop_toBottomOf="@+id/view_mood_publicity_label"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+
+    <Button
+        android:id="@+id/view_mood_comments_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/button_color"
+        android:text="Comments"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_photo_view"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/view_mood_edit_button"

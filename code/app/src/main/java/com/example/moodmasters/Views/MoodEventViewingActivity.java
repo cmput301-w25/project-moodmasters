@@ -2,6 +2,7 @@ package com.example.moodmasters.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -97,6 +98,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         ImageButton exit_button = findViewById(R.id.view_mood_x_button);
         Button edit_button = findViewById(R.id.view_mood_edit_button);
         Button delete_button = findViewById(R.id.view_mood_delete_button);
+        Button viewCommentsButton = findViewById(R.id.view_mood_comments_button);
 
         exit_button.setOnClickListener(v -> {
             controller.execute(new ExitMoodEventViewingEvent(), this);
@@ -114,6 +116,12 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         else if (mood_event_list.equals("MoodFollowingList")){
             ((ViewManager) edit_button.getParent()).removeView(edit_button);
             ((ViewManager) delete_button.getParent()).removeView(delete_button);
+        }
+        // Set visibility based on the activity's context
+        if (mood_event_list.equals("MoodHistoryList") || mood_event_list.equals("MoodFollowingList")) {
+            viewCommentsButton.setVisibility(View.VISIBLE);
+        } else {
+            viewCommentsButton.setVisibility(View.GONE); // Hide button if not needed
         }
     }
 }
