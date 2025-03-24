@@ -79,11 +79,11 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         int social_default_pos = social_situations_adapter.getPosition(SocialSituation.getString(current_mood_event.getSituation()));
         social_situations_spinner.setSelection(social_default_pos);
 
-        CheckBox public_status_check_box = findViewById(R.id.alter_mood_public_checkbox);
-        public_status_check_box.setChecked(current_mood_event.getIsPublic());
-
         EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
         reason_text.setText(current_mood_event.getReason());
+
+        CheckBox check_public = findViewById(R.id.alter_mood_public_checkbox);
+        check_public.setChecked(current_mood_event.isIs_public());
 
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 
@@ -93,10 +93,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
     }
 
     public boolean addDataVerification(String reason_string){
-        if (reason_string.length() > 200){
-            return false;
-        }
-        return true;
+        return reason_string.length() > 200;
     }
 
     @Override
