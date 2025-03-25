@@ -4,46 +4,61 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.BaseAdapter;
 
 import com.example.moodmasters.Objects.ObjectsApp.Comment;
 import com.example.moodmasters.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
-public class CommentAdapter extends ArrayAdapter<Comment> {
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+public class CommentAdapter extends BaseAdapter {
+    private Context context;
+    private List<Comment> comments;
+    private FirebaseFirestore db;
 
-    public CommentAdapter(Context context, List<Comment> comments) {
-        super(context, 0, comments);
+    public CommentAdapter(Context context, List<Comment> comments, FirebaseFirestore db) {
+        this.context = context;
+        this.comments = comments;
+        this.db = db;
+    }
+
+    @Override
+    public int getCount() {
+        return comments.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return comments.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the current comment item
-        Comment currentComment = getItem(position);
-
-        // Check if the view is being reused, otherwise inflate a new one
+        // Sets the layout that we want for the comment (has username, timestamp and username)
+        // Responsible for creating or reusing a view for each item in the listview
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.comment_list_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.comment_list_item, parent, false);
         }
 
-        // Get the TextViews for username, timestamp, and content
-        TextView usernameText = convertView.findViewById(R.id.comment_username);
-        TextView timestampText = convertView.findViewById(R.id.comment_timestamp);
-        TextView contentText = convertView.findViewById(R.id.comment_content);
+        // Find the views for username, timestamp, and content
+        TextView usernameTextView = convertView.findViewById(R.id.comment_username);
+        TextView timestampTextView = convertView.findViewById(R.id.comment_timestamp);
+        TextView contentTextView = convertView.findViewById(R.id.comment_content);
 
-        // Set the text for username, timestamp, and content
-        if (currentComment != null) {
-            usernameText.setText(currentComment.getUsername());
-            // Convert the timestamp to a formatted string
-            String formattedTimestamp = dateFormat.format(currentComment.getTimestamp());
-            timestampText.setText(formattedTimestamp);
-            contentText.setText(currentComment.getContent());
-        }
+        // Get the current comment
+        Comment comment = comments.get(position);
+
+        // Set the data for each item
+        usernameTextView.setText(comment.getUsername());
+        timestampTextView.setText(comment.getTimestamp());
+        contentTextView.setText(comment.getContent());
 
         return convertView;
     }

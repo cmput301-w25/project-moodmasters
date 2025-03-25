@@ -2,16 +2,16 @@ package com.example.moodmasters.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsApp.Comment;
+import com.example.moodmasters.Objects.ObjectsMisc.CommentAdapter;
 import com.example.moodmasters.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -19,31 +19,36 @@ public class CommentViewingActivity extends AppCompatActivity {
 
     private ListView commentsListView;
     private Button addCommentButton;
-    private ArrayList<String> commentsList;
-    private ArrayAdapter<String> commentsAdapter;
+    private ArrayList<Comment> commentsList;
+    private CommentAdapter commentsAdapter;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_mood_comment);  // This is your comment viewing layout
+        setContentView(R.layout.view_mood_comment);  // What it looks like when you click "Comments"
+
+        // Initialize Firebase Firestore
+        db = FirebaseFirestore.getInstance();
 
         // Reference the ListView by the correct ID
-        commentsListView = findViewById(R.id.view_comment_list);
+        commentsListView = findViewById(R.id.view_comment_list); // ListView for the comments
+        addCommentButton = findViewById(R.id.add_comment_button); // Add comment button
 
-        addCommentButton = findViewById(R.id.add_comment_button); // Reference the Add Comment button
-
-        commentsList = new ArrayList<>();
-        commentsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, commentsList);
+        // Initialize the list of comments
+        commentsList = new ArrayList<>(); // commentsList is the source of data for the comments
+        commentsAdapter = new CommentAdapter(this, commentsList, db); // Converts each item in the ArrayList to be displayed onto screen
         commentsListView.setAdapter(commentsAdapter);  // Set the adapter for the ListView
 
         // Handle "Add Comment" Button Click
         addCommentButton.setOnClickListener(v -> {
             // Launch Add Comment screen (comment_add.xml)
             Intent intent = new Intent(CommentViewingActivity.this, AddCommentActivity.class);
-            startActivityForResult(intent, 1);  // Start the add comment activity for result
-        });
-        ImageButton xButton = findViewById(R.id.view_mood_x_button);
+            startActivityForResult(intent, 1);  // This starts the activity and expects a result back
 
+        });
+        // Initialize the xButton to be used if the user wants to leave the comments
+        ImageButton xButton = findViewById(R.id.view_mood_x_button);
         // Set an OnClickListener to handle the button click
         xButton.setOnClickListener(v -> {
             finish();
@@ -56,11 +61,16 @@ public class CommentViewingActivity extends AppCompatActivity {
 
         if (requestCode == 1 && resultCode == RESULT_OK) {
             // Get the added comment from AddCommentActivity
-            String comment = data.getStringExtra("new_comment");
-            commentsList.add(comment);  // Add the new comment to the list
+            String username = data.getStringExtra("username");
+            String timestamp = data.getStringExtra("timestamp");
+            String content = data.getStringExtra("content");
+
+            // Create a new Comment object
+            Comment newComment = new Comment(username, timestamp, content);
+
+            // Add the new comment to the list
+            commentsList.add(newComment);
             commentsAdapter.notifyDataSetChanged();  // Refresh the ListView
         }
     }
 }
-
-
