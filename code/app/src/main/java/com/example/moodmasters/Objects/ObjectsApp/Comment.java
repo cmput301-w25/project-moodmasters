@@ -1,12 +1,14 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
+import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+
 public class Comment {
     private String username;
     private String content;
-    private long timestamp;
+    private String timestamp;
 
     // Constructor
-    public Comment(String username, String content, long timestamp) {
+    public Comment(String username, String content, String timestamp) {
         this.username = username;
         this.content = content;
         this.timestamp = timestamp;
@@ -21,7 +23,7 @@ public class Comment {
         return content;
     }
 
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 }
