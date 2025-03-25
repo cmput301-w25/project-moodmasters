@@ -24,6 +24,7 @@ import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
+import com.example.moodmasters.Objects.ObjectsMisc.CommentAdapter;
 import com.example.moodmasters.R;
 
 public class MoodEventViewingActivity extends AppCompatActivity implements MVCView {
@@ -123,5 +124,16 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         } else {
             viewCommentsButton.setVisibility(View.GONE); // Hide button if not needed
         }
+        // Handle the "View Comments" button click
+        viewCommentsButton.setOnClickListener(v -> {
+            // Create an Intent to go to CommentsActivity
+            Intent intent = new Intent(MoodEventViewingActivity.this, CommentViewingActivity.class);
+
+            // Optionally pass the MoodEvent object to the next activity
+            // intent.putExtra("MoodEvent", displayed_mood_event); // Pass MoodEvent to the next activity
+
+            // Start CommentsActivity
+            startActivity(intent);
+        });
     }
 }
