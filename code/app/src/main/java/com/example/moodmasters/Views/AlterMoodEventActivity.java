@@ -16,18 +16,22 @@ import com.example.moodmasters.Events.AddMoodEventConfirmEvent;
 import com.example.moodmasters.Events.AlterMoodEventCancelEvent;
 import com.example.moodmasters.Events.EditMoodEventConfirmEvent;
 import com.example.moodmasters.Events.MoodEventViewingEditEvent;
+import com.example.moodmasters.Views.MoodLocationActivity;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.R;
+import com.google.android.gms.maps.model.LatLng;
+
 
 import java.util.List;
 
 public class AlterMoodEventActivity extends AppCompatActivity implements MVCView {
     private final List<String> emotions_list;
     private final List<String> social_situations_list;
+    private LatLng userLocation = null;
 
     public AlterMoodEventActivity(){
         super();
@@ -40,7 +44,9 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
     public void initialize(MVCModel model){
         // skip for now
     }
-
+    public LatLng getLocation() {
+        return userLocation;  // Return the location string
+    }
     public void addMoodEventCode() {
         TextView label_view = findViewById(R.id.alter_mood_main_label);
         label_view.setText("Add MoodEvent");
@@ -54,6 +60,14 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         social_situations_spinner.setAdapter(social_situations_adapter);
 
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
+
+        // Get the Get Location button
+        Button location_button = findViewById(R.id.alter_mood_location_button);
+        location_button.setOnClickListener(v -> {
+            // Start the MoodLocationActivity to get the user's location
+            Intent intent = new Intent(AlterMoodEventActivity.this, MoodLocationActivity.class);
+            startActivityForResult(intent, 1001); // 1001 is a request code for identification
+        });
 
         confirm_button.setOnClickListener(v -> {
             controller.execute(new AddMoodEventConfirmEvent(), this);
@@ -86,6 +100,14 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         check_public.setChecked(current_mood_event.getIsPublic());
 
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
+
+        Button location_button = findViewById(R.id.alter_mood_location_button);
+        location_button.setOnClickListener(v -> {
+            // Start the MoodLocationActivity to get the user's location
+            Intent intent = new Intent(AlterMoodEventActivity.this, MoodLocationActivity.class);
+            startActivityForResult(intent, 1001); // 1001 is a request code for identification
+        });
+
 
         confirm_button.setOnClickListener(v -> {
             controller.execute(new EditMoodEventConfirmEvent(current_mood_event, position), this);
@@ -122,4 +144,31 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         });
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1001 && resultCode == RESULT_OK) {
+            // Retrieve the LatLng object from the result intent
+            LatLng location = data.getParcelableExtra("location");
+
+            if (location != null) {
+                userLocation = location; // Store the location as LatLng object
+                double fLatitude = Math.round(location.latitude * 100.0) / 100.0;
+                double fLongitude = Math.round(location.longitude * 100.0) / 100.0;
+
+
+                // Update the TextView with the location (you can display lat and long)
+                TextView locationTextView = findViewById(R.id.alter_mood_location_text);
+                locationTextView.setText("Lat: " + fLatitude + ", Long: " + fLongitude);
+            }
+        } else {
+            // Handle failure (if location fetching failed)
+            TextView locationTextView = findViewById(R.id.alter_mood_location_text);
+            locationTextView.setText("Location fetch failed.");
+        }
+    }
+
+
 }
+

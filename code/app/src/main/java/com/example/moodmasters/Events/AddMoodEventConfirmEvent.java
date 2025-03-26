@@ -2,6 +2,7 @@ package com.example.moodmasters.Events;
 
 import android.content.Context;
 import android.icu.util.Calendar;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -53,8 +54,7 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
             return;
         }
 
-        // mock location for testing
-        LatLng location = new LatLng(0, 0);
+        LatLng location = activity.getLocation(); // Get the location as LatLng
 
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion),
