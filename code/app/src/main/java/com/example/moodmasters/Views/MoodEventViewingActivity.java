@@ -26,6 +26,7 @@ import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Objects.ObjectsMisc.CommentAdapter;
 import com.example.moodmasters.R;
+import com.google.android.gms.maps.model.LatLng;
 
 public class MoodEventViewingActivity extends AppCompatActivity implements MVCView {
     private MoodEvent displayed_mood_event;
@@ -55,6 +56,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         TextView public_view = findViewById(R.id.view_mood_publicity_label);
         TextView creator_view = findViewById(R.id.view_mood_creator_text);
         Mood displayed_mood = displayed_mood_event.getMood();
+        TextView location_view = findViewById(R.id.view_mood_location_text);
 
         emoji_view.setText(displayed_mood.getEmoticon());
         mood_view.setText(displayed_mood.getEmotionString());
@@ -70,6 +72,17 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
             public_view.setText("☒ Private");
         }
         creator_view.setText(displayed_mood_event.getUsername());
+        LatLng location = displayed_mood_event.getLocation(); // Get LatLng location
+        if (location != null) {
+            // Format the location to display both latitude and longitude as a string
+            String locationText = "Lat: " + String.format("%.2f", location.latitude) +
+                    ", Long: " + String.format("%.2f", location.longitude);
+            location_view.setText(locationText);
+        } else {
+            location_view.setText("Location: Unknown");
+        }
+
+
     }
 
     @Override

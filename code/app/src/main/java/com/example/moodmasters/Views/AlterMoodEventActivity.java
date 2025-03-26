@@ -166,6 +166,8 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
             // Handle failure (if location fetching failed)
             TextView locationTextView = findViewById(R.id.alter_mood_location_text);
             locationTextView.setText("Location fetch failed.");
+            if (userLocation == null || (userLocation.latitude == 0.0 && userLocation.longitude == 0.0)) {
+                locationTextView.setText("Location: Unknown"); }
         }
     }
 

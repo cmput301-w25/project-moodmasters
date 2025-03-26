@@ -51,7 +51,7 @@ public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
         }
 
         // mock location for testing
-        LatLng location = new LatLng(0, 0);
+        LatLng location = activity.getLocation();
 
         MoodEvent new_mood_event = new MoodEvent(mood_event.getDatetime(), mood_event.getEpochTime(), mood_list.getMood(emotion),
                                                     is_public, reason_string, social_situation, location,
