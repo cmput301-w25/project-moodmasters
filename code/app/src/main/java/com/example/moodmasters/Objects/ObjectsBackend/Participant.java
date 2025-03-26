@@ -74,7 +74,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
                         }
                         else {
                             last_event.setAction("GoMoodHistoryActivity");
-                            mood_history_list = new MoodHistoryList();
+                            mood_history_list = new MoodHistoryList(Participant.this);
                             Map<String, Object> map = new HashMap<String, Object>();
                             map.put("list", mood_history_list.getList());
                             doc_ref.set(map);

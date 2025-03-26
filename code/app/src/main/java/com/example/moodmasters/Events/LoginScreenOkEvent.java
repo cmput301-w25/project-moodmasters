@@ -78,14 +78,10 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
             activity_launched = true;
             context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
             entered_username.setText("");
-            System.out.println("AFTERDATABASEQUERY");
             model.createBackendObject(BackendObject.State.FOLLOWINGLIST);
         }
         else{
             throw new InvalidParameterException("Error: invalid action in LoginScreenOkEvent");
         }
-        Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
-        username = user.getUsername();
-        System.out.println("Welcome User: " + username);
     }
 }

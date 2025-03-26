@@ -18,6 +18,10 @@ public class MoodHistoryList extends MoodEventList {
         super(list);
         participant = init_participant;
     }
+    public MoodHistoryList(Participant init_participant) {
+        super();
+        participant = init_participant;
+    }
     public MoodHistoryList() {
         super();
     }

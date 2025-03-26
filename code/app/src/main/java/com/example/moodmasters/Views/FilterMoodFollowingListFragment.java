@@ -28,7 +28,7 @@ public class FilterMoodFollowingListFragment extends DialogFragment implements M
         MoodFollowingList mood_following_list = (MoodFollowingList) model.getBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
         recency_filter_applied = mood_following_list.getFilter().getRecencyFilter();
         emotion_filter_applied = mood_following_list.getFilter().getEmotionFilter();
-        reason_filter_applied = mood_following_list.getFilter().getEditedReasonFilter();
+        reason_filter_applied = mood_following_list.getFilter().getReasonFilter();
     }
     public void update(MVCModel model){
         // Not needed

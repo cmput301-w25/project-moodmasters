@@ -11,8 +11,6 @@ import java.util.List;
  * */
 public abstract class MVCBackendList <T> extends MVCBackend implements MVCDatabase.Add, MVCDatabase.Remove{
     protected ArrayList<T> object_list;
-    private DocumentReference doc_ref;
-    private DocumentSnapshot snapshot;
 
     /**
      * Constructor for List using a pre-existing List

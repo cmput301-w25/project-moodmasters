@@ -28,7 +28,7 @@ public class FilterMoodHistoryListFragment extends DialogFragment implements MVC
         MoodHistoryList mood_history_list = (MoodHistoryList) model.getBackendObject(BackendObject.State.MOODHISTORYLIST);
         recency_filter_applied = mood_history_list.getFilter().getRecencyFilter();
         emotion_filter_applied = mood_history_list.getFilter().getEmotionFilter();
-        reason_filter_applied = mood_history_list.getFilter().getEditedReasonFilter();
+        reason_filter_applied = mood_history_list.getFilter().getReasonFilter();
     }
     public void update(MVCModel model){
         // Not needed
