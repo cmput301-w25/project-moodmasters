@@ -27,7 +27,7 @@
         android:text="Username"
         android:textColor="#000000"
         android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/mood_history_list"
+        app:layout_constraintBottom_toTopOf="@+id/mood_following_list"
         app:layout_constraintEnd_toStartOf="@+id/followButton"
         app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ListView
-        android:id="@+id/mood_history_list"
+        android:id="@+id/mood_following_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:divider="@android:color/darker_gray"

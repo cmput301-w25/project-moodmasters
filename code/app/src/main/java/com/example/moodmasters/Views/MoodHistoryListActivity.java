@@ -1,20 +1,14 @@
 package com.example.moodmasters.Views;
 
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moodmasters.Events.ChangeActivityEvent;
-import com.example.moodmasters.Events.LogOutEvent;
 import com.example.moodmasters.Events.MoodHistoryListShowFilterEvent;
 import com.example.moodmasters.Events.MoodHistoryListAddEvent;
-import com.example.moodmasters.Events.MoodHistoryListMenuEvent;
-import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
-import com.example.moodmasters.Events.UserSearchEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
@@ -94,21 +88,16 @@ public class MoodHistoryListActivity extends ChangeActivityEvent implements MVCV
             controller.execute(new MoodHistoryListAddEvent(), this);
         });
 
-        Button sort_button = findViewById(R.id.user_mood_history_sort_button);
+        ImageButton sort_button = findViewById(R.id.user_mood_following_sort_button);
         sort_button.setOnClickListener(v -> {
             mood_history_view.toggleSort();
         });
 
-        Button filter_button = findViewById(R.id.user_mood_history_filter_button);
+        ImageButton filter_button = findViewById(R.id.user_mood_following_filter_button);
         filter_button.setOnClickListener(v -> {
             controller.execute(new MoodHistoryListShowFilterEvent(), this);
         });
 
-        Button map_button = findViewById(R.id.user_mood_history_show_map_button);
-        map_button.setOnClickListener(v -> {
-            // TODO: Replace mock_mood_events with appropriate MoodEvent ArrayList
-            controller.execute(new MoodHistoryScreenShowMapEvent(mock_mood_events), this);
-        });
         mood_history_view.setListElementClicker();
     }
 

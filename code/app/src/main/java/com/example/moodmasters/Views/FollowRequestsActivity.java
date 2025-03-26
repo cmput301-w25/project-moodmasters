@@ -47,7 +47,6 @@ public class FollowRequestsActivity extends ChangeActivityEvent implements MVCVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_requests);
-        controller.addBackendView(this, BackendObject.State.USER);
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation_view);
         setupBottomNav(nav, R.id.options_follow_requests_button);
