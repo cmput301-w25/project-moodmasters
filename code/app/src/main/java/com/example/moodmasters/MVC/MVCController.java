@@ -92,6 +92,11 @@ public class MVCController{
     public void removeBackendView(MVCView view){
         model.removeView(view);
     }
+
+    public boolean existsBackendObject(BackendObject.State backend_object){
+        return model.existsBackendObject(backend_object);
+    }
+
     /**
      * Executes a event on UI interaction, takes in the MVCEvent that will contain the code to execute on the
      * UI interaction and also the context of the app for possible bringing up of new UI elements
@@ -101,6 +106,7 @@ public class MVCController{
      *  Context of the app
      * */
     public void execute(MVCEvent event, Context context){
+        model.setLastEvent(event);
         event.executeEvent(context, model, this);
     }
 }

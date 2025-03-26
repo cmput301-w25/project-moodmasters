@@ -6,13 +6,14 @@ import android.content.Intent;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Views.MoodHistoryListActivity;
 import com.example.moodmasters.Views.MoodEventViewingActivity;
+import com.example.moodmasters.Views.MoodFollowingListActivity;
+import com.example.moodmasters.Views.MoodHistoryListActivity;
 
-public class MoodHistoryListClickMoodEvent implements MVCController.MVCEvent{
+public class MoodFollowingListClickMoodEvent implements MVCController.MVCEvent{
     private static MoodEvent mood_event;
     private static int position;
-    public MoodHistoryListClickMoodEvent(MoodEvent init_mood_event, int init_position){
+    public MoodFollowingListClickMoodEvent(MoodEvent init_mood_event, int init_position){
         mood_event = init_mood_event;
         position = init_position;
     }
@@ -24,8 +25,8 @@ public class MoodHistoryListClickMoodEvent implements MVCController.MVCEvent{
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        Intent i = new Intent((MoodHistoryListActivity) context, MoodEventViewingActivity.class);
-        i.putExtra("MoodEventList", "MoodHistoryList");
+        Intent i = new Intent((MoodFollowingListActivity) context, MoodEventViewingActivity.class);
+        i.putExtra("MoodEventList", "MoodFollowingList");
         context.startActivity(i);
     }
 }

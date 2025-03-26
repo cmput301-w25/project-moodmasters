@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
+import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.SignupLoginScreenActivity;
@@ -21,26 +22,36 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.security.InvalidParameterException;
+
 public class LoginScreenOkEvent implements MVCController.MVCEvent {
     private static String username;
-    private FirebaseFirestore db;
-    private static CollectionReference participants_ref;
-    private static DocumentReference doc_ref;
+    private boolean signup;
+    private String action;
+    private Context context;
+    private MVCModel model;
+    private boolean activity_launched = false;
 
     public static String getUsername(){
         return username;
     }
+    public boolean getSignUp(){
+        return signup;
+    }
 
-    public DocumentReference getDocRef() {
-        db = FirebaseFirestore.getInstance();
-        participants_ref = db.collection("participants");
-        doc_ref = participants_ref.document(username);
-        return doc_ref;
+    public void setAction(String new_action){
+        action = new_action;
+    }
+    public boolean getActivityLaunched(){
+        return activity_launched;
     }
 
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         // Allow the same action for both Login and Sign Up (minimal changes)
+        this.context = context;
+        this.model = model;
+        action = "";
         EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
         TextView label = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_ok_button);
         username = entered_username.getText().toString().trim();
@@ -50,38 +61,27 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
             Toast.makeText(context, "Username cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        this.getDocRef().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot snapshot = task.getResult();
-
-                    if (label.getText().equals("Sign Up")) {
-                        // Sign Up: Check if the username already exists
-                        if (snapshot.exists()) {
-                            Toast.makeText(context, "Username already taken. Please choose another.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            model.createBackendObject(BackendObject.State.USER);
-                            model.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
-                            context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
-                            entered_username.setText("");
-                        }
-                    } else {
-                        // Login: Check if the username exists
-                        if (snapshot.exists()) {
-                            if (model.getBackendObject(BackendObject.State.USER) == null) {
-                                model.createBackendObject(BackendObject.State.USER);
-                            }
-                            model.getBackendObject(BackendObject.State.USER).setDatabaseData(doc_ref, snapshot);
-                            context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
-                            entered_username.setText("");
-                        } else {
-                            Toast.makeText(context, "Username not found. Please sign up first.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            }
-        });
+        signup = label.getText().equals("Sign Up");
+        model.createBackendObject(BackendObject.State.USER);
+    }
+    public void afterDatabaseQuery(){
+        EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
+        if (action.equals("SignupError")){
+            model.removeBackendObject(BackendObject.State.USER);
+            Toast.makeText(context, "Username already taken. Please choose another.", Toast.LENGTH_SHORT).show();
+        }
+        else if (action.equals("LoginError")){
+            model.removeBackendObject(BackendObject.State.USER);
+            Toast.makeText(context, "Username not found. Please sign up first.", Toast.LENGTH_SHORT).show();
+        }
+        else if (action.equals("GoMoodHistoryActivity")){
+            activity_launched = true;
+            context.startActivity(new Intent((SignupLoginScreenActivity) context, MoodHistoryListActivity.class));
+            entered_username.setText("");
+            model.createBackendObject(BackendObject.State.FOLLOWINGLIST);
+        }
+        else{
+            throw new InvalidParameterException("Error: invalid action in LoginScreenOkEvent");
+        }
     }
 }

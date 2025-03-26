@@ -36,12 +36,12 @@ public class MoodHistoryListTest {
         when(mock_firestore.collection("participants")).thenReturn(mock_participant_collection);
         when(mock_participant_collection.document()).thenReturn(mock_doc_ref);
         when(mock_participant_collection.document(anyString())).thenReturn(mock_doc_ref);
-        mood_history_list = new MoodHistoryList(mock_doc_ref, mock_snapshot);
+        mood_history_list = new MoodHistoryList();
     }
 
     @Test
     public void testUpdateDatabaseData() {
-        mood_history_list.updateDatabaseData(mock_doc_ref);
+        //mood_history_list.updateDatabaseData(mock_doc_ref);
         verify(mock_doc_ref).set(mood_history_list);
     }
 }

@@ -4,6 +4,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.example.moodmasters.MVC.MVCDatabase;
+import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
@@ -69,7 +71,9 @@ public class ParticipantTest {
 
     @Test
     public void testSetDatabaseData() {
-        participant.setDatabaseData(mock_doc_ref, mock_snapshot);
+        MVCDatabase database = new MVCDatabase();
+        MVCModel model = new MVCModel();
+        participant.setDatabaseData(database, model);
         verify(mock_snapshot).get("list");
         assert participant.getMoodHistoryList().getList().get(0).getMood().getEmotion().equals(Emotion.State.HAPPY);
     }

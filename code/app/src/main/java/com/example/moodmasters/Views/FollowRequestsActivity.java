@@ -7,6 +7,9 @@ import android.widget.Toast;
 import com.example.moodmasters.Events.ChangeActivityEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
+import androidx.appcompat.app.AppCompatActivity;
+import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
+import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
@@ -32,11 +35,6 @@ public class FollowRequestsActivity extends ChangeActivityEvent implements MVCVi
     @Override
     public void initialize(MVCModel model) {
         Participant user = (Participant) model.getBackendObject(BackendObject.State.USER);
-        if (user == null) {
-            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
         currentUsername = user.getUsername();
     }
 
@@ -49,12 +47,14 @@ public class FollowRequestsActivity extends ChangeActivityEvent implements MVCVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_requests);
+        controller.addBackendView(this, BackendObject.State.USER);
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation_view);
         setupBottomNav(nav, R.id.options_follow_requests_button);
 
         requestsListView = findViewById(R.id.follow_requests_list);
         db = FirebaseFirestore.getInstance();
+
         followRequestsList = new ArrayList<>();
         adapter = new FollowRequestsAdapter(this, followRequestsList, db);
         requestsListView.setAdapter(adapter);
@@ -63,11 +63,6 @@ public class FollowRequestsActivity extends ChangeActivityEvent implements MVCVi
     }
 
     private void loadFollowRequests() {
-        if (currentUsername == null) {
-            Toast.makeText(this, "Username is missing", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         db.collection("participants")
                 .document(currentUsername)
                 .collection("followRequests")

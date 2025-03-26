@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,7 +19,6 @@ import com.example.moodmasters.Events.MoodEventViewingEditEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
-import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.R;
@@ -53,11 +53,6 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         ArrayAdapter<String> social_situations_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, social_situations_list);
         social_situations_spinner.setAdapter(social_situations_adapter);
 
-
-        EditText trigger_text = findViewById(R.id.alter_mood_enter_trigger);
-
-        EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
-
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 
         confirm_button.setOnClickListener(v -> {
@@ -84,11 +79,11 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         int social_default_pos = social_situations_adapter.getPosition(SocialSituation.getString(current_mood_event.getSituation()));
         social_situations_spinner.setSelection(social_default_pos);
 
-        EditText trigger_text = findViewById(R.id.alter_mood_enter_trigger);
-        trigger_text.setText(current_mood_event.getTrigger());
-
         EditText reason_text = findViewById(R.id.alter_mood_enter_reason);
         reason_text.setText(current_mood_event.getReason());
+
+        CheckBox check_public = findViewById(R.id.alter_mood_public_checkbox);
+        check_public.setChecked(current_mood_event.getIsPublic());
 
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
 
@@ -98,15 +93,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
     }
 
     public boolean addDataVerification(String reason_string){
-        if (reason_string.length() > 20){
-            return false;
-        }
-        String regex = "\\W+";
-        String[] words = reason_string.split(regex);
-        if (words.length > 3){
-            return false;
-        }
-        return true;
+        return reason_string.length() > 200;
     }
 
     @Override

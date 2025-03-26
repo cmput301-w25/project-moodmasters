@@ -34,6 +34,10 @@ public class UserSearchOkEvent {
 
         final String searchQuery = inputQuery.trim().toLowerCase(Locale.ROOT); // Case-insensitive search
 
+        /*
+        * Needs to be changed to a query in the backend
+        *
+        * */
         usersRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 ArrayList<String> searchResults = new ArrayList<>();

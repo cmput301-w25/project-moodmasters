@@ -31,6 +31,7 @@
         android:inputType="text"
         android:textColor="@color/text_color"
         android:textSize="20sp"
+        android:hint="Enter Space Seperated Words"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,11 +77,12 @@
         android:id="@+id/mood_filter_sad_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="Sad"
         android:textColor="@color/text_color"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/mood_filter_happy_checkbox"
-        app:layout_constraintTop_toTopOf="@+id/mood_filter_happy_checkbox" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mood_filter_happy_checkbox" />
 
     <CheckBox
         android:id="@+id/mood_filter_angry_checkbox"
@@ -89,8 +91,8 @@
         android:text="Angry"
         android:textColor="@color/text_color"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/mood_filter_sad_checkbox"
-        app:layout_constraintTop_toTopOf="@+id/mood_filter_sad_checkbox" />
+        app:layout_constraintStart_toEndOf="@+id/mood_filter_happy_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/mood_filter_happy_checkbox" />
 
     <CheckBox
         android:id="@+id/mood_filter_scared_checkbox"
@@ -99,8 +101,8 @@
         android:text="Scared"
         android:textColor="@color/text_color"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/mood_filter_angry_checkbox"
-        app:layout_constraintTop_toTopOf="@+id/mood_filter_angry_checkbox" />
+        app:layout_constraintStart_toEndOf="@+id/mood_filter_sad_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/mood_filter_sad_checkbox" />
 
     <CheckBox
         android:id="@+id/mood_filter_surprised_checkbox"
@@ -109,20 +111,18 @@
         android:text="Surprised"
         android:textColor="@color/text_color"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/mood_filter_scared_checkbox"
-        app:layout_constraintTop_toTopOf="@+id/mood_filter_angry_checkbox" />
+        app:layout_constraintStart_toEndOf="@+id/mood_filter_confused_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/mood_filter_confused_checkbox" />
 
     <CheckBox
         android:id="@+id/mood_filter_disgusted_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="Disgusted"
         android:textColor="@color/text_color"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mood_filter_happy_checkbox" />
+        app:layout_constraintStart_toEndOf="@+id/mood_filter_scared_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/mood_filter_scared_checkbox" />
 
     <CheckBox
         android:id="@+id/mood_filter_confused_checkbox"
@@ -131,8 +131,8 @@
         android:text="Confused"
         android:textColor="@color/text_color"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/mood_filter_disgusted_checkbox"
-        app:layout_constraintTop_toTopOf="@+id/mood_filter_disgusted_checkbox" />
+        app:layout_constraintStart_toEndOf="@+id/mood_filter_angry_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/mood_filter_angry_checkbox" />
 
     <CheckBox
         android:id="@+id/mood_filter_ashamed_checkbox"
@@ -141,6 +141,6 @@
         android:text="Ashamed"
         android:textColor="@color/text_color"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/mood_filter_confused_checkbox"
-        app:layout_constraintTop_toTopOf="@+id/mood_filter_confused_checkbox" />
+        app:layout_constraintStart_toEndOf="@+id/mood_filter_disgusted_checkbox"
+        app:layout_constraintTop_toTopOf="@+id/mood_filter_disgusted_checkbox" />
 </androidx.constraintlayout.widget.ConstraintLayout>
