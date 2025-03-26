@@ -10,28 +10,42 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moodmasters.MVC.MVCModel;
+import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Comment;
+import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Objects.ObjectsMisc.CommentAdapter;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class ViewMoodCommentActivity extends AppCompatActivity {
+public class ViewMoodCommentActivity extends AppCompatActivity implements MVCView {
 
     private ListView commentListView;
     private CommentAdapter commentAdapter;
     private ArrayList<Comment> commentList;
     private FirebaseFirestore db;
+    private String username;
+
+    public void initialize(MVCModel model) {
+        Participant user = (Participant) model.getBackendObject(BackendObject.State.USER);
+        username = user.getUsername();
+    }
+
+    public void update(MVCModel model) {
+        // not necessary, nothing to update
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_mood_comment); // Ensure this XML layout is used
-
-        // Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
-
         // Initialize ListView and the comment list
         commentListView = findViewById(R.id.view_comment_list);
         commentList = new ArrayList<>();
@@ -40,12 +54,7 @@ public class ViewMoodCommentActivity extends AppCompatActivity {
         commentAdapter = new CommentAdapter(this, commentList, db);
         commentListView.setAdapter(commentAdapter);
 
-        // Sample comments (Replace with actual data fetching logic)
-        // commentList.add(new Comment("John Doe", "Jan 1, 2025 | 10:00 AM", "This is a comment!"));
-        // commentList.add(new Comment("Jane Smith", "Jan 1, 2025 | 10:05 AM", "Another comment!"));
-
-        // Notify adapter that the data has changed
-        // commentAdapter.notifyDataSetChanged();
+        loadComments();
 
         // Initialize the "X" button to close the activity
         ImageButton xButton = findViewById(R.id.view_mood_x_button);
@@ -89,4 +98,23 @@ public class ViewMoodCommentActivity extends AppCompatActivity {
             commentAdapter.notifyDataSetChanged();
         }
     }
+    private void loadComments() {
+        db.collection("participants")
+                .document(username)
+                .collection("comments")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Only add new comments to the list without clearing old ones
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Comment comment = document.toObject(Comment.class);
+                            commentList.add(comment);
+                        }
+                    } else {
+                        Log.w("loadComments", "Error getting comments.", task.getException());
+                    }
+                    commentAdapter.notifyDataSetChanged();  // Refresh the ListView/RecyclerView
+                });
+    }
+
 }
