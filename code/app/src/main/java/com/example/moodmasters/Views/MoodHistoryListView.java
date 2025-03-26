@@ -23,7 +23,7 @@ public class MoodHistoryListView implements MVCView {
     private List<MoodEvent> originalList; // Store original order
     public MoodHistoryListView(Context init_context){
         context = init_context;
-        mood_history_list = ((MoodHistoryListActivity) context).findViewById(R.id.mood_history_list);
+        mood_history_list = ((MoodHistoryListActivity) context).findViewById(R.id.mood_following_list);
         controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
         setListElementClicker();
     }

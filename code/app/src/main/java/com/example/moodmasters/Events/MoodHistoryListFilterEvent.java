@@ -48,20 +48,19 @@ public class MoodHistoryListFilterEvent implements MVCController.MVCEvent{
                 Emotion.State.CONFUSED, confused_box,
                 Emotion.State.ASHAMED, ashamed_box
         ));
-        if (recency_box.isChecked() && !filter.getRecencyFilter()){         /*checkbox checked and recency filter not applied*/
+        if (recency_box.isChecked()){
             mood_event_list.recencyFilterMoodEventList();
         }
-        else if (!recency_box.isChecked() && filter.getRecencyFilter()){         /*checkbox not checked and recency filter applied*/
+        else{
             mood_event_list.revertRecencyFilterMoodEventList();
         }
 
-        List<Emotion.State> emotions_filtered = filter.getEmotionFilter();
         for (Emotion.State emotion: Emotion.State.values()){
             CheckBox emotion_checkbox = emotion_to_checkbox.get(emotion);
-            if (emotion_checkbox.isChecked() && !emotions_filtered.contains(emotion)){
+            if (emotion_checkbox.isChecked()) {
                 mood_event_list.emotionFilterMoodEventList(emotion);
             }
-            else if (!emotion_checkbox.isChecked() && emotions_filtered.contains(emotion)){
+            else if (!emotion_checkbox.isChecked()){
                 mood_event_list.revertEmotionFilterMoodEventList(emotion);
             }
         }
@@ -70,16 +69,15 @@ public class MoodHistoryListFilterEvent implements MVCController.MVCEvent{
         String regex = "\\s+";
         List<String> current_reasons = new ArrayList<String>(Arrays.asList(reason_text.split(regex)));
         current_reasons.remove("");         /*possibility on empty edit text field*/
-        List<String> reasons_filtered = filter.getEditedReasonFilter();
+        List<String> reasons_filtered = new ArrayList<String>(filter.getReasonFilter());
+
         for (String word: reasons_filtered){
             if (!current_reasons.contains(word)){
                 mood_event_list.revertWordFilterMoodEventList(word);
             }
         }
         for (String word: current_reasons){
-            if (!reasons_filtered.contains(word)){
-                mood_event_list.wordFilterMoodEventList(word);
-            }
+            mood_event_list.wordFilterMoodEventList(word);
         }
 
         model.notifyViews(BackendObject.State.MOODHISTORYLIST);         /*have to do this manually here but its fine*/

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.moodmasters.Events.LogOutEvent;
+import com.example.moodmasters.Events.UserSearchEvent;
 import com.example.moodmasters.Events.MoodFollowingListEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;

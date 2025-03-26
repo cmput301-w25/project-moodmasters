@@ -79,7 +79,7 @@ public class MoodEvent {
 
         HashMap location_map = (HashMap) map.get("location");
         location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
-
+      
         username = (String) map.get("username");
     }
 

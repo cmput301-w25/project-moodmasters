@@ -94,7 +94,7 @@ public class MoodSortingTest {
         onView(withText("Happy")).check(matches(isDisplayed()));
         onView(withText("Sad")).check(matches(isDisplayed()));
         // Check that there are 2 items in listView
-        onView(withId(R.id.mood_history_list)).check(matches(hasChildCount(2)));
+        onView(withId(R.id.mood_following_list)).check(matches(hasChildCount(2)));
         // Check that the first item in the list is sad
         onView(withText("Sad")).check(matches(isDisplayed()));
         onView(withText("Happy")).check(matches(isDisplayed()));
