@@ -77,9 +77,9 @@ public class MoodEvent {
 
         is_public = (boolean) map.get("isPublic");
 
-        //HashMap location_map = (HashMap) map.get("location");
-        //location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
-        location = new LatLng((double) 0, (double) 0);
+        HashMap location_map = (HashMap) map.get("location");
+        location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
+      
         username = (String) map.get("username");
     }
 

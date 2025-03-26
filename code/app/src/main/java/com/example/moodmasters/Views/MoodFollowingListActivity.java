@@ -1,5 +1,7 @@
 package com.example.moodmasters.Views;
 
+import android.content.Intent;
+import android.widget.ImageButton;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -8,6 +10,8 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.moodmasters.Events.ChangeActivityEvent;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
 import com.example.moodmasters.Events.MoodFollowingListShowFilterEvent;
 import com.example.moodmasters.MVC.MVCModel;
@@ -20,12 +24,9 @@ import com.example.moodmasters.R;
 
 import java.util.ArrayList;
 
-public class MoodFollowingListActivity extends AppCompatActivity implements MVCView {
+public class MoodFollowingListActivity extends ChangeActivityEvent implements MVCView {
     private MoodFollowingListView mood_following_view;
     private String username;
-
-    // mock MoodEvent ArrayList for testing
-    private ArrayList<MoodEvent> mock_mood_events;
 
     public MoodFollowingListActivity(){
         super();
@@ -43,28 +44,31 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.user_mood_following_screen);
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation_view);
+        setupBottomNav(nav, R.id.mood_following_list_button);
+
+        ImageButton userSearch = findViewById(R.id.user_search_button);
+        userSearch.setOnClickListener(v -> {
+            Intent intent = new Intent(this, UserSearchActivity.class);
+            startActivity(intent);
+        });
+
         TextView username_view = findViewById(R.id.user_mood_following_label);
         username_view.setText(username);
-        /*
+
         if (!controller.existsBackendObject(BackendObject.State.MOODFOLLOWINGLIST)){
             controller.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
         }
-         */
         mood_following_view = new MoodFollowingListView(this);
 
-        Button sort_button = findViewById(R.id.user_mood_following_sort_button);
+        ImageButton sort_button = findViewById(R.id.user_mood_following_sort_button);
         sort_button.setOnClickListener(v -> {
             mood_following_view.toggleSort();
         });
 
-        Button filter_button = findViewById(R.id.user_mood_following_filter_button);
+        ImageButton filter_button = findViewById(R.id.user_mood_following_filter_button);
         filter_button.setOnClickListener(v -> {
             controller.execute(new MoodFollowingListShowFilterEvent(), this);
-        });
-
-        Button back_button = findViewById(R.id.user_mood_following_back_button);
-        back_button.setOnClickListener(v -> {
-            controller.execute(new MoodFollowingListBackEvent(), this);
         });
 
         SwipeRefreshLayout swipe_container = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
@@ -72,6 +76,7 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
             controller.execute(new MoodFollowingListRefreshEvent(), this);
         });
         mood_following_view.setListElementClicker();
+
     }
 
     public MoodFollowingListView getMoodFollowingListView(){

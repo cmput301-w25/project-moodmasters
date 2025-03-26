@@ -53,7 +53,7 @@ public class LoginScreenOkEvent implements MVCController.MVCEvent {
         this.model = model;
         action = "";
         EditText entered_username = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_enter_username);
-        TextView label = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_label);
+        TextView label = ((SignupLoginScreenActivity) context).findViewById(R.id.signup_login_ok_button);
         username = entered_username.getText().toString().trim();
 
 
