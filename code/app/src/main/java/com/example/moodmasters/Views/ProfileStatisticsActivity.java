@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
+import com.example.moodmasters.Events.ShowProfileStatisticsEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -21,10 +23,17 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileStatisticsActivity extends AppCompatActivity implements MVCView {
-    private ArrayList<MoodEvent> mood_list;
+    private List<MoodEvent> mood_list;
     private String username;
+
+    public ProfileStatisticsActivity() {
+        super();
+        mood_list = ShowProfileStatisticsEvent.getMoodEvents();
+        username = ShowProfileStatisticsEvent.getUsername();
+    }
 
     @Override
     public void update(MVCModel model) {
