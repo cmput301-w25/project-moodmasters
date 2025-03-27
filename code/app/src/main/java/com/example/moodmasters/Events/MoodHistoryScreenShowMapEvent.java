@@ -21,6 +21,6 @@ public class MoodHistoryScreenShowMapEvent implements MVCController.MVCEvent {
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        context.startActivity(new Intent((MoodHistoryListActivity) context, MoodEventsMapActivity.class));
+        context.startActivity(new Intent(context, MoodEventsMapActivity.class));
     }
 }

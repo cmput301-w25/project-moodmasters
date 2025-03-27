@@ -1,11 +1,16 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.util.Calendar;
+import android.net.Uri;
+import android.util.Base64;
 
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -23,6 +28,7 @@ public class MoodEvent {
     private boolean is_public;
     private LatLng location;
     private String username;
+    private String photo_string;
 
     /**
      * MoodEvent constructor.
@@ -43,7 +49,7 @@ public class MoodEvent {
      */
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
                      @Nullable String init_reason, @Nullable SocialSituation.State init_situation,
-                     @Nullable LatLng init_location, String init_username){
+                     @Nullable LatLng init_location, String init_username, String init_photo_string){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
@@ -52,6 +58,7 @@ public class MoodEvent {
         is_public = init_is_public;
         location = init_location;
         username = init_username;
+        photo_string = init_photo_string;
     }
 
     /**
@@ -77,10 +84,12 @@ public class MoodEvent {
 
         is_public = (boolean) map.get("isPublic");
 
-        //HashMap location_map = (HashMap) map.get("location");
-        //location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
-        location = new LatLng((double) 0, (double) 0);
+        HashMap location_map = (HashMap) map.get("location");
+        location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
+
         username = (String) map.get("username");
+
+        photo_string =  (String) map.get("photoString");
     }
 
     /**
@@ -181,5 +190,11 @@ public class MoodEvent {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    public String getPhotoString(){
+        return photo_string;
+    }
+    public void setPhotoString(String new_photo_string){
+        photo_string = new_photo_string;
     }
 }

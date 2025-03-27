@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_button"
+        android:icon="@drawable/home_icon"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/user_mood_history_show_map_button"
+        android:icon="@drawable/map_icon"
+        android:title="Map"/>
+
+    <item
+        android:id="@+id/mood_following_list_button"
+        android:icon="@drawable/mood_following_list_icon"
+        android:title="Following" />
+
+    <item
+        android:id="@+id/options_follow_requests_button"
+        android:icon="@drawable/follow_requests_icon"
+        android:title="Requests" />
+
+    <item
+        android:id="@+id/options_logout_button"
+        android:icon="@drawable/log_out_icon"
+        android:title="Log out" />
+
+</menu>
