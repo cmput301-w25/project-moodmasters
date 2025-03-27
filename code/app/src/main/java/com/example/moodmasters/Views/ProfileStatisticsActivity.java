@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class ProfileStatisticsActivity extends AppCompatActivity implements MVCView {
     private List<MoodEvent> mood_list;
@@ -39,6 +40,8 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
     private String username;
     private PieChart pie_chart;
     private BarChart bar_chart;
+    final long day_millis = 86400000L;
+    final long week_millis = 604800000L;
 
     public ProfileStatisticsActivity() {
         super();
@@ -71,8 +74,28 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
         return counts;
     }
 
+    public HashMap<Integer, Integer> getWeekdayCounts(Calendar calendar, long epoch_time) {
+        HashMap<Integer, Integer> counts = new HashMap<>();
+        for (int i = 0; i < 7; i++) {
+            calendar.add(Calendar.DATE, -i);
+            counts.put(calendar.get(Calendar.DATE), 0);
+        }
+
+        for (int i = 0; i < mood_list.size(); i++) {
+            MoodEvent mood_event = mood_list.get(i);
+            Calendar mood_calendar = Calendar.getInstance();
+            long mood_epoch = mood_event.getEpochTime();
+            mood_calendar.setTimeInMillis(mood_epoch);
+            if (epoch_time - mood_event.getEpochTime() < week_millis) {
+                counts.putIfAbsent(mood_calendar.get(Calendar.DATE), 0);
+                counts.put(mood_calendar.get(Calendar.DATE), counts.get(mood_calendar.get(Calendar.DATE)) + 1);
+            }
+        }
+
+        return counts;
+    }
+
     public void showMoodStatistics() {
-        final long week_millis = 604800000L;
         ArrayList<PieEntry> pie_values = new ArrayList<>();
         ArrayList<BarEntry> bar_values = new ArrayList<>();
 
@@ -82,26 +105,43 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
 
         Calendar mood_calendar = Calendar.getInstance();
 
-        for (int i = 0; i < mood_list.size(); i++) {
-            MoodEvent mood_event = mood_list.get(i);
-            long mood_epoch = mood_event.getEpochTime();
-            mood_calendar.setTimeInMillis(mood_epoch);
-            if (epoch_time - mood_epoch < week_millis) {
-                bar_values.add(new BarEntry(mood_calendar.get(7), 1));
-            }
-        }
+
+//        for (int i = 0; i < mood_list.size(); i++) {
+//            MoodEvent mood_event = mood_list.get(i);
+//            long mood_epoch = mood_event.getEpochTime();
+//            mood_calendar.setTimeInMillis(mood_epoch);
+//            if (epoch_time - mood_epoch < week_millis) {
+//                bar_values.add(new BarEntry(mood_calendar.get(7), 1));
+//            }
+//        }
 
         HashMap<Emotion.State, Integer> mood_counts = getEmotionCounts();
+        HashMap<Integer, Integer> weekday_counts = getWeekdayCounts(calendar, epoch_time);
 
         for (int i = 0; i < moods.size(); i++) {
             pie_values.add(new PieEntry(mood_counts.get(moods.get(i).getEmotion()), moods.get(i).getEmotion()));
         }
 
+        Set<Integer> key_set = weekday_counts.keySet();
+        Integer[] keys = new Integer[7];
+        key_set.toArray(keys);
+
+        for (int i = 0; i < 7; i++) {
+            bar_values.add(new BarEntry(keys[i], weekday_counts.get(keys[i])));
+        }
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (int i = 0; i < moods.size(); i++) {
+            colors.add(getResources().getColor(moods.get(i).getColor(), getTheme()));
+        }
+
         PieDataSet pie_set = new PieDataSet(pie_values, "Total Moods");
+        pie_set.setColors(colors);
         PieData pie_data = new PieData(pie_set);
         pie_chart.setData(pie_data);
 
         BarDataSet bar_set = new BarDataSet(bar_values, "Last 7 Days");
+        bar_set.setColors(colors);
         BarData bar_data = new BarData(bar_set);
         bar_chart.setData(bar_data);
     }
