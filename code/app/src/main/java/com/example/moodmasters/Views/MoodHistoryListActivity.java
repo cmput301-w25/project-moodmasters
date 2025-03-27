@@ -50,7 +50,7 @@ public class MoodHistoryListActivity extends ChangeActivityEvent implements MVCV
                 "",
                 SocialSituation.State.NONE,
                 new LatLng(20, 20),
-                "user_1"));
+                "user_1", null));
         mock_mood_events.add(new MoodEvent("Mar 15 2025 | 21:30",
                 1742099444745L,
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
@@ -58,7 +58,7 @@ public class MoodHistoryListActivity extends ChangeActivityEvent implements MVCV
                 "",
                 SocialSituation.State.NONE,
                 new LatLng(25, 25),
-                "user_2"));
+                "user_2", null));
         mock_mood_events.add(new MoodEvent("Mar 15 2025 | 21:30",
                 1742099444745L,
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
@@ -66,7 +66,7 @@ public class MoodHistoryListActivity extends ChangeActivityEvent implements MVCV
                 "",
                 SocialSituation.State.NONE,
                 new LatLng(30, 30),
-                "user_3"));
+                "user_3", null));
         setMoodEventList(mock_mood_events);
     }
     @Override

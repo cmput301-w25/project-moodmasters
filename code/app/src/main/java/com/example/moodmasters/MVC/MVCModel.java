@@ -88,6 +88,7 @@ public class MVCModel {
             FollowingList following_list = (FollowingList) backend_objects.get(BackendObject.State.FOLLOWINGLIST);
             backend_objects.put(backend_object, following_list.getMoodFollowingList());
         }
+        System.out.println("CREATING BACKEND OBJECT " + BackendObject.getString(backend_object));
     }
     /**
      * Remove a pre-existing backend object from the Model, if the backend object does not exists throw an exception
@@ -98,6 +99,7 @@ public class MVCModel {
         if (!backend_objects.containsKey(backend_object)){
             throw new IllegalArgumentException("Error: Trying to delete non-existent backend object " + BackendObject.getString(backend_object));
         }
+        System.out.println("REMOVING BACKEND OBJECT " + BackendObject.getString(backend_object));
         backend_objects.remove(backend_object);
         dependencies.remove(backend_object);
     }
