@@ -25,8 +25,10 @@ public class MoodEventViewingEditEvent implements MVCController.MVCEvent {
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
+        System.out.println("AT START MOODEVENTVIEWINGEVENT");
         Intent i = new Intent((MoodEventViewingActivity) context, AlterMoodEventActivity.class);
         i.putExtra("Event", "EditMoodEvent");
+        System.out.println("AT END MOODEVENTVIEWINGEVENT");
         context.startActivity(i);
     }
 

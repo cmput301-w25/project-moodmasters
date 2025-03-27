@@ -1,11 +1,13 @@
 package com.example.moodmasters.Views;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +24,7 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsApp.PhotoDecoderEncoder;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
@@ -53,6 +56,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         TextView reason_view = findViewById(R.id.view_mood_reason_text);
         TextView public_view = findViewById(R.id.view_mood_publicity_label);
         TextView creator_view = findViewById(R.id.view_mood_creator_text);
+        ImageView photo_view = findViewById(R.id.view_mood_photo_view);
         Mood displayed_mood = displayed_mood_event.getMood();
 
         emoji_view.setText(displayed_mood.getEmoticon());
@@ -62,6 +66,10 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         layout_view.setBackgroundColor(background_color);
         social_situation_view.setText(SocialSituation.getString(displayed_mood_event.getSituation()));
         reason_view.setText(displayed_mood_event.getReason());
+        if (displayed_mood_event.getPhotoString() != null){
+            Bitmap photo = PhotoDecoderEncoder.photoDecoder(displayed_mood_event.getPhotoString());
+            photo_view.setImageBitmap(photo);
+        }
         if (displayed_mood_event.getIsPublic()) {
             public_view.setText("☑ Public");
         }
@@ -76,7 +84,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.view_mood_screen);
-
+        System.out.println("MOODEVENTVIEWINGACTIVITY ONCREATE");
         Intent i = getIntent();
         mood_event_list = i.getStringExtra("MoodEventList");
         if (mood_event_list.equals("MoodHistoryList")){

@@ -1,7 +1,10 @@
 package com.example.moodmasters.Objects.ObjectsBackend;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ColorSpace;
+import android.util.Base64;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -90,6 +93,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
                                 mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
                             }
                             mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
+
                         }
                         else {
                             last_event.setAction("LoginError");
