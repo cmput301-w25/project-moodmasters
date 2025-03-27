@@ -21,6 +21,9 @@ import java.util.ArrayList;
 
 import static com.example.moodmasters.MVC.MVCView.controller;
 
+/*
+* Doesn't enable removing MVCViews from backend on activity switch but this is sufficient for now
+* */
 public class ChangeActivityEvent extends AppCompatActivity {
     private ArrayList<MoodEvent> moodEventList;
 
