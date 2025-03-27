@@ -28,6 +28,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,15 +61,16 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
         moods = model.getBackendList(BackendObject.State.MOODLIST);
     }
 
-    public HashMap<Emotion.State, Integer> getEmotionCounts() {
-        HashMap<Emotion.State, Integer> counts = new HashMap<Emotion.State, Integer>();
-        for (int i = 0; i < moods.size(); i++) {
-            counts.put(moods.get(i).getEmotion(), 0);
-        }
+    public HashMap<String, Integer> getEmotionCounts() {
+        HashMap<String, Integer> counts = new HashMap<String, Integer>();
+//        for (int i = 0; i < moods.size(); i++) {
+//            counts.put(moods.get(i).getEmotion(), 0);
+//        }
 
         for (int i = 0; i < mood_list.size(); i++) {
             MoodEvent mood_event = mood_list.get(i);
-            counts.put(mood_event.getMood().getEmotion(), counts.get(mood_event.getMood().getEmotion()) + 1);
+            counts.putIfAbsent(mood_event.getMood().getEmotionString(), 0);
+            counts.put(mood_event.getMood().getEmotionString(), counts.get(mood_event.getMood().getEmotionString()) + 1);
         }
 
         return counts;
@@ -119,25 +121,34 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
 //            }
 //        }
 
-        HashMap<Emotion.State, Integer> mood_counts = getEmotionCounts();
+        HashMap<String, Integer> mood_counts = getEmotionCounts();
         HashMap<Integer, Integer> day_counts = getDayCounts(calendar, epoch_time);
 
-        for (int i = 0; i < moods.size(); i++) {
-            pie_values.add(new PieEntry(mood_counts.get(moods.get(i).getEmotion()), moods.get(i).getEmotionString()));
+        Set<String> mood_set = mood_counts.keySet();
+        String[] mood_keys = new String[mood_set.size()];
+        mood_set.toArray(mood_keys);
+
+        for (int i = 0; i < mood_set.size(); i++) {
+            pie_values.add(new PieEntry(mood_counts.get(mood_keys[i]), mood_keys[i]));
         }
 
-        Set<Integer> key_set = day_counts.keySet();
-        Integer[] keys = new Integer[7];
-        key_set.toArray(keys);
+        Set<Integer> day_set = day_counts.keySet();
+        Integer[] day_keys = new Integer[day_set.size()];
+        day_set.toArray(day_keys);
 
-        for (int i = 0; i < 7; i++) {
-            bar_values.add(new BarEntry(keys[i], day_counts.get(keys[i])));
+        for (int i = 0; i < day_set.size(); i++) {
+            bar_values.add(new BarEntry(day_keys[i], day_counts.get(day_keys[i])));
         }
 
         ArrayList<Integer> colors = new ArrayList<>();
-        for (int i = 0; i < moods.size(); i++) {
-            colors.add(getResources().getColor(moods.get(i).getColor(), getTheme()));
-        }
+//        for (int i = 0; i < moods.size(); i++) {
+//            colors.add(getResources().getColor(moods.get(i).getColor(), getTheme()));
+//        }
+
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+
+        //colors.add(ColorTemplate.getHoloBlue());
 
         PieDataSet pie_set = new PieDataSet(pie_values, "");
         pie_set.setColors(colors);
@@ -147,7 +158,7 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
 
 
         BarDataSet bar_set = new BarDataSet(bar_values, "");
-        //bar_set.setColors(colors);
+        bar_set.setColors(colors);
         //bar_set.calcMinMax();
         BarData bar_data = new BarData(bar_set);
         bar_data.setValueTextSize(0);
