@@ -43,7 +43,7 @@ public class MoodHistoryListActivity extends ChangeActivityEvent implements MVCV
     public void initialize(MVCModel model){
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         username = user.getUsername();
-        mood_list = model.getBackendList(BackendObject.State.MOODHISTORYLIST);
+        mood_list = user.getMoodHistoryList().getList();
 
         // mock MoodEvent ArrayList for testing
         mock_mood_events = new ArrayList<>();
