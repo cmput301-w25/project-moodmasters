@@ -21,6 +21,7 @@ import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -41,6 +42,7 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
     private String username;
     private PieChart pie_chart;
     private BarChart bar_chart;
+    TextView display_label;
     final long day_millis = 86400000L;
     final long week_millis = 604800000L;
 
@@ -101,6 +103,20 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
         return counts;
     }
 
+    public String getTopMood(HashMap<String, Integer> counts, String[] mood_keys) {
+        String top_mood = mood_keys[0];
+        int top_count = 0;
+
+        for (String mood : mood_keys) {
+            if (counts.get(mood) > top_count) {
+                top_mood = mood;
+                top_count = counts.get(mood);
+            }
+        }
+
+        return top_mood;
+    }
+
     public void showMoodStatistics() {
         ArrayList<PieEntry> pie_values = new ArrayList<>();
         ArrayList<BarEntry> bar_values = new ArrayList<>();
@@ -110,16 +126,6 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
         calendar.setTimeInMillis(epoch_time);
 
         Calendar mood_calendar = Calendar.getInstance();
-
-
-//        for (int i = 0; i < mood_list.size(); i++) {
-//            MoodEvent mood_event = mood_list.get(i);
-//            long mood_epoch = mood_event.getEpochTime();
-//            mood_calendar.setTimeInMillis(mood_epoch);
-//            if (epoch_time - mood_epoch < week_millis) {
-//                bar_values.add(new BarEntry(mood_calendar.get(7), 1));
-//            }
-//        }
 
         HashMap<String, Integer> mood_counts = getEmotionCounts();
         HashMap<Integer, Integer> day_counts = getDayCounts(calendar, epoch_time);
@@ -141,14 +147,14 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
         }
 
         ArrayList<Integer> colors = new ArrayList<>();
-//        for (int i = 0; i < moods.size(); i++) {
-//            colors.add(getResources().getColor(moods.get(i).getColor(), getTheme()));
-//        }
 
-        for (int c : ColorTemplate.LIBERTY_COLORS)
+        for (int c : ColorTemplate.LIBERTY_COLORS) {
             colors.add(c);
+        }
 
-        //colors.add(ColorTemplate.getHoloBlue());
+        String display_string = username + "'s top mood is " + getTopMood(mood_counts, mood_keys);
+
+        display_label.setText(display_string);
 
         PieDataSet pie_set = new PieDataSet(pie_values, "");
         pie_set.setColors(colors);
@@ -156,10 +162,8 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
         pie_data.setDrawValues(false);
         pie_chart.setData(pie_data);
 
-
         BarDataSet bar_set = new BarDataSet(bar_values, "");
-        bar_set.setColors(colors);
-        //bar_set.calcMinMax();
+        bar_set.addColor(getResources().getColor(R.color.button_color, getTheme()));
         BarData bar_data = new BarData(bar_set);
         bar_data.setValueTextSize(0);
         bar_chart.setData(bar_data);
@@ -173,7 +177,7 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
         setContentView(R.layout.profile_statistics_screen);
 
         TextView username_label = findViewById(R.id.profile_statistics_username_label);
-        TextView display_label = findViewById(R.id.profile_statistics_display_label);
+        display_label = findViewById(R.id.profile_statistics_display_label);
 
         ArrayList<String> selections = new ArrayList<>();
         selections.add("Mood");
@@ -191,7 +195,6 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
         pie_chart.setDrawEntryLabels(true);
         pie_chart.setEntryLabelTextSize(20);
         pie_chart.setEntryLabelColor(R.color.text_color);
-        //pie_chart.setFitsSystemWindows(false);
         pie_chart.setMinimumHeight(1000);
 
         bar_chart = findViewById(R.id.profile_statistics_bar_chart);
@@ -199,8 +202,12 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
         bar_chart.setPinchZoom(false);
         bar_chart.setDoubleTapToZoomEnabled(false);
         bar_chart.getLegend().setEnabled(false);
-        //bar_chart.setFitsSystemWindows(false);
-        bar_chart.setMinimumHeight(1000);
+        bar_chart.setMinimumHeight(900);
+        bar_chart.getAxisLeft().setTextSize(20);
+        bar_chart.getXAxis().setTextSize(20);
+        bar_chart.getXAxis().setDrawGridLines(false);
+        bar_chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
+        bar_chart.getAxisRight().setEnabled(false);
 
         Button back_button = findViewById(R.id.profile_statistics_back_button);
         back_button.setOnClickListener(v -> {

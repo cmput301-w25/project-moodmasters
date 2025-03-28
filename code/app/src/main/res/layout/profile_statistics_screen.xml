@@ -83,22 +83,13 @@
                 android:id="@+id/profile_statistics_pie_chart"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_weight="2"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_weight="1" />
+                android:layout_weight="2" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/profile_statistics_bar_chart"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_weight="2"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp" />
+                android:layout_weight="2" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -111,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="16dp"
-                    android:backgroundTint="#6B646B"
+                    android:backgroundTint="@color/button_color"
                     android:padding="12dp"
                     android:text="Back"
                     android:textColor="#FFFFFF"
