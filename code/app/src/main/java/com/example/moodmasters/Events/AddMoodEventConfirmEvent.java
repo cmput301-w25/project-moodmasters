@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.icu.util.Calendar;
+import android.widget.Button;
 import android.util.Pair;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -77,8 +78,7 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
             return;
         }
 
-        // mock location for testing
-        LatLng location = new LatLng(0, 0);
+        LatLng location = activity.getLocation(); // Get the location as LatLng
 
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion),

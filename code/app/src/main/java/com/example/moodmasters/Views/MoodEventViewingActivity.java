@@ -27,7 +27,9 @@ import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.PhotoDecoderEncoder;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
+import com.example.moodmasters.Objects.ObjectsMisc.CommentAdapter;
 import com.example.moodmasters.R;
+import com.google.android.gms.maps.model.LatLng;
 
 public class MoodEventViewingActivity extends AppCompatActivity implements MVCView {
     private MoodEvent displayed_mood_event;
@@ -58,6 +60,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         TextView creator_view = findViewById(R.id.view_mood_creator_text);
         ImageView photo_view = findViewById(R.id.view_mood_photo_view);
         Mood displayed_mood = displayed_mood_event.getMood();
+        TextView location_view = findViewById(R.id.view_mood_location_text);
 
         emoji_view.setText(displayed_mood.getEmoticon());
         mood_view.setText(displayed_mood.getEmotionString());
@@ -77,6 +80,17 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
             public_view.setText("☒ Private");
         }
         creator_view.setText(displayed_mood_event.getUsername());
+        LatLng location = displayed_mood_event.getLocation(); // Get LatLng location
+        if (location != null) {
+            // Format the location to display both latitude and longitude as a string
+            String locationText = "Lat: " + String.format("%.2f", location.latitude) +
+                    ", Long: " + String.format("%.2f", location.longitude);
+            location_view.setText(locationText);
+        } else {
+            location_view.setText("Unknown");
+        }
+
+
     }
 
     @Override
@@ -131,5 +145,16 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         } else {
             viewCommentsButton.setVisibility(View.GONE); // Hide button if not needed
         }
+        // Handle the "View Comments" button click
+        viewCommentsButton.setOnClickListener(v -> {
+            // Create an Intent to go to CommentsActivity
+            Intent intent = new Intent(MoodEventViewingActivity.this, CommentViewingActivity.class);
+
+            // Optionally pass the MoodEvent object to the next activity
+            // intent.putExtra("MoodEvent", displayed_mood_event); // Pass MoodEvent to the next activity
+
+            // Start CommentsActivity
+            startActivity(intent);
+        });
     }
 }
