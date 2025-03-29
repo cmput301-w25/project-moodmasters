@@ -13,6 +13,7 @@ import com.example.moodmasters.Events.LogOutEvent;
 import com.example.moodmasters.Events.MoodHistoryListShowFilterEvent;
 import com.example.moodmasters.Events.MoodHistoryListAddEvent;
 import com.example.moodmasters.Events.ShowMapEvent;
+import com.example.moodmasters.Events.ShowProfileStatisticsEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
@@ -26,10 +27,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MoodHistoryListActivity extends AppCompatActivity implements MVCView {
     private MoodHistoryListView mood_history_view;
     private String username;
+    private List<MoodEvent> mood_list;
 
     // mock MoodEvent ArrayList for testing
     private ArrayList<MoodEvent> mock_mood_events;
@@ -45,6 +48,7 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
     public void initialize(MVCModel model){
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         username = user.getUsername();
+        mood_list = user.getMoodHistoryList().getList();
 
         // mock MoodEvent ArrayList for testing
         mock_mood_events = new ArrayList<>();
@@ -100,6 +104,11 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
         ImageButton filter_button = findViewById(R.id.user_mood_following_filter_button);
         filter_button.setOnClickListener(v -> {
             controller.execute(new MoodHistoryListShowFilterEvent(), this);
+        });
+
+        ImageButton stats_button = findViewById(R.id.user_mood_history_stats_button);
+        stats_button.setOnClickListener(v -> {
+            controller.execute(new ShowProfileStatisticsEvent(mood_list, username), this);
         });
 
         mood_history_view.setListElementClicker();

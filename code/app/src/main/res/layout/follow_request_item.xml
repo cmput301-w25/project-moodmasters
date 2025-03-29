@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="8dp"
-    android:gravity="center_vertical">
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/request_username"
@@ -12,25 +12,25 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Username"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/accept_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
+        android:padding="12dp"
         android:text="Accept"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:padding="12dp"
-        android:backgroundTint="#6B646B"/>
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/ignore_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
+        android:padding="12dp"
         android:text="Ignore"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:padding="12dp"
-        android:backgroundTint="#6B646B"/>
+        android:textSize="16sp" />
 </LinearLayout>
