@@ -116,7 +116,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
     }
 
     /*
-    * just temporary for now while i add multithreading
+    * just temporary for now while i add multithreading (if i have time)
     * */
     public void setDatabaseData2(MVCDatabase database, MVCModel model, int index){
         database.addCollection("participants");
@@ -130,9 +130,13 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
                     if (snapshot.exists()) {
                         ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
                         ArrayList list = (ArrayList) snapshot.get("list");
+                        String print = username + "\n";
                         for (int i = 0; i < list.size(); i++) {
-                            mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
+                            MoodEvent mood_event = new MoodEvent((HashMap) list.get(i));
+                            print = print + mood_event.getMoodEventString() + "\n";
+                            mood_array_list.add(mood_event);
                         }
+                        System.out.println(print);
                         mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
                     }
                     else{

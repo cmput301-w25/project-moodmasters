@@ -97,6 +97,20 @@ public class MoodEvent {
         photo_string =  (String) map.get("photoString");
     }
 
+    public String getMoodEventString(){
+        String public_string;
+        if (is_public){
+            public_string = "public";
+        }
+        else{
+            public_string = "private";
+        }
+        String mood_event_string = datetime + "\n" + mood.getEmotionString() + "\n" +
+                reason + "\n" + SocialSituation.getString(situation) +
+                "\n" + public_string + "\n" + username;
+        return mood_event_string;
+    }
+
     /**
      * datetime getter
      */

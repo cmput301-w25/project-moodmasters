@@ -78,8 +78,8 @@ public class MVCModel{
         }
         else if (backend_object == BackendObject.State.FOLLOWINGLIST){
             FollowingList follow_list = ((Participant) backend_objects.get(BackendObject.State.USER)).getFollowingList();
-            follow_list.setDatabaseData(database, this);
             backend_objects.put(backend_object, follow_list);
+            follow_list.setDatabaseData(database, this);
         }
         else if (backend_object == BackendObject.State.MOODHISTORYLIST){
             Participant user = ((Participant) this.getBackendObject(BackendObject.State.USER));

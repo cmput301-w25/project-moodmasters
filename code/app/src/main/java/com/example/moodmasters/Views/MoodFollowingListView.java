@@ -45,7 +45,8 @@ public class MoodFollowingListView implements MVCView {
     }
 
     public void update(MVCModel model){
-        return;
+        List<MoodEvent> mood_list = model.getBackendList(BackendObject.State.MOODFOLLOWINGLIST);
+        original_list = new ArrayList<>(mood_list);
     }
 
     public void toggleSort() {
