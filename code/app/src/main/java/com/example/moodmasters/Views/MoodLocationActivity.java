@@ -23,7 +23,7 @@ public class MoodLocationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.alter_mood_screen);  // Use a specific layout for this activity
+        setContentView(R.layout.loading_screen);  // Use a specific layout for this activity
 
         // Initialize the LocationManager
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);

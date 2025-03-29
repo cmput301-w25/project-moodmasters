@@ -79,7 +79,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
                     ", Long: " + String.format("%.2f", location.longitude);
             location_view.setText(locationText);
         } else {
-            location_view.setText("Location: Unknown");
+            location_view.setText("Unknown");
         }
 
 
