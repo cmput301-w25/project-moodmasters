@@ -70,6 +70,8 @@ public class CommentViewingActivity extends AppCompatActivity {
 
             // Add the new comment to the list
             commentsList.add(newComment);
+
+            // Update the MoodEvent with this ??
             commentsAdapter.notifyDataSetChanged();  // Refresh the ListView
         }
     }

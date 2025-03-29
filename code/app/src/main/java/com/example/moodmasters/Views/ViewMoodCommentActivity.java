@@ -54,27 +54,18 @@ public class ViewMoodCommentActivity extends AppCompatActivity implements MVCVie
         commentAdapter = new CommentAdapter(this, commentList, db);
         commentListView.setAdapter(commentAdapter);
 
-        loadComments();
 
         // Initialize the "X" button to close the activity
         ImageButton xButton = findViewById(R.id.view_mood_x_button);
         xButton.setOnClickListener(v -> finish());
 
+        // TODO: Fetch the MoodEvent from MoodEventViewingActivity
         // Initialize the "Add Comment" button
         Button addCommentButton = findViewById(R.id.add_comment_button);
             addCommentButton.setOnClickListener(v -> {
-                // Launch Add Comment screen (comment_add.xml)
-                // Log.d("ViewMoodCommentActivity", "button clicked");
+                // TODO: Send the MoodEvent to AddCommentActivity
                 Intent intent = new Intent(ViewMoodCommentActivity.this, AddCommentActivity.class);
-                //String username = "John Doe";
-                // String timestamp = "Jan 1, 2025 | 10:10 AM";
 
-                //Log.d("ViewMoodCommentActivity", "Username: " + username);
-                //Log.d("ViewMoodCommentActivity", "Timestamp: " + timestamp);
-
-                //intent.putExtra("username", username);
-                //intent.putExtra("timestamp", timestamp);
-                //startActivityForResult(intent, 1);
 
             });
         }
@@ -97,24 +88,6 @@ public class ViewMoodCommentActivity extends AppCompatActivity implements MVCVie
             // Notify the adapter that the data has changed
             commentAdapter.notifyDataSetChanged();
         }
-    }
-    private void loadComments() {
-        db.collection("participants")
-                .document(username)
-                .collection("comments")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        // Only add new comments to the list without clearing old ones
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Comment comment = document.toObject(Comment.class);
-                            commentList.add(comment);
-                        }
-                    } else {
-                        Log.w("loadComments", "Error getting comments.", task.getException());
-                    }
-                    commentAdapter.notifyDataSetChanged();  // Refresh the ListView/RecyclerView
-                });
     }
 
 }

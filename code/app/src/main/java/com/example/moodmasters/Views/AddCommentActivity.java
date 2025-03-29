@@ -23,6 +23,7 @@ import com.google.firebase.firestore.CollectionReference;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class AddCommentActivity extends AppCompatActivity implements MVCView {
 
@@ -56,6 +57,12 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
         cancelButton = findViewById(R.id.cancel_button);
         okButton = findViewById(R.id.ok_button);
 
+        // TO DO: retrieve the passed MoodEvent Object
+
+        // Get the list of comments from the MoodEvent Object
+        // List<Comment> comments = moodEvent.getComments();
+
+
         // Handle Cancel Button Click
         cancelButton.setOnClickListener(v -> {
             // Close this activity without sending anything back
@@ -72,8 +79,13 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
             // Create the new Comment object with username, timestamp, and the new content
             Comment newComment = new Comment(username, timestamp, newCommentContent);
 
-            // Save the comment to Firestore
-            saveCommentToFirebase(newComment);
+            // TODO: Add new comment to the list of comments in MoodEvent Object
+            // comments.add(newComment);
+            // TODO: Update the MoodEvent with this new comment
+
+            // Temporary
+            finish();
+
         });
     }
 
@@ -90,35 +102,5 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
             long timestampMillis = System.currentTimeMillis();
             return String.valueOf(timestampMillis);  // Returns timestamp in milliseconds
         }
-    }
-
-    // Save the comment to Firestore
-    private void saveCommentToFirebase(Comment comment) {
-        // Get a reference to the user's document in the 'participants' collection
-        DocumentReference userDocRef = db.collection("participants").document(username);
-
-        // Get a reference to the 'comments' subcollection within the user's document
-        CollectionReference commentsRef = userDocRef.collection("comments");
-
-        // Add the comment to the 'comments' subcollection (Firestore auto-generates a unique ID)
-        commentsRef.add(comment)
-                .addOnSuccessListener(documentReference -> {
-                    // When the comment is successfully added, log the result and return to the previous activity
-                    Log.d("AddCommentActivity", "Comment added with ID: " + documentReference.getId());
-
-                    // Return the comment data to the previous activity
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("username", comment.getUsername());
-                    resultIntent.putExtra("timestamp", comment.getTimestamp());
-                    resultIntent.putExtra("content", comment.getContent());
-                    setResult(RESULT_OK, resultIntent);
-
-                    // Finish the activity
-                    finish();
-                })
-                .addOnFailureListener(e -> {
-                    // Handle any errors
-                    Log.w("AddCommentActivity", "Error adding comment", e);
-                });
     }
 }

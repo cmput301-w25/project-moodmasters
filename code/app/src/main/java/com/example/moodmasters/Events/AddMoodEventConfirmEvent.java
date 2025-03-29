@@ -6,6 +6,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.moodmasters.Objects.ObjectsApp.Comment;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
 import com.example.moodmasters.MVC.MVCController;
@@ -20,7 +21,9 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
     @Override
@@ -56,9 +59,12 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
         // mock location for testing
         LatLng location = new LatLng(0, 0);
 
+        // When adding, there is an emptyCommentsList
+        List<Comment> emptyCommentsList = new ArrayList<>();
+
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion),
-                is_public, reason_string, social_situation, location, user.getUsername());
+                is_public, reason_string, social_situation, location, user.getUsername(), emptyCommentsList);
         model.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
 

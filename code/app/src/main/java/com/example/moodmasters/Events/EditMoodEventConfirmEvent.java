@@ -7,6 +7,7 @@ import android.widget.Spinner;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
+import com.example.moodmasters.Objects.ObjectsApp.Comment;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
@@ -16,6 +17,8 @@ import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
 
 public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
     private MoodEvent mood_event;
@@ -53,9 +56,13 @@ public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
         // mock location for testing
         LatLng location = new LatLng(0, 0);
 
+        // Fetch comments from current MoodEvent
+        List<Comment> existingComments = mood_event.getComments();
+
+
         MoodEvent new_mood_event = new MoodEvent(mood_event.getDatetime(), mood_event.getEpochTime(), mood_list.getMood(emotion),
                                                     is_public, reason_string, social_situation, location,
-                                                    ((Participant) model.getBackendObject(BackendObject.State.USER)).getUsername());
+                                                    ((Participant) model.getBackendObject(BackendObject.State.USER)).getUsername(), existingComments);
         model.replaceObjectBackendList(BackendObject.State.MOODHISTORYLIST, position, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
     }

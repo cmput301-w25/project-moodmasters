@@ -129,8 +129,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
             // Create an Intent to go to CommentsActivity
             Intent intent = new Intent(MoodEventViewingActivity.this, CommentViewingActivity.class);
 
-            // Optionally pass the MoodEvent object to the next activity
-            // intent.putExtra("MoodEvent", displayed_mood_event); // Pass MoodEvent to the next activity
+            // TODO: Send the MoodEvent to CommentViewingActivity
 
             // Start CommentsActivity
             startActivity(intent);

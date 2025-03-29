@@ -14,6 +14,7 @@ import com.example.moodmasters.Events.MoodHistoryListMenuEvent;
 import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
+import com.example.moodmasters.Objects.ObjectsApp.Comment;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
@@ -45,6 +46,14 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
 
         // mock MoodEvent ArrayList for testing
         mock_mood_events = new ArrayList<>();
+
+        ArrayList<Comment> comments1 = new ArrayList<>();
+        comments1.add(new Comment("user_2", "2025-03-25 14:00:00", "Nice mood!"));
+        comments1.add(new Comment("user_3", "2025-03-25 14:05:00", "I can relate."));
+
+        ArrayList<Comment> comments2 = new ArrayList<>();
+        comments2.add(new Comment("user_1", "2025-03-25 14:10:00", "Hang in there!"));
+
         mock_mood_events.add(new MoodEvent("Mar 15 2025 | 21:30",
                 1742099444745L,
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
@@ -52,7 +61,9 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 "",
                 SocialSituation.State.NONE,
                 new LatLng(20, 20),
-                "user_1"));
+                "user_1",
+                comments1))
+        ;
         mock_mood_events.add(new MoodEvent("Mar 15 2025 | 21:30",
                 1742099444745L,
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
@@ -60,7 +71,8 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 "",
                 SocialSituation.State.NONE,
                 new LatLng(25, 25),
-                "user_2"));
+                "user_2",
+                comments2));
         mock_mood_events.add(new MoodEvent("Mar 15 2025 | 21:30",
                 1742099444745L,
                 ((MoodList) model.getBackendObject(BackendObject.State.MOODLIST)).getMood(Emotion.State.ANGRY),
@@ -68,7 +80,8 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
                 "",
                 SocialSituation.State.NONE,
                 new LatLng(30, 30),
-                "user_3"));
+                "user_3",
+                new ArrayList<>()));
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

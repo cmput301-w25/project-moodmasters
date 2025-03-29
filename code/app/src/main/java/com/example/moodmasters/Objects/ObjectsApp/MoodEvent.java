@@ -6,9 +6,12 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +26,7 @@ public class MoodEvent {
     private boolean is_public;
     private LatLng location;
     private String username;
+    private List<Comment> comments;
 
     /**
      * MoodEvent constructor.
@@ -40,10 +44,12 @@ public class MoodEvent {
      *  This is the MoodEvent's publicity.
      * @param init_location
      *  (optional) This is the MoodEvent's location
+     * @param init_comments
+     * (optional) This is the MoodEvent's comments
      */
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
                      @Nullable String init_reason, @Nullable SocialSituation.State init_situation,
-                     @Nullable LatLng init_location, String init_username){
+                     @Nullable LatLng init_location, String init_username, List<Comment> init_comments){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
@@ -52,6 +58,7 @@ public class MoodEvent {
         is_public = init_is_public;
         location = init_location;
         username = init_username;
+        comments = init_comments != null ? init_comments : new ArrayList<>();
     }
 
     /**
@@ -81,6 +88,7 @@ public class MoodEvent {
         location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
 
         username = (String) map.get("username");
+        comments = (List<Comment>) map.get("comments");
     }
 
     public String getStringMoodEvent(){
@@ -185,5 +193,34 @@ public class MoodEvent {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * Method to add a comment to the list.
+     * @param comment The comment to be added.
+     */
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+    /**
+     * Method to remove a comment from the list.
+     * @param comment The comment to be removed.
+     */
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+    }
+
+    /**
+     * Method to get the list of comments.
+     */
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    /**
+     * Method to set the list of comments.
+     */
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
-import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+
 
 public class Comment {
     private String username;
@@ -22,7 +22,6 @@ public class Comment {
     public String getContent() {
         return content;
     }
-
     public String getTimestamp() {
         return timestamp;
     }
