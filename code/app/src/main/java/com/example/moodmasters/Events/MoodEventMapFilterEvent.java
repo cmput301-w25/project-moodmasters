@@ -25,10 +25,10 @@ public class MoodEventMapFilterEvent implements MVCController.MVCEvent{
         CheckBox mood_history_box = fragment_view.findViewById(R.id.mood_filter_mood_history_checkbox);
         CheckBox mood_following_box = fragment_view.findViewById(R.id.mood_filter_mood_following_checkbox);
         if (recency_location_box.isChecked()){
-            // TODO: add call
+            mood_map.recencyLocationFilterMoodEventList();
         }
         else{
-            // TODO: add call
+            mood_map.revertRecencyLocationFilterMoodEventList();
         }
 
         if (mood_history_box.isChecked()){

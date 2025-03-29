@@ -91,7 +91,7 @@ public class MVCModel{
             backend_objects.put(backend_object, following_list.getMoodFollowingList());
         }
         else if (backend_object == BackendObject.State.MOODMAP){
-
+            String username = ((Participant) backend_objects.get(BackendObject.State.USER)).getUsername();
             List<MoodEvent> mood_history_list = new ArrayList<MoodEvent>((List<MoodEvent>) ((MoodHistoryList) backend_objects.get(BackendObject.State.MOODHISTORYLIST)).getList());
             List<MoodEvent> mood_following_list = new ArrayList<MoodEvent>((List<MoodEvent>) ((MoodFollowingList) backend_objects.get(BackendObject.State.MOODFOLLOWINGLIST)).getList());
             List<MoodEvent> init_mood_events = new ArrayList<MoodEvent>();
@@ -113,7 +113,7 @@ public class MVCModel{
             mood_following_list.removeAll(removables);
             init_mood_events.addAll(mood_history_list);
             init_mood_events.addAll(mood_following_list);
-            MoodMap mood_map = new MoodMap(null, init_mood_events, mood_history_list, mood_following_list);
+            MoodMap mood_map = new MoodMap(init_mood_events, mood_history_list, mood_following_list, username);
             backend_objects.put(backend_object, mood_map);
         }
         System.out.println("CREATING BACKEND OBJECT " + BackendObject.getString(backend_object));

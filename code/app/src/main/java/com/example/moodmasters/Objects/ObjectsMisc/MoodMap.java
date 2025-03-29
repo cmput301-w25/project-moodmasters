@@ -1,45 +1,35 @@
 package com.example.moodmasters.Objects.ObjectsMisc;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-
-import androidx.annotation.NonNull;
+import android.location.Location;
 
 import com.example.moodmasters.MVC.MVCBackend;
-import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.R;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MoodMap extends MVCBackend {
+    String username;
+    Double user_longitude;
+    Double user_latitude;
     private GoogleMap google_map;
     private List<MoodEvent> mood_events;
     private FilterMoodEventMap filter_mood_map;
 
-    public MoodMap(GoogleMap init_map, List<MoodEvent> init_events, List<MoodEvent> init_mood_history, List<MoodEvent> init_mood_following) {
-        google_map = init_map;
+    public MoodMap(List<MoodEvent> init_events, List<MoodEvent> init_mood_history,
+                   List<MoodEvent> init_mood_following, String init_username) {
         mood_events = init_events;
         filter_mood_map = new FilterMoodEventMap(init_mood_history, init_mood_following);
-    }
-    public MoodMap(GoogleMap init_map, List<MoodEvent> init_events) {
-        google_map = init_map;
-        mood_events = init_events;
-        filter_mood_map = new FilterMoodEventMap();
-    }
-    public MoodMap() {
+        username = init_username;
         google_map = null;
-        mood_events = new ArrayList<MoodEvent>();
-        filter_mood_map = new FilterMoodEventMap();
+        user_latitude = null;
+        user_longitude = null;
     }
     public void clearMap() {
         google_map.clear();
@@ -54,6 +44,13 @@ public class MoodMap extends MVCBackend {
         paint.setColor(Color.YELLOW);
         canvas.drawText("😐", 0, 0, paint);
          */
+        if (user_longitude != null && user_latitude != null){
+            MarkerOptions marker = new MarkerOptions();
+            marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            google_map.addMarker(marker
+                    .position(new LatLng(user_latitude, user_longitude))
+                    .title(username));
+        }
         for (int i = 0; i < mood_events.size(); i++) {
             MoodEvent event = mood_events.get(i);
             String emoji = context.getResources().getString(event.getMood().getEmoticon());
@@ -81,6 +78,12 @@ public class MoodMap extends MVCBackend {
     public void revertRecencyLocationFilterMoodEventList(){
         filter_mood_map.revertFilterByLocationRecency(mood_events);
     }
+    public void filterCreateLocationRecencyList(){
+        if (user_longitude == null || user_latitude == null){
+            throw new InvalidParameterException("Error: trying to create location recency list when longitude and latitude are null");
+        }
+        filter_mood_map.createLocationRecencyList(user_longitude, user_latitude);
+    }
     public FilterMoodEventMap getFilter(){
         return filter_mood_map;
     }
@@ -97,5 +100,9 @@ public class MoodMap extends MVCBackend {
     }
     public void setMoodEvents(List<MoodEvent> mood_events) {
         this.mood_events = mood_events;
+    }
+    public void setUserLocation(Location location){
+        user_latitude = location.getLatitude();
+        user_longitude = location.getLongitude();
     }
 }
