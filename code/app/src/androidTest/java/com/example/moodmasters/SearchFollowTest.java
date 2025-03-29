@@ -19,7 +19,6 @@ import com.example.moodmasters.Views.SignupLoginScreenActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -34,7 +33,7 @@ import java.util.Objects;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class AddMoodTest {
+public class SearchFollowTest {
     @Rule
     public ActivityScenarioRule<SignupLoginScreenActivity> scenario = new
             ActivityScenarioRule<SignupLoginScreenActivity>(SignupLoginScreenActivity.class);
@@ -53,96 +52,115 @@ public class AddMoodTest {
     }
 
     @Before
-    public void navigateToMainScreen() throws Exception{
-        //Thread.sleep(1000);
+    public void navigateToMainScreen() throws InterruptedException {
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
         //Thread.sleep(1000);
-        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_8"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
-        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_8"));
         onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
 
-    }
-
-    @Test
-    public void testAddMood() throws Exception{
-        Thread.sleep(1000);
-        // 1 mood
-        onView(withId(R.id.user_mood_history_add_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
-        onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
-        onView(withText("Sad")).perform(ViewActions.click());
-        onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
-        onView(withText("Sad")).check(matches(isDisplayed()));
-
-        // 2 moods
+        // Add moods
         onView(withId(R.id.user_mood_history_add_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
         onView(withText("Happy")).perform(ViewActions.click());
+        onView(withId(R.id.alter_mood_public_checkbox)).perform(ViewActions.click());
         onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withText("Happy")).check(matches(isDisplayed()));
-        onView(withText("Sad")).check(matches(isDisplayed()));
 
-        // Logout/login
-
-        onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
-        //onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        //Thread.sleep(1000);
-        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
-        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
-        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_1"));
-        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
-
-        onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
-        onView(withText("Happy")).check(matches(isDisplayed()));
-        onView(withText("Sad")).check(matches(isDisplayed()));
-
-        // Switch to new user
-
-        onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
-        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
-        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_2"));
-        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
-        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_2"));
-        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
-        onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
-        onView(withText("Happy")).check(doesNotExist());
-        onView(withText("Sad")).check(doesNotExist());
-
-        // Logout/login again
-
-        onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
-        //onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        //Thread.sleep(1000);
-        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
-        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
-        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_1"));
-        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
-        onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
-        onView(withText("Happy")).check(matches(isDisplayed()));
-        onView(withText("Sad")).check(matches(isDisplayed()));
-
-        // 4-word reason
         onView(withId(R.id.user_mood_history_add_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
-        onView(withText("Scared")).perform(ViewActions.click());
-        onView(withId(R.id.alter_mood_enter_reason)).perform(ViewActions.typeText("a b c d"));
-        onView(withId(R.id.alter_mood_enter_reason)).perform(closeSoftKeyboard());
+        onView(withText("Sad")).perform(ViewActions.click());
+        onView(withId(R.id.alter_mood_public_checkbox)).perform(ViewActions.click());
         onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withText(R.string.mood_emoji_scared)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.user_mood_history_add_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
+        onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
+        onView(withText("Angry")).perform(ViewActions.click());
+        //onView(withId(R.id.alter_mood_public_checkbox)).perform(ViewActions.click());
+        onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
+
+        onView(withId(R.id.user_mood_history_add_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
+        onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
+        onView(withText("Surprised")).perform(ViewActions.click());
+        onView(withId(R.id.alter_mood_public_checkbox)).perform(ViewActions.click());
+        onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
+
+        onView(withId(R.id.user_mood_history_add_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
+        onView(withId(R.id.alter_mood_emotion_spinner)).perform(ViewActions.click());
+        onView(withText("Disgusted")).perform(ViewActions.click());
+        onView(withId(R.id.alter_mood_public_checkbox)).perform(ViewActions.click());
+        onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
+        Thread.sleep(1000);
+    }
+
+    @Test
+    public void testSearchAndFollow() {
+        // Search for self
+        onView(withId(R.id.mood_following_list_button)).perform(ViewActions.click());
+        onView(withId(R.id.user_search_button)).perform(ViewActions.click());
+        onView(withId(R.id.searchInput)).perform(ViewActions.typeText("user"));
+        onView(withId(R.id.searchInput)).perform(closeSoftKeyboard());
+        onView(withId(R.id.searchButton)).perform(ViewActions.click());
+        onView(withText("user_8")).check(doesNotExist());
+
+        // Search for other user
+        onView(withId(R.id.backButton)).perform(ViewActions.click());
+        onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
+        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
+        //Thread.sleep(1000);
+        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_9"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_9"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
+        onView(withId(R.id.mood_following_list_button)).perform(ViewActions.click());
+        onView(withId(R.id.user_search_button)).perform(ViewActions.click());
+        onView(withId(R.id.searchInput)).perform(ViewActions.typeText("user"));
+        onView(withId(R.id.searchInput)).perform(closeSoftKeyboard());
+        onView(withId(R.id.searchButton)).perform(ViewActions.click());
+        onView(withText("user_8")).check(matches(isDisplayed()));
+
+        // Follow user
+        onView(withText("user_8")).perform(ViewActions.click());
+        onView(withId(R.id.followButton)).perform(ViewActions.click());
+        onView(withId(R.id.backButton)).perform(ViewActions.click());
+        onView(withId(R.id.backButton)).perform(ViewActions.click());
+        onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
+        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_8"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_8"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
+        onView(withId(R.id.options_follow_requests_button)).perform(ViewActions.click());
+        onView(withText("user_9")).check(matches(isDisplayed()));
+
+        // Accept request
+        onView(withId(R.id.accept_button)).perform(ViewActions.click());
+        onView(withText("user_9")).check(doesNotExist());
+
+        // Following user can see followed moods
+        onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
+        onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_9"));
+        onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_9"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
+        onView(withId(R.id.mood_following_list_button)).perform(ViewActions.click());
+        onView(withText("Happy")).check(matches(isDisplayed()));
+        onView(withText("Sad")).check(matches(isDisplayed()));
+        onView(withText("Angry")).check(doesNotExist());
+        onView(withText("Surprised")).check(matches(isDisplayed()));
+        onView(withText("Disgusted")).check(doesNotExist());
     }
 
     @After

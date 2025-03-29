@@ -2,6 +2,8 @@ package com.example.moodmasters;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.assertion.PositionAssertions.isCompletelyAbove;
+import static androidx.test.espresso.assertion.PositionAssertions.isCompletelyBelow;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -56,14 +58,15 @@ public class MoodSortingTest {
 
     @Before
     public void navigateToMainScreen() {
+        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
+        //Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_7"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_7"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
     }
-    /**
-     * This test is wrong and does not test sorting (the sorting button isn't even clicked at all)
-     *
-     * */
+
     @Test
     public void testMoodsAreSorted() throws Exception{
         Thread.sleep(1000);
@@ -91,13 +94,13 @@ public class MoodSortingTest {
         onView(withText("Happy")).perform(ViewActions.click());
         onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withText("Happy")).check(matches(isDisplayed()));
-        onView(withText("Sad")).check(matches(isDisplayed()));
-        // Check that there are 2 items in listView
-        onView(withId(R.id.mood_following_list)).check(matches(hasChildCount(2)));
-        // Check that the first item in the list is sad
-        onView(withText("Sad")).check(matches(isDisplayed()));
-        onView(withText("Happy")).check(matches(isDisplayed()));
+        onView(withText("Happy")).check(isCompletelyBelow(withText("Sad")));
+        onView(withText("Sad")).check(isCompletelyAbove(withText("Happy")));
+
+        onView(withId(R.id.user_mood_following_sort_button)).perform(ViewActions.click());
+
+        onView(withText("Sad")).check(isCompletelyBelow(withText("Happy")));
+        onView(withText("Happy")).check(isCompletelyAbove(withText("Sad")));
     }
 
     @After
