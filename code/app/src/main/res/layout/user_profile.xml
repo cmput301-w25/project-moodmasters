@@ -37,14 +37,14 @@
         android:id="@+id/followButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
+        android:padding="8dp"
         android:text="Follow"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        android:backgroundTint="#6B646B"
-        android:padding="8dp"
-        app:layout_constraintTop_toTopOf="@+id/usernameTextView"
         app:layout_constraintBottom_toBottomOf="@+id/usernameTextView"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/usernameTextView" />
 
     <ListView
         android:id="@+id/mood_following_list"
