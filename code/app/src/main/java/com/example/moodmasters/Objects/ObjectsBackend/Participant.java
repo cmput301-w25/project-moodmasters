@@ -1,7 +1,10 @@
 package com.example.moodmasters.Objects.ObjectsBackend;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ColorSpace;
+import android.util.Base64;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -58,6 +61,8 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
 
     public void setDatabaseData(MVCDatabase database, MVCModel model){
         LoginScreenOkEvent last_event = (LoginScreenOkEvent) model.getLastEvent();
+        String password = last_event.getPassword();
+        // TODO: password hashing here
         database.addCollection("participants");
         database.addDocument(username);
         DocumentReference doc_ref = database.getDocument(username);
@@ -77,19 +82,27 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
                             mood_history_list = new MoodHistoryList(Participant.this);
                             Map<String, Object> map = new HashMap<String, Object>();
                             map.put("list", mood_history_list.getList());
+                            map.put("password", password);
                             doc_ref.set(map);
                         }
                     }
                     else {
                         // Login: Check if the username exists
                         if (snapshot.exists()) {
-                            last_event.setAction("GoMoodHistoryActivity");
-                            ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
-                            ArrayList list = (ArrayList) snapshot.get("list");
-                            for (int i = 0; i < list.size(); i++) {
-                                mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
+                            String database_password = (String) snapshot.get("password");
+                            if (database_password.equals(password)){
+                                last_event.setAction("GoMoodHistoryActivity");
+                                ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
+                                ArrayList list = (ArrayList) snapshot.get("list");
+                                for (int i = 0; i < list.size(); i++) {
+                                    mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
+                                }
+                                mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
                             }
-                            mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
+                            else{
+                                last_event.setAction("PasswordError");
+                            }
+
                         }
                         else {
                             last_event.setAction("LoginError");

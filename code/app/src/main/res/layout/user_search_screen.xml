@@ -8,85 +8,76 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/user_search_title"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="48dp"
-        android:text="User Search"
-        android:textColor="#000000"
-        android:textSize="34sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/username_label"
+        android:id="@+id/user_search_main_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username:"
-        android:textSize="24sp"
-        android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@id/user_search_title"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="User Search"
+        android:textColor="@color/text_color"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.408"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="12dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/searchInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:background="#D3D3D3"
         android:hint="Enter username"
+        android:padding="10dp"
         android:textColor="#000000"
         android:textSize="16sp"
-        android:padding="10dp"
-        android:background="#D3D3D3"
-        app:layout_constraintTop_toBottomOf="@id/user_search_title"
-        app:layout_constraintStart_toEndOf="@id/username_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/user_search_main_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/searchButton" />
 
     <ListView
         android:id="@+id/searchResultsListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#F5F5F5"
+        android:background="@color/background_color"
         android:divider="#B0B0B0"
         android:dividerHeight="1dp"
         android:padding="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintTop_toBottomOf="@id/searchInput"
-        app:layout_constraintBottom_toTopOf="@id/button_container"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/button_container"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="cancel screen button"
+        android:src="@drawable/x_icon"
+        app:layout_constraintBottom_toTopOf="@+id/searchButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.903"
+        app:layout_constraintStart_toEndOf="@+id/user_search_main_label"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:padding="12dp"
-            android:backgroundTint="#6B646B"
-            android:layout_marginEnd="24dp"/>
-
-        <Button
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:padding="12dp"
-            android:backgroundTint="#6B646B"/>
-    </LinearLayout>
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/button_color"
+        android:padding="12dp"
+        android:text="Search"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/searchResultsListView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.91" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

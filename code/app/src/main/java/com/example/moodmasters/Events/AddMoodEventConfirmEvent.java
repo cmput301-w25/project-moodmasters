@@ -1,12 +1,18 @@
 package com.example.moodmasters.Events;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.icu.util.Calendar;
 import android.widget.Button;
+import android.util.Pair;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.moodmasters.Objects.ObjectsApp.PhotoDecoderEncoder;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
 import com.example.moodmasters.MVC.MVCController;
@@ -24,6 +30,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
+    private boolean photo_added;
+    public AddMoodEventConfirmEvent(boolean init_photo_added){
+        photo_added = init_photo_added;
+    }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         AlterMoodEventActivity activity = (AlterMoodEventActivity) context;
@@ -49,8 +59,22 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
         DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
         String datetime = format.format(calendar.getTime());
 
-        if (activity.addDataVerification(reason_string)){
+        ImageView upload_photo_image = activity.findViewById(R.id.alter_mood_photo_button);
+        Bitmap photo =((BitmapDrawable) upload_photo_image.getDrawable()).getBitmap();
+        String photo_string;
+        if (photo_added){
+            photo_string = PhotoDecoderEncoder.photoEncoder(photo);
+        }
+        else{
+            photo_string = null;
+        }
+
+        if (!activity.addDataVerificationReason(reason_string)){
             reason_text.setError("Must be less than 20 characters and only 3 words");
+            return;
+        }
+        if (!activity.addDataVerificationPhoto(photo_string)){
+            Toast.makeText(context, "Photo must be less than 65536 bytes", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -58,7 +82,7 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
 
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion),
-                is_public, reason_string, social_situation, location, user.getUsername());
+                is_public, reason_string, social_situation, location, user.getUsername(), photo_string);
         model.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
 

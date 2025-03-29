@@ -1,3 +1,4 @@
+// com.example.moodmasters.Events.UserSearchEvent.java
 package com.example.moodmasters.Events;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
@@ -11,21 +12,12 @@ import android.widget.Toast;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Views.MoodEventsMapActivity;
-import com.example.moodmasters.Views.MoodHistoryListActivity;
+import com.example.moodmasters.MVC.MVCView;
+import com.example.moodmasters.Views.UserSearchActivity;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class MoodHistoryScreenShowMapEvent implements MVCController.MVCEvent {
-    private static ArrayList<MoodEvent> mood_events;
-    public MoodHistoryScreenShowMapEvent(ArrayList<MoodEvent> init_events) {
-        mood_events = init_events;
-    }
-    public static ArrayList<MoodEvent> getMoodEvents() {
-        return mood_events;
-    }
+public class UserSearchEvent implements MVCController.MVCEvent {
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         ConnectivityManager connectivityManager = getSystemService(context, ConnectivityManager.class);
@@ -35,6 +27,7 @@ public class MoodHistoryScreenShowMapEvent implements MVCController.MVCEvent {
             return;
         }
 
-        context.startActivity(new Intent(context, MoodEventsMapActivity.class));
+        Intent intent = new Intent(context, UserSearchActivity.class);
+        context.startActivity(intent);
     }
 }

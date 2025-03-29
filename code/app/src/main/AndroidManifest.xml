@@ -58,6 +58,10 @@
             android:exported="true"/>
         <activity android:name=".Views.MoodFollowingListActivity"
             android:exported="true"/>
+        <activity
+            android:name=".Views.ProfileStatisticsActivity"
+            android:exported="true">
+        </activity>
         <activity android:name=".Views.CommentViewingActivity"
             android:exported="true"/>
         <activity android:name=".Views.ViewMoodCommentActivity"
