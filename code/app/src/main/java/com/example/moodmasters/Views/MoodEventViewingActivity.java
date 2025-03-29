@@ -18,6 +18,7 @@ import com.example.moodmasters.Events.ExitMoodEventViewingEvent;
 import com.example.moodmasters.Events.MoodEventViewingEditEvent;
 import com.example.moodmasters.Events.MoodFollowingListClickMoodEvent;
 import com.example.moodmasters.Events.MoodHistoryListClickMoodEvent;
+import com.example.moodmasters.Events.ViewCommentsEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
@@ -93,6 +94,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         else{
             throw new IllegalArgumentException("Error: invalid string extra given to MoodEventViewingActivity");
         }
+        System.out.println(displayed_mood_event.getMoodEventString());
 
         setScreen();
 
@@ -126,13 +128,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         }
         // Handle the "View Comments" button click
         viewCommentsButton.setOnClickListener(v -> {
-            // Create an Intent to go to CommentsActivity
-            Intent intent = new Intent(MoodEventViewingActivity.this, CommentViewingActivity.class);
-
-            // TODO: Send the MoodEvent to CommentViewingActivity
-
-            // Start CommentsActivity
-            startActivity(intent);
+            controller.execute(new ViewCommentsEvent(displayed_mood_event, position), this);
         });
     }
 }

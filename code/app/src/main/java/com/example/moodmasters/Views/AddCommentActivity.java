@@ -1,32 +1,29 @@
 package com.example.moodmasters.Views;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moodmasters.Events.MoodEventCreateCommentEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
+import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Objects.ObjectsApp.Comment;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.CollectionReference;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class AddCommentActivity extends AppCompatActivity implements MVCView {
-
+    private static MoodEvent mood_event;
+    private static int position;
     private EditText commentEditText;
     private Button cancelButton;
     private Button okButton;
@@ -51,7 +48,9 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
         setContentView(R.layout.add_mood_comment);  // Use add_mood_comment.xml
         timestamp = getCurrentTimestamp();
         controller.addBackendView(this, BackendObject.State.USER);
-
+        mood_event = MoodEventCreateCommentEvent.getMoodEvent();
+        position = MoodEventCreateCommentEvent.getPosition();
+        System.out.println(mood_event.getMoodEventString()); // debugging print
         // Initialize UI components
         commentEditText = findViewById(R.id.comment_edit_text);
         cancelButton = findViewById(R.id.cancel_button);

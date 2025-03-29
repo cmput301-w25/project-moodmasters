@@ -91,8 +91,18 @@ public class MoodEvent {
         comments = (List<Comment>) map.get("comments");
     }
 
-    public String getStringMoodEvent(){
-        return mood.getEmotionString() + " " +  reason + " " + SocialSituation.getString(situation) + " " + datetime;
+    public String getMoodEventString(){
+        String public_string;
+        if (is_public){
+            public_string = "public";
+        }
+        else{
+            public_string = "private";
+        }
+        String mood_event_string = datetime + "\n" + mood.getEmotionString() + "\n" +
+                                    reason + "\n" + SocialSituation.getString(situation) +
+                                    "\n" + public_string + "\n" + username;
+        return mood_event_string;
     }
 
     /**
