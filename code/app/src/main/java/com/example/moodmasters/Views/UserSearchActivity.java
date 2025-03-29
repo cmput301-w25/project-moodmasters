@@ -29,14 +29,12 @@ public class UserSearchActivity extends AppCompatActivity implements MVCView {
     private EditText searchInput;
     private ListView searchResultsListView;
 
-
     private Button searchButton;
     private ImageButton backButton;
     private ArrayAdapter<String> adapter;
     private UserSearchOkEvent searchEvent;
     private Participant currentUser;
     private FirebaseFirestore db;
-
     public void update(MVCModel model){
         // not necessary, nothing to update
     }

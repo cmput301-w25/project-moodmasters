@@ -1,20 +1,15 @@
 package com.example.moodmasters.Events;
 
 import android.content.Intent;
-import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Events.LogOutEvent;
-import com.example.moodmasters.Events.MoodHistoryScreenShowMapEvent;
-import com.example.moodmasters.Events.UserSearchEvent;
-import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.FollowRequestsActivity;
 import com.example.moodmasters.Views.MoodEventsMapActivity;
 import com.example.moodmasters.Views.MoodFollowingListActivity;
 import com.example.moodmasters.Views.MoodHistoryListActivity;
-import com.example.moodmasters.Views.UserSearchActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -25,12 +20,6 @@ import static com.example.moodmasters.MVC.MVCView.controller;
 * Doesn't enable removing MVCViews from backend on activity switch but this is sufficient for now
 * */
 public class ChangeActivityEvent extends AppCompatActivity {
-    private ArrayList<MoodEvent> moodEventList;
-
-    public void setMoodEventList(ArrayList<MoodEvent> moodEventList) {
-        this.moodEventList = moodEventList;
-    }
-
     private boolean is_nav_setup = false;
 
     protected void setupBottomNav(BottomNavigationView bottomNav, int currentItemId) {
@@ -49,11 +38,7 @@ public class ChangeActivityEvent extends AppCompatActivity {
             }
 
             if (itemId == R.id.user_mood_history_show_map_button) {
-                if (moodEventList != null) {
-                    controller.execute(new MoodHistoryScreenShowMapEvent(moodEventList), this);
-                } else {
-                    controller.execute(new MoodHistoryScreenShowMapEvent(new ArrayList<>()), this);
-                }
+                controller.execute(new ShowMapEvent(), this);
                 return true;
             }
 

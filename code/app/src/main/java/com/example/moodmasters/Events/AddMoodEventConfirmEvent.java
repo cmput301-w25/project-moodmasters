@@ -78,7 +78,7 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
         }
 
         // mock location for testing
-        LatLng location = new LatLng(0, 0);
+        LatLng location = null;
 
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion),
