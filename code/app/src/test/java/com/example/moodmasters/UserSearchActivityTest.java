@@ -11,7 +11,6 @@ import android.widget.ListView;
 import com.example.moodmasters.Events.UserSearchOkEvent;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.google.android.gms.tasks.Tasks;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,11 +24,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class UserSearchActivityTest {
 

@@ -5,16 +5,12 @@ import static org.mockito.Mockito.when;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
-import android.app.Activity;
 import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.android.gms.tasks.Tasks;
-import com.google.android.gms.tasks.Task;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +19,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import java.lang.reflect.Field;
