@@ -59,6 +59,8 @@ public class AddMoodTest {
         //Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
 
     }
@@ -89,10 +91,13 @@ public class AddMoodTest {
 
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+        //onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
+        //Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
+
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(matches(isDisplayed()));
@@ -106,6 +111,8 @@ public class AddMoodTest {
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_2"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_2"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(doesNotExist());
@@ -115,10 +122,12 @@ public class AddMoodTest {
 
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+        //onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
+        //Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(matches(isDisplayed()));
@@ -133,7 +142,7 @@ public class AddMoodTest {
         onView(withId(R.id.alter_mood_enter_reason)).perform(closeSoftKeyboard());
         onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withText(R.string.mood_emoji_scared)).check(doesNotExist());
+        onView(withText(R.string.mood_emoji_scared)).check(matches(isDisplayed()));
     }
 
     @After
