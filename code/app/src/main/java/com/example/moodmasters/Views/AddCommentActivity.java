@@ -1,5 +1,6 @@
 package com.example.moodmasters.Views;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.moodmasters.Events.AddCommentConfirmEvent;
 import com.example.moodmasters.Events.MoodEventCreateCommentEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
@@ -20,6 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddCommentActivity extends AppCompatActivity implements MVCView {
     private static MoodEvent mood_event;
@@ -39,27 +43,30 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
     }
 
     public void update(MVCModel model) {
-        // not necessary, nothing to update
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_mood_comment);  // Use add_mood_comment.xml
+
         timestamp = getCurrentTimestamp();
         controller.addBackendView(this, BackendObject.State.USER);
+
         mood_event = MoodEventCreateCommentEvent.getMoodEvent();
         position = MoodEventCreateCommentEvent.getPosition();
         System.out.println(mood_event.getMoodEventString()); // debugging print
+
         // Initialize UI components
         commentEditText = findViewById(R.id.comment_edit_text);
         cancelButton = findViewById(R.id.cancel_button);
         okButton = findViewById(R.id.ok_button);
 
-        // TO DO: retrieve the passed MoodEvent Object
+
+        // TODO: retrieve the passed MoodEvent Object
 
         // Get the list of comments from the MoodEvent Object
-        // List<Comment> comments = moodEvent.getComments();
+        List<Comment> comments = mood_event.getComments();
 
 
         // Handle Cancel Button Click
@@ -79,11 +86,10 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
             Comment newComment = new Comment(username, timestamp, newCommentContent);
 
             // TODO: Add new comment to the list of comments in MoodEvent Object
-            // comments.add(newComment);
+            comments.add(newComment);
+            mood_event.setComments(comments);
             // TODO: Update the MoodEvent with this new comment
-
-            // Temporary
-            finish();
+            controller.execute(new AddCommentConfirmEvent(mood_event, position), this);
 
         });
     }

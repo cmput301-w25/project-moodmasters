@@ -21,12 +21,13 @@ import com.example.moodmasters.Objects.ObjectsMisc.CommentAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewMoodCommentActivity extends AppCompatActivity implements MVCView {
     private static MoodEvent mood_event;
     private static int position;
     private ListView commentListView;
-    private CommentAdapter commentAdapter;
+    private static CommentAdapter commentAdapter;
     private ArrayList<Comment> commentList;
     private FirebaseFirestore db;
     private String username;
@@ -39,6 +40,9 @@ public class ViewMoodCommentActivity extends AppCompatActivity implements MVCVie
     public void update(MVCModel model) {
         // not necessary, nothing to update
     }
+
+    public static CommentAdapter getAdapter() {return commentAdapter;}
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,32 +65,13 @@ public class ViewMoodCommentActivity extends AppCompatActivity implements MVCVie
         ImageButton xButton = findViewById(R.id.view_mood_x_button);
         xButton.setOnClickListener(v -> finish());
 
-        // TODO: Fetch the MoodEvent from MoodEventViewingActivity
         // Initialize the "Add Comment" button
         Button addCommentButton = findViewById(R.id.add_comment_button);
         addCommentButton.setOnClickListener(v -> {
             controller.execute(new MoodEventCreateCommentEvent(mood_event, position), this);
+
         });
-    }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Get the added comment from AddCommentActivity
-            String username = data.getStringExtra("username");
-            String timestamp = data.getStringExtra("timestamp");
-            String content = data.getStringExtra("content");
-
-            // Create a new Comment object and add it to the list
-            Comment newComment = new Comment(username, timestamp, content);
-            commentList.add(newComment);
-
-            // Notify the adapter that the data has changed
-            commentAdapter.notifyDataSetChanged();
-        }
     }
 
 }

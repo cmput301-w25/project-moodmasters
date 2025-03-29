@@ -1,8 +1,9 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
 
+import java.io.Serializable;
 
-public class Comment {
+public class Comment implements Serializable {
     private String username;
     private String content;
     private String timestamp;
