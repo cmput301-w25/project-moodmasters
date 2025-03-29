@@ -226,13 +226,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             uploadPhotoImage.setImageBitmap(photo);
             photo_added = true;
-        }
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1001 && resultCode == RESULT_OK) {
+        } else if (requestCode == 1001 && resultCode == RESULT_OK) {
             // Retrieve the LatLng object from the result intent
             LatLng location = data.getParcelableExtra("location");
 
@@ -254,7 +248,5 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
                 locationTextView.setText("Unknown"); }
         }
     }
-
-
 }
 
