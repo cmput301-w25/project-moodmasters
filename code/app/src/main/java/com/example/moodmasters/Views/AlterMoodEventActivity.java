@@ -226,7 +226,8 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             uploadPhotoImage.setImageBitmap(photo);
             photo_added = true;
-        } else if (requestCode == 1001 && resultCode == RESULT_OK) {
+        }
+        else if (requestCode == 1001 && resultCode == RESULT_OK) {
             // Retrieve the LatLng object from the result intent
             LatLng location = data.getParcelableExtra("location");
 
@@ -240,7 +241,8 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
                 TextView locationTextView = findViewById(R.id.alter_mood_location_text);
                 locationTextView.setText("Lat: " + fLatitude + ", Long: " + fLongitude);
             }
-        } else {
+        }
+        else {
             // Handle failure (if location fetching failed)
             TextView locationTextView = findViewById(R.id.alter_mood_location_text);
             locationTextView.setText("Location fetch failed.");

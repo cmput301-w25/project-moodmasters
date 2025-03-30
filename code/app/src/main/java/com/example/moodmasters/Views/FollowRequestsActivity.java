@@ -3,16 +3,15 @@ package com.example.moodmasters.Views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.moodmasters.Events.ChangeActivityEvent;
 import com.example.moodmasters.Events.LogOutEvent;
+import com.example.moodmasters.Events.ShowFollowRequestsEvent;
 import com.example.moodmasters.Events.ShowMapEvent;
+import com.example.moodmasters.Events.ShowMoodFollowingEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
-import com.example.moodmasters.Events.LoginScreenOkEvent;
+
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
@@ -82,6 +81,7 @@ public class FollowRequestsActivity extends AppCompatActivity implements MVCView
     }
     protected void setupBottomNav(BottomNavigationView bottomNav, int currentItemId) {
         is_nav_setup = true;
+
         bottomNav.setOnItemSelectedListener(item -> {
             if (is_nav_setup && item.getItemId() == currentItemId) {
                 // Already on this screen, do nothing
@@ -106,12 +106,12 @@ public class FollowRequestsActivity extends AppCompatActivity implements MVCView
             }
 
             if (itemId == R.id.options_follow_requests_button) {
-                startActivity(new Intent(this, FollowRequestsActivity.class));
+                controller.execute(new ShowFollowRequestsEvent(), this);
                 return true;
             }
 
             if (itemId == R.id.mood_following_list_button) {
-                startActivity(new Intent(this, MoodFollowingListActivity.class));
+                controller.execute(new ShowMoodFollowingEvent(), this);
                 return true;
             }
 

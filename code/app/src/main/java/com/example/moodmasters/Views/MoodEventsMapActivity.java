@@ -3,7 +3,6 @@ package com.example.moodmasters.Views;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.health.connect.datatypes.ExerciseRoute;
 import android.location.Location;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -14,15 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.moodmasters.Events.ChangeActivityEvent;
 import com.example.moodmasters.Events.LogOutEvent;
 import com.example.moodmasters.Events.MoodEventMapShowFilterEvent;
+import com.example.moodmasters.Events.ShowFollowRequestsEvent;
 import com.example.moodmasters.Events.ShowMapEvent;
+import com.example.moodmasters.Events.ShowMoodFollowingEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
-import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.Objects.ObjectsMisc.FilterMoodEventMap;
 import com.example.moodmasters.Objects.ObjectsMisc.MoodMap;
 import com.example.moodmasters.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -33,11 +31,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.checkerframework.checker.units.qual.A;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MoodEventsMapActivity extends AppCompatActivity implements OnMapReadyCallback, MVCView {
     private final int FINE_PERMISSION_CODE = 1;
@@ -142,6 +135,7 @@ public class MoodEventsMapActivity extends AppCompatActivity implements OnMapRea
     }
     protected void setupBottomNav(BottomNavigationView bottomNav, int currentItemId) {
         is_nav_setup = true;
+
         bottomNav.setOnItemSelectedListener(item -> {
             if (is_nav_setup && item.getItemId() == currentItemId) {
                 // Already on this screen, do nothing
@@ -149,9 +143,8 @@ public class MoodEventsMapActivity extends AppCompatActivity implements OnMapRea
             }
 
             int itemId = item.getItemId();
+
             if (itemId == R.id.options_logout_button) {
-                controller.removeBackendObject(BackendObject.State.MOODMAP);
-                controller.removeBackendView(this);
                 controller.execute(new LogOutEvent(), this);
                 return true;
             }
@@ -162,23 +155,17 @@ public class MoodEventsMapActivity extends AppCompatActivity implements OnMapRea
             }
 
             if (itemId == R.id.home_button) {
-                controller.removeBackendObject(BackendObject.State.MOODMAP);
-                controller.removeBackendView(this);
                 startActivity(new Intent(this, MoodHistoryListActivity.class));
                 return true;
             }
 
             if (itemId == R.id.options_follow_requests_button) {
-                controller.removeBackendObject(BackendObject.State.MOODMAP);
-                controller.removeBackendView(this);
-                startActivity(new Intent(this, FollowRequestsActivity.class));
+                controller.execute(new ShowFollowRequestsEvent(), this);
                 return true;
             }
 
             if (itemId == R.id.mood_following_list_button) {
-                controller.removeBackendObject(BackendObject.State.MOODMAP);
-                controller.removeBackendView(this);
-                startActivity(new Intent(this, MoodFollowingListActivity.class));
+                controller.execute(new ShowMoodFollowingEvent(), this);
                 return true;
             }
 
