@@ -9,6 +9,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.moodmasters.Events.MoodFollowingListEvent;
 import com.example.moodmasters.Events.LogOutEvent;
 import com.example.moodmasters.Events.ShowFollowRequestsEvent;
 import com.example.moodmasters.Events.ShowMapEvent;

@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,7 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Objects.ObjectsMisc.FilterMoodEventMap;
-import com.example.moodmasters.Objects.ObjectsMisc.MoodMap;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
 
 public class FilterMoodEventMapFragment extends DialogFragment implements MVCView {

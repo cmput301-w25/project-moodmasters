@@ -16,7 +16,7 @@ import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.Objects.ObjectsMisc.MoodMap;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
 
 /**

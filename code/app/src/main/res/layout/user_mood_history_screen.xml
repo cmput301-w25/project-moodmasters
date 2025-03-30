@@ -36,7 +36,7 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/user_mood_history_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.228"
+        app:layout_constraintHorizontal_bias="0.026"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/user_mood_history_toolbar" />
 
@@ -44,16 +44,19 @@
         android:id="@+id/followers_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="4dp"
+        android:layout_marginEnd="4dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/user_mood_history_toolbar"
+        android:orientation="vertical"
+        android:padding="4dp"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/user_mood_history_label"
         app:layout_constraintEnd_toStartOf="@+id/following_container"
+        app:layout_constraintTop_toBottomOf="@id/user_mood_history_toolbar"
         app:layout_constraintTop_toTopOf="@+id/user_mood_history_label"
-        app:layout_constraintBottom_toBottomOf="@+id/user_mood_history_label">
+        app:layout_constraintVertical_bias="0.673">
 
         <TextView
             android:id="@+id/followers_number"
@@ -77,6 +80,7 @@
         android:id="@+id/following_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
@@ -87,7 +91,7 @@
         app:layout_constraintEnd_toStartOf="@+id/user_mood_history_stats_button"
         app:layout_constraintTop_toBottomOf="@id/user_mood_history_toolbar"
         app:layout_constraintTop_toTopOf="@+id/user_mood_history_label"
-        app:layout_constraintVertical_bias="0.51">
+        app:layout_constraintVertical_bias="0.673">
 
         <TextView
             android:id="@+id/following_number"
@@ -150,10 +154,11 @@
         android:layout_margin="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Add a Mood"
-        android:src="@drawable/add_mood_icon"
         android:scaleType="centerInside"
+        android:src="@drawable/add_mood_icon"
         app:layout_constraintBottom_toTopOf="@+id/mood_following_list"
         app:layout_constraintEnd_toStartOf="@+id/user_mood_following_sort_button"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toEndOf="@+id/user_mood_following_filter_button"
         app:layout_constraintTop_toBottomOf="@+id/user_mood_history_toolbar" />
 
@@ -161,13 +166,14 @@
         android:id="@+id/user_mood_history_stats_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/screen_color"
-        android:tint="@color/white"
         android:tintMode="multiply"
+        app:layout_constraintBottom_toBottomOf="@+id/following_container"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_info_details" />
+        app:layout_constraintTop_toTopOf="@+id/following_container"
+        app:layout_constraintVertical_bias="0.529"
+        app:srcCompat="@android:drawable/ic_menu_info_details"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
