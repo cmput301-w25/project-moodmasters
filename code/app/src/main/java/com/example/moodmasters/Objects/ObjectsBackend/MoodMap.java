@@ -1,17 +1,17 @@
-package com.example.moodmasters.Objects.ObjectsMisc;
+package com.example.moodmasters.Objects.ObjectsBackend;
 
 import android.content.Context;
 import android.location.Location;
 
 import com.example.moodmasters.MVC.MVCBackend;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsMisc.FilterMoodEventMap;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MoodMap extends MVCBackend {
@@ -43,7 +43,7 @@ public class MoodMap extends MVCBackend {
         paint.setStrokeWidth(LINE_WIDTH);
         paint.setColor(Color.YELLOW);
         canvas.drawText("😐", 0, 0, paint);
-         */
+
         if (user_longitude != null && user_latitude != null){
             MarkerOptions marker = new MarkerOptions();
             marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
@@ -51,6 +51,7 @@ public class MoodMap extends MVCBackend {
                     .position(new LatLng(user_latitude, user_longitude))
                     .title(username));
         }
+         */
         for (int i = 0; i < mood_events.size(); i++) {
             MoodEvent event = mood_events.get(i);
             String emoji = context.getResources().getString(event.getMood().getEmoticon());

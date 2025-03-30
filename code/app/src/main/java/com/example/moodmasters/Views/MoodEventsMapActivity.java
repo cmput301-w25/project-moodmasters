@@ -21,7 +21,7 @@ import com.example.moodmasters.Events.ShowMoodFollowingEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.Objects.ObjectsMisc.MoodMap;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;

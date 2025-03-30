@@ -7,7 +7,7 @@ import android.widget.CheckBox;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.Objects.ObjectsMisc.MoodMap;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.FilterMoodEventMapFragment;
 
