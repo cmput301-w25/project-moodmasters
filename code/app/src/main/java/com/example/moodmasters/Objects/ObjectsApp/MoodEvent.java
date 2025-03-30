@@ -1,19 +1,40 @@
 package com.example.moodmasters.Objects.ObjectsApp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.icu.util.Calendar;
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Base64;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is a class that represents a single mood event created by a user.
  */
-public class MoodEvent {
+public class MoodEvent{
     private String datetime;
     private long epoch_time;
     private Mood mood;
     private String reason;
-    private String trigger;
     private SocialSituation.State situation;
+    private boolean is_public;
+    private LatLng location;
+    private String username;
+    private String photo_string;
+    private ArrayList<Comment> comments;
 
     /**
      * MoodEvent constructor.
@@ -25,19 +46,27 @@ public class MoodEvent {
      *  This is the MoodEvent's Mood.
      * @param init_reason
      *  (optional) This is the MoodEvent's reason.
-     * @param init_trigger
-     *  (optional) This is the MoodEvent's trigger.
      * @param init_situation
      *  (optional) This is the MoodEvent's social situation.
+     * @param init_is_public
+     *  This is the MoodEvent's publicity.
+     * @param init_location
+     *  (optional) This is the MoodEvent's location
      */
-    public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, @Nullable String init_reason,
-                     @Nullable String init_trigger, @Nullable SocialSituation.State init_situation){
+    public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
+                     @Nullable String init_reason, @Nullable SocialSituation.State init_situation,
+                     @Nullable LatLng init_location, String init_username, String init_photo_string,
+                     ArrayList<Comment> init_comments){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
         reason = init_reason;
-        trigger = init_trigger;
         situation = init_situation;
+        is_public = init_is_public;
+        location = init_location;
+        username = init_username;
+        photo_string = init_photo_string;
+        comments = init_comments;
     }
 
     /**
@@ -46,12 +75,58 @@ public class MoodEvent {
      *  This is a HashMap retrieved from the Firebase database containing mood event information.
      */
     public MoodEvent(HashMap map) {
-        datetime = (String) map.get("datetime");
+        // map.forEach((key, value) -> System.out.println(key + ":" + value));
         mood = new Mood((HashMap) map.get("mood"));
+
         epoch_time = (long) map.get("epochTime");
+
+        // add support for phones with possibly different timezones than the one of the mood event poster
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(epoch_time);
+        DateFormat format = new SimpleDateFormat("MMM dd yyyy | HH:mm");
+        datetime = format.format(calendar.getTime());
+
         reason = (String) map.get("reason");
+
         situation = SocialSituation.fromStringToSocialState((String) map.get("situation"));
-        trigger = (String) map.get("trigger");
+
+        is_public = (boolean) map.get("isPublic");
+
+        HashMap location_map = (HashMap) map.get("location");
+
+        if (location_map != null){
+            location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
+        }
+        else {
+            location = null;
+        }
+
+        username = (String) map.get("username");
+
+        photo_string =  (String) map.get("photoString");
+
+        ArrayList<HashMap<String,Object>> comment_maps = (ArrayList<HashMap<String,Object>>) map.get("comments");
+        comments = new ArrayList<Comment>();
+        for (HashMap<String,Object> comment_map: comment_maps){
+            comments.add(new Comment(comment_map));
+        }
+        for (Comment comment: comments){
+            System.out.println(comment.createString());
+        }
+    }
+
+    public String getMoodEventString(){
+        String public_string;
+        if (is_public){
+            public_string = "public";
+        }
+        else{
+            public_string = "private";
+        }
+        String mood_event_string = datetime + "\n" + mood.getEmotionString() + "\n" +
+                reason + "\n" + SocialSituation.getString(situation) +
+                "\n" + public_string + "\n" + username;
+        return mood_event_string;
     }
 
     /**
@@ -80,13 +155,6 @@ public class MoodEvent {
      */
     public String getReason() {
         return reason;
-    }
-
-    /**
-     * trigger getter
-     */
-    public String getTrigger() {
-        return trigger;
     }
 
     /**
@@ -125,17 +193,54 @@ public class MoodEvent {
     }
 
     /**
-     * trigger setter
-     */
-    public void setTrigger(String new_trigger) {
-        trigger = new_trigger;
-    }
-
-    /**
      * situation setter
      */
     public void setSituation(SocialSituation.State new_situation) {
         situation = new_situation;
     }
 
+    /**
+     * is_public getter
+     */
+    public boolean getIsPublic() {
+        return is_public;
+    }
+
+    /**
+     * is_public setter
+     */
+    public void setIsPublic(boolean is_public) {
+        this.is_public = is_public;
+    }
+
+    public LatLng getLocation() {
+        return location;
+    }
+
+    public void setLocation(LatLng location) {
+        this.location = location;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getPhotoString(){
+        return photo_string;
+    }
+    public void setPhotoString(String new_photo_string){
+        photo_string = new_photo_string;
+    }
+    public ArrayList<Comment> getComments(){
+        return comments;
+    }
+    public void setComments(ArrayList<Comment> new_comments){
+        comments = new_comments;
+    }
+    public void addComment(Comment comment){
+        comments.add(comment);
+    }
 }

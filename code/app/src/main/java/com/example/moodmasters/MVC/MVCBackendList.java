@@ -9,10 +9,8 @@ import java.util.List;
 /**
  * An abstract class for backend objects that are Lists aswell
  * */
-public abstract class MVCBackendList <T> implements MVCBackend{
+public abstract class MVCBackendList <T> extends MVCBackend implements MVCDatabase.Add, MVCDatabase.Remove{
     protected ArrayList<T> object_list;
-    private DocumentReference doc_ref;
-    private DocumentSnapshot snapshot;
 
     /**
      * Constructor for List using a pre-existing List
@@ -28,22 +26,7 @@ public abstract class MVCBackendList <T> implements MVCBackend{
     public MVCBackendList(){
         object_list = new ArrayList<T>();
     }
-    /**
-     * constructor for backend List creating an empty list and initializing database members
-     * */
-    public MVCBackendList(DocumentReference doc_ref, DocumentSnapshot snapshot){
-        object_list = new ArrayList<T>();
-        this.doc_ref = doc_ref;
-        this.snapshot = snapshot;
-    }
-    /**
-     * constructor for backend List creating an empty list and initializing database members
-     * */
-    public MVCBackendList(ArrayList<T> list, DocumentReference doc_ref, DocumentSnapshot snapshot) {
-        object_list = list;
-        this.doc_ref = doc_ref;
-        this.snapshot = snapshot;
-    }
+
     /**
      * Adds a object to the list
      * @param object
@@ -51,7 +34,6 @@ public abstract class MVCBackendList <T> implements MVCBackend{
      * */
     public void addObject(T object){
         object_list.add(object);
-        updateDatabaseData(doc_ref);
     }
     /**
      * Removes a object from the list
@@ -60,7 +42,6 @@ public abstract class MVCBackendList <T> implements MVCBackend{
      * */
     public void removeObject(T object){
         object_list.remove(object);
-        updateDatabaseData(doc_ref);
     }
     /**
      * Removes a object from the list
@@ -72,7 +53,6 @@ public abstract class MVCBackendList <T> implements MVCBackend{
             throw new InvalidParameterException("error");
         }
         object_list.remove(position);
-        updateDatabaseData(doc_ref);
     }
     /**
      * Gets a object from the list
@@ -99,7 +79,6 @@ public abstract class MVCBackendList <T> implements MVCBackend{
             throw new InvalidParameterException("error");
         }
         object_list.set(position, new_object);
-        updateDatabaseData(doc_ref);
     }
     public ArrayList<T> getList(){
         return object_list;

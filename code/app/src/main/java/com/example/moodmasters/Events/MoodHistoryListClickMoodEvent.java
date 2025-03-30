@@ -24,6 +24,8 @@ public class MoodHistoryListClickMoodEvent implements MVCController.MVCEvent{
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        context.startActivity(new Intent((MoodHistoryListActivity) context, MoodEventViewingActivity.class));
+        Intent i = new Intent((MoodHistoryListActivity) context, MoodEventViewingActivity.class);
+        i.putExtra("MoodEventList", "MoodHistoryList");
+        context.startActivity(i);
     }
 }

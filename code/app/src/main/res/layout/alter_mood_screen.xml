@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     android:background="@color/screen_color">
 
+    <CheckBox
+        android:id="@+id/alter_mood_public_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Public"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/alter_mood_location_label"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/alter_mood_ok_button"
         android:layout_width="wrap_content"
@@ -33,30 +45,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/alter_mood_photo_button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/background_color"
-        android:text="Upload Photo"
-        android:textColor="@color/photo_color"
-        android:textSize="20sp"
-        app:cornerRadius="2dp"
-        app:icon="@android:drawable/ic_menu_camera"
-        app:iconGravity="textTop"
-        app:iconPadding="0dp"
-        app:iconSize="100dp"
-        app:iconTint="@color/background_color"
-        app:iconTintMode="screen"
-        app:layout_constraintBottom_toTopOf="@+id/alter_mood_location_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alter_mood_enter_reason" />
-
-    <Button
         android:id="@+id/alter_mood_cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,37 +58,22 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/alter_mood_enter_trigger"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/background_color"
-        android:ems="10"
-        android:inputType="text"
-        android:textColor="@color/text_color"
-        android:textSize="20sp"
-        android:hint="Enter Trigger (Optional)"
-        app:layout_constraintBottom_toBottomOf="@+id/alter_mood_trigger_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/alter_mood_trigger_label"
-        app:layout_constraintTop_toTopOf="@+id/alter_mood_trigger_label" />
-
-    <EditText
         android:id="@+id/alter_mood_enter_reason"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/background_color"
+        android:background="@drawable/rounded_edit_text"
         android:ems="10"
         android:hint="Enter Reason (Optional)"
         android:inputType="text"
-        android:maxLength="20"
+        android:maxLength="200"
+        android:paddingStart="16dp"
         android:textColor="@color/text_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alter_mood_reason_label" />
 
@@ -131,35 +104,23 @@
         app:layout_constraintTop_toBottomOf="@+id/alter_mood_main_label" />
 
     <TextView
-        android:id="@+id/alter_mood_trigger_label"
+        android:id="@+id/alter_mood_situation_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="Trigger:"
+        android:layout_marginTop="8dp"
+        android:text="Social Situation:"
         android:textColor="@color/text_color"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alter_mood_emotion_label" />
 
     <TextView
-        android:id="@+id/alter_mood_situation_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="Social Situation:"
-        android:textColor="@color/text_color"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alter_mood_trigger_label" />
-
-    <TextView
         android:id="@+id/alter_mood_reason_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:text="Reason:"
         android:textColor="@color/text_color"
         android:textSize="24sp"
@@ -207,5 +168,23 @@
         app:layout_constraintBottom_toBottomOf="@+id/alter_mood_situation_label"
         app:layout_constraintStart_toEndOf="@+id/alter_mood_situation_label"
         app:layout_constraintTop_toTopOf="@+id/alter_mood_situation_label" />
+
+    <ImageView
+        android:id="@+id/alter_mood_photo_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:background="@color/background_color"
+        android:backgroundTint="@color/background_color"
+        android:text="Upload Photo"
+        android:textColor="@color/photo_color"
+        app:cornerRadius="2dp"
+        app:iconGravity="textTop"
+        app:layout_constraintBottom_toTopOf="@+id/alter_mood_public_checkbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.578"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alter_mood_enter_reason"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

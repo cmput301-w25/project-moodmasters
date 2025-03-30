@@ -1,6 +1,5 @@
 package com.example.moodmasters.MVC;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,24 +9,27 @@ import java.util.Map;
 import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
+import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodFollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
-import com.google.api.Backend;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * Class that represents the Model part of the MVC framework, will be sent messages by the Controller to do certain requests like
  * data manipulation and as a result do that data manipulation and update the Views that depend on that data manipulation once it has
  * finished
  * */
-public class MVCModel {
+public class MVCModel{
     private ArrayList<MVCView> views;
     private Map<BackendObject.State, MVCBackend> backend_objects;
     private Map<BackendObject.State, List<MVCView>> dependencies;
-    private FirebaseFirestore db;
+    private MVCDatabase database;
+    private MVCController.MVCEvent last_event;
 
     /**
      * Empty constructor for the Model, initializes all members to empty
@@ -36,6 +38,8 @@ public class MVCModel {
         views = new ArrayList<MVCView>();
         backend_objects = new HashMap<BackendObject.State, MVCBackend>();
         dependencies = new HashMap<BackendObject.State, List<MVCView>>();
+        database = new MVCDatabase();
+
     }
     /**
      * Creates a backend object in the Model, currently there are 5 backend objects all represented as
@@ -53,10 +57,11 @@ public class MVCModel {
             //throw new IllegalArgumentException("Error: Trying to add pre-existing backend object " + BackendObject.getString(backend_object));
         }
          */
-        dependencies.put(backend_object, new ArrayList<MVCView>());
+        dependencies.putIfAbsent(backend_object, new ArrayList<MVCView>());
         if (backend_object == BackendObject.State.USER){
             Participant user = new Participant(LoginScreenOkEvent.getUsername());
             backend_objects.put(backend_object, user);
+            user.setDatabaseData(database, this);
         }
         else if (backend_object == BackendObject.State.MOODLIST){
             Mood happy = new Mood(Emotion.State.HAPPY, R.color.mood_happy_color, R.string.mood_emoji_happy);
@@ -72,7 +77,9 @@ public class MVCModel {
             backend_objects.put(backend_object, mood_list);
         }
         else if (backend_object == BackendObject.State.FOLLOWINGLIST){
-            // Not needed yet
+            FollowingList follow_list = ((Participant) backend_objects.get(BackendObject.State.USER)).getFollowingList();
+            backend_objects.put(backend_object, follow_list);
+            follow_list.setDatabaseData(database, this);
         }
         else if (backend_object == BackendObject.State.MOODHISTORYLIST){
             Participant user = ((Participant) this.getBackendObject(BackendObject.State.USER));
@@ -80,9 +87,36 @@ public class MVCModel {
             backend_objects.put(backend_object, mood_history_list);
         }
         else if (backend_object == BackendObject.State.MOODFOLLOWINGLIST){
-            // Not needed yet
-            // make sure following list is generated first and use that to generate mood following list
+            FollowingList following_list = (FollowingList) backend_objects.get(BackendObject.State.FOLLOWINGLIST);
+            backend_objects.put(backend_object, following_list.getMoodFollowingList());
         }
+        else if (backend_object == BackendObject.State.MOODMAP){
+            String username = ((Participant) backend_objects.get(BackendObject.State.USER)).getUsername();
+            List<MoodEvent> mood_history_list = new ArrayList<MoodEvent>((List<MoodEvent>) ((MoodHistoryList) backend_objects.get(BackendObject.State.MOODHISTORYLIST)).getList());
+            List<MoodEvent> mood_following_list = new ArrayList<MoodEvent>((List<MoodEvent>) ((MoodFollowingList) backend_objects.get(BackendObject.State.MOODFOLLOWINGLIST)).getList());
+            List<MoodEvent> init_mood_events = new ArrayList<MoodEvent>();
+
+            List<MoodEvent> removables = new ArrayList<MoodEvent>();
+            for (MoodEvent mood_event: mood_history_list){
+                if (mood_event.getLocation() == null){
+                    removables.add(mood_event);
+                }
+            }
+            mood_history_list.removeAll(removables);
+
+            removables = new ArrayList<MoodEvent>();
+            for (MoodEvent mood_event: mood_following_list){
+                if (mood_event.getLocation() == null){
+                    removables.add(mood_event);
+                }
+            }
+            mood_following_list.removeAll(removables);
+            init_mood_events.addAll(mood_history_list);
+            init_mood_events.addAll(mood_following_list);
+            MoodMap mood_map = new MoodMap(init_mood_events, mood_history_list, mood_following_list, username);
+            backend_objects.put(backend_object, mood_map);
+        }
+        System.out.println("CREATING BACKEND OBJECT " + BackendObject.getString(backend_object));
     }
     /**
      * Remove a pre-existing backend object from the Model, if the backend object does not exists throw an exception
@@ -93,8 +127,14 @@ public class MVCModel {
         if (!backend_objects.containsKey(backend_object)){
             throw new IllegalArgumentException("Error: Trying to delete non-existent backend object " + BackendObject.getString(backend_object));
         }
+        System.out.println("REMOVING BACKEND OBJECT " + BackendObject.getString(backend_object));
         backend_objects.remove(backend_object);
         dependencies.remove(backend_object);
+    }
+
+    public boolean existsBackendObject(BackendObject.State backend_object){
+        MVCBackend object = backend_objects.get(backend_object);
+        return object != null;
     }
     /**
      * Return a pre-existing backend object to the caller of this method
@@ -164,6 +204,13 @@ public class MVCModel {
             v.update( this );
         }
     }
+
+    public void setLastEvent(MVCController.MVCEvent new_event){
+        last_event = new_event;
+    }
+    public MVCController.MVCEvent getLastEvent(){
+        return last_event;
+    }
     /**
      * Adds a new object to a backend object only if that backend object is a List, if it isn't a exception is
      * thrown
@@ -179,7 +226,7 @@ public class MVCModel {
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         obj_list.addObject(object);
-        // TODO: update database
+        obj_list.addDatabaseData(database, object);
         notifyViews(backend_object);
     }
     /**
@@ -197,7 +244,7 @@ public class MVCModel {
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         obj_list.removeObject(object);
-        // TODO: update database
+        obj_list.removeDatabaseData(database, object);
         notifyViews(backend_object);
     }
     /**
@@ -214,8 +261,9 @@ public class MVCModel {
             throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
         MVCBackendList obj_list = (MVCBackendList) obj;
+        Object object = obj_list.getObjectPosition(position);
         obj_list.removeObject(position);
-        // TODO: update database
+        obj_list.removeDatabaseData(database, object);
         notifyViews(backend_object);
     }
     /**
@@ -250,8 +298,10 @@ public class MVCModel {
             throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
+        Object old_object = obj_list.getObjectPosition(position);
         obj_list.replaceObjectPosition(position, new_object);
-        // TODO: update database
+        obj_list.removeDatabaseData(database, old_object);
+        obj_list.addDatabaseData(database, new_object);
         notifyViews(backend_object);
     }
     /**
@@ -262,10 +312,14 @@ public class MVCModel {
     public <T> ArrayList<T> getBackendList(BackendObject.State backend_object){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
-            throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
+            throw new IllegalArgumentException("Error: Trying to get non-list backend object " + BackendObject.getString(backend_object));
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         return obj_list.getList();
+    }
+
+    public MVCDatabase getDatabase(){
+        return database;
     }
 
 }

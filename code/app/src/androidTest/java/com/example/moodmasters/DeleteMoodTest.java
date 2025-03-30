@@ -54,8 +54,12 @@ public class DeleteMoodTest {
 
     @Before
     public void navigateToMainScreen() {
+        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
+        //Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_3"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_3"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
     }
 
@@ -90,14 +94,15 @@ public class DeleteMoodTest {
         onView(withText("Happy")).check(matches(isDisplayed()));
 
         // Logout/login
-        onView(withId(R.id.user_mood_history_menu_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+        //onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
+        //Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_3"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_3"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(matches(isDisplayed()));

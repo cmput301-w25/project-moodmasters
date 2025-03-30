@@ -5,71 +5,99 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_color">
-
     <TextView
-        android:id="@+id/signup_login_label"
+        android:id="@+id/title_moodmasters_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Sign Up"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="MOOD MASTERS"
         android:textColor="@color/text_color"
-        android:textSize="34sp"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.299" />
+
+    <TextView
+        android:id="@+id/signup_pretext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="Don't have an account?"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/signup_login_change_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.016" />
+        app:layout_constraintVertical_bias="0.951" />
 
     <Button
         android:id="@+id/signup_login_change_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/button_color"
-        android:text="Change"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/signup_login_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/signup_login_label"
-        app:layout_constraintTop_toTopOf="@+id/signup_login_label" />
-
-    <TextView
-        android:id="@+id/signup_login_username_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Username:"
-        android:textColor="@color/text_color"
-        android:textSize="24sp"
+        android:backgroundTint="@color/screen_color"
+        android:text="Sign Up"
+        android:textColor="#2196F3"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.784"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.962" />
 
     <EditText
         android:id="@+id/signup_login_enter_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/background_color"
+        android:layout_marginEnd="88dp"
+        android:background="@drawable/rounded_edit_text"
         android:ems="10"
+        android:hint="Enter username"
         android:inputType="text"
+        android:minWidth="200dp"
+        android:minHeight="32dp"
+        android:paddingStart="16dp"
         android:textColor="@color/text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/signup_login_username_label"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <EditText
+        android:id="@+id/signup_login_enter_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="88dp"
+        android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:hint="Enter password"
+        android:inputType="textPassword"
+        android:minWidth="200dp"
+        android:minHeight="32dp"
+        android:paddingStart="16dp"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/signup_login_ok_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_login_enter_username"
+        app:layout_constraintVertical_bias="0.314" />
 
     <Button
         android:id="@+id/signup_login_ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/button_color"
-        android:text="OK"
+        android:text="Login"
         android:textSize="24sp"
         app:iconPadding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_login_enter_username" />
+        app:layout_constraintTop_toBottomOf="@+id/signup_login_enter_username"
+        app:layout_constraintVertical_bias="0.24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

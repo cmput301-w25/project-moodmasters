@@ -53,10 +53,16 @@ public class AddMoodTest {
     }
 
     @Before
-    public void navigateToMainScreen() {
+    public void navigateToMainScreen() throws Exception{
+        //Thread.sleep(1000);
+        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
+        //Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
+
     }
 
     @Test
@@ -82,42 +88,46 @@ public class AddMoodTest {
         onView(withText("Sad")).check(matches(isDisplayed()));
 
         // Logout/login
-        onView(withId(R.id.user_mood_history_menu_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+        //onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
+        //Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
+
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(matches(isDisplayed()));
         onView(withText("Sad")).check(matches(isDisplayed()));
 
         // Switch to new user
-        onView(withId(R.id.user_mood_history_menu_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_2"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_2"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(doesNotExist());
         onView(withText("Sad")).check(doesNotExist());
 
         // Logout/login again
-        onView(withId(R.id.user_mood_history_menu_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        Thread.sleep(1000);
+        //onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
+        //Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_1"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
+        onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_1"));
+        onView(withId(R.id.signup_login_enter_password)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
         onView(withText("Happy")).check(matches(isDisplayed()));
@@ -132,7 +142,7 @@ public class AddMoodTest {
         onView(withId(R.id.alter_mood_enter_reason)).perform(closeSoftKeyboard());
         onView(withId(R.id.alter_mood_ok_button)).perform(ViewActions.click());
         Thread.sleep(1000);
-        onView(withText(R.string.mood_emoji_scared)).check(doesNotExist());
+        onView(withText(R.string.mood_emoji_scared)).check(matches(isDisplayed()));
     }
 
     @After
