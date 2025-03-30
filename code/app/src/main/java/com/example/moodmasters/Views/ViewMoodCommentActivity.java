@@ -74,8 +74,8 @@ public class ViewMoodCommentActivity extends AppCompatActivity implements MVCVie
             Log.d("ViewMoodCommentActivity", "commentAdapter is initialized" + commentAdapter);
         }
         if (commentListView.getAdapter() == null) {
-            // commentListView.setAdapter(commentAdapter);
-            CommentAdapterManager.setAdapter(commentAdapter);
+            commentListView.setAdapter(commentAdapter);
+            // CommentAdapterManager.setAdapter(commentAdapter);
             Log.d("ViewMoodCommentActivity", "Setting adapter to ListView");
 
 
