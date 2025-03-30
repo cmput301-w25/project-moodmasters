@@ -4,8 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.icu.util.Calendar;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Base64;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -13,13 +16,15 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * This is a class that represents a single mood event created by a user.
  */
-public class MoodEvent {
+public class MoodEvent{
     private String datetime;
     private long epoch_time;
     private Mood mood;
@@ -29,6 +34,7 @@ public class MoodEvent {
     private LatLng location;
     private String username;
     private String photo_string;
+    private ArrayList<Comment> comments;
 
     /**
      * MoodEvent constructor.
@@ -49,7 +55,8 @@ public class MoodEvent {
      */
     public MoodEvent(String init_datetime, long init_epoch_time, Mood init_mood, boolean init_is_public,
                      @Nullable String init_reason, @Nullable SocialSituation.State init_situation,
-                     @Nullable LatLng init_location, String init_username, String init_photo_string){
+                     @Nullable LatLng init_location, String init_username, String init_photo_string,
+                     ArrayList<Comment> init_comments){
         datetime = init_datetime;
         mood = init_mood;
         epoch_time = init_epoch_time;
@@ -59,6 +66,7 @@ public class MoodEvent {
         location = init_location;
         username = init_username;
         photo_string = init_photo_string;
+        comments = init_comments;
     }
 
     /**
@@ -96,6 +104,15 @@ public class MoodEvent {
         username = (String) map.get("username");
 
         photo_string =  (String) map.get("photoString");
+
+        ArrayList<HashMap<String,Object>> comment_maps = (ArrayList<HashMap<String,Object>>) map.get("comments");
+        comments = new ArrayList<Comment>();
+        for (HashMap<String,Object> comment_map: comment_maps){
+            comments.add(new Comment(comment_map));
+        }
+        for (Comment comment: comments){
+            System.out.println(comment.createString());
+        }
     }
 
     public String getMoodEventString(){
@@ -216,5 +233,14 @@ public class MoodEvent {
     }
     public void setPhotoString(String new_photo_string){
         photo_string = new_photo_string;
+    }
+    public ArrayList<Comment> getComments(){
+        return comments;
+    }
+    public void setComments(ArrayList<Comment> new_comments){
+        comments = new_comments;
+    }
+    public void addComment(Comment comment){
+        comments.add(comment);
     }
 }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
 import com.example.moodmasters.MVC.MVCBackend;
+import com.example.moodmasters.MVC.MVCBackendList;
 import com.example.moodmasters.MVC.MVCDatabase;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -49,7 +50,6 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
             }
         });
     }
-
     @Override
     public void setDatabaseData(MVCDatabase database, MVCModel model){
         followingRef.get().addOnCompleteListener(task -> {
@@ -114,5 +114,12 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
         updateMoodFollowingList();
         return mood_following_list;
     }
-
+    public Participant getParticipant(String username){
+        for (Participant participant: following_list){
+            if (participant.getUsername().equals(username)){
+                return participant;
+            }
+        }
+        return null;
+    }
 }

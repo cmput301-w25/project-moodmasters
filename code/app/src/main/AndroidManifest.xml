@@ -67,8 +67,6 @@
         </activity>
         <activity android:name=".Views.CommentViewingActivity"
             android:exported="true"/>
-        <activity android:name=".Views.ViewMoodCommentActivity"
-            android:exported="true"/>
         <activity android:name=".Views.AddCommentActivity"
             android:exported="true"/>
         <activity android:name=".Views.MoodLocationActivity"

@@ -2,6 +2,8 @@ package com.example.moodmasters.Objects.ObjectsApp;
 
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 
+import java.util.HashMap;
+
 public class Comment {
     private String username;
     private String content;
@@ -13,6 +15,11 @@ public class Comment {
         this.content = content;
         this.timestamp = timestamp;
     }
+    public Comment(HashMap<String,Object> map){
+        this.username = (String) map.get("username");
+        this.content = (String) map.get("content");
+        this.timestamp = (String) map.get("timestamp");
+    }
 
     // Getter methods
     public String getUsername() {
@@ -22,8 +29,11 @@ public class Comment {
     public String getContent() {
         return content;
     }
-
     public String getTimestamp() {
         return timestamp;
+    }
+
+    public String createString(){
+        return username + "\n" + timestamp + "\n" + content;
     }
 }
