@@ -17,6 +17,7 @@ public class MoodFollowingListRefreshEvent implements MVCController.MVCEvent {
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         this.context = context;
+        System.out.println("REFRESH EXECUTE EVENT");
         model.createBackendObject(BackendObject.State.FOLLOWINGLIST);           /*refresh following list and mood following list*/
     }
 

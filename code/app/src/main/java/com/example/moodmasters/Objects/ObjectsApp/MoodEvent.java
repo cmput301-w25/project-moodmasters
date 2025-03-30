@@ -85,13 +85,31 @@ public class MoodEvent {
         is_public = (boolean) map.get("isPublic");
 
         HashMap location_map = (HashMap) map.get("location");
-        if (location_map != null) {
+
+        if (location_map != null){
             location = new LatLng((double) location_map.get("latitude"), (double) location_map.get("longitude"));
+        }
+        else {
+            location = null;
         }
 
         username = (String) map.get("username");
 
         photo_string =  (String) map.get("photoString");
+    }
+
+    public String getMoodEventString(){
+        String public_string;
+        if (is_public){
+            public_string = "public";
+        }
+        else{
+            public_string = "private";
+        }
+        String mood_event_string = datetime + "\n" + mood.getEmotionString() + "\n" +
+                reason + "\n" + SocialSituation.getString(situation) +
+                "\n" + public_string + "\n" + username;
+        return mood_event_string;
     }
 
     /**

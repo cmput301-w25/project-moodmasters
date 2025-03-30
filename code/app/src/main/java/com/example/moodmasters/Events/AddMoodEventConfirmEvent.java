@@ -77,7 +77,7 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
             Toast.makeText(context, "Photo must be less than 65536 bytes", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        
         LatLng location = activity.getLocation(); // Get the location as LatLng
 
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));

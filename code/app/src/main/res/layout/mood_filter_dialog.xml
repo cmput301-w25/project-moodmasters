@@ -47,10 +47,10 @@
         android:textColor="@color/text_color"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mood_filter_week_checkbox" />
+        app:layout_constraintTop_toBottomOf="@+id/mood_filter_location_recency_checkbox" />
 
     <CheckBox
-        android:id="@+id/mood_filter_week_checkbox"
+        android:id="@+id/mood_filter_location_recency_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

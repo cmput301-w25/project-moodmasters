@@ -45,6 +45,11 @@ public class MVCController{
     public void createBackendObject(BackendObject.State create){
         model.createBackendObject(create);
     }
+
+    // should be creating via MVCEvent instead
+    public void removeBackendObject(BackendObject.State remove){
+        model.removeBackendObject(remove);
+    }
     /**
      * Adds the given View to the backend and once the Model adds the object the Model will call the View's
      * corresponding initialize method

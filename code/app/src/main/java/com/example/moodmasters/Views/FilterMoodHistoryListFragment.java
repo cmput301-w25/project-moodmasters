@@ -40,7 +40,7 @@ public class FilterMoodHistoryListFragment extends DialogFragment implements MVC
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
 
-        CheckBox recency_box = view.findViewById(R.id.mood_filter_week_checkbox);
+        CheckBox recency_box = view.findViewById(R.id.mood_filter_location_recency_checkbox);
         CheckBox happy_box = view.findViewById(R.id.mood_filter_happy_checkbox);
         CheckBox sad_box = view.findViewById(R.id.mood_filter_sad_checkbox);
         CheckBox angry_box = view.findViewById(R.id.mood_filter_angry_checkbox);
