@@ -8,7 +8,8 @@ public class BackendObject {
         MOODLIST,          /* list that contains all of the 8 possible moods */
         FOLLOWINGLIST,
         MOODHISTORYLIST,
-        MOODFOLLOWINGLIST       /* used later for final checkpoint */
+        MOODFOLLOWINGLIST,       /* used later for final checkpoint */
+        MOODMAP
     }
 
     public static String getString(BackendObject.State backend_object){
@@ -26,6 +27,9 @@ public class BackendObject {
         }
         if (backend_object == BackendObject.State.MOODFOLLOWINGLIST){
             return "MOODFOLLOWINGLIST";
+        }
+        if (backend_object == BackendObject.State.MOODMAP){
+            return "MOODMAP";
         }
         return "Error";         /* impossible to get here */
     }

@@ -28,7 +28,7 @@ public class MoodFollowingListFilterEvent implements MVCController.MVCEvent{
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         MoodEventList mood_event_list = (MoodEventList) model.getBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
         FilterMoodEventList filter = mood_event_list.getFilter();
-        CheckBox recency_box = fragment_view.findViewById(R.id.mood_filter_week_checkbox);
+        CheckBox recency_box = fragment_view.findViewById(R.id.mood_filter_location_recency_checkbox);
         CheckBox happy_box = fragment_view.findViewById(R.id.mood_filter_happy_checkbox);
         CheckBox sad_box = fragment_view.findViewById(R.id.mood_filter_sad_checkbox);
         CheckBox angry_box = fragment_view.findViewById(R.id.mood_filter_angry_checkbox);

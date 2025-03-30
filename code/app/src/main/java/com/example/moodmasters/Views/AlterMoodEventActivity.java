@@ -4,13 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.util.Pair;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,10 +18,10 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
 import com.example.moodmasters.Events.AddMoodEventConfirmEvent;
 import com.example.moodmasters.Events.AlterMoodEventCancelEvent;
+import com.example.moodmasters.Events.AlterMoodEventScreenUnsetLocationEvent;
 import com.example.moodmasters.Events.EditMoodEventConfirmEvent;
 import com.example.moodmasters.Events.MoodEventViewingEditEvent;
 import com.example.moodmasters.Events.UploadPhotoEvent;
@@ -35,8 +32,9 @@ import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.PhotoDecoderEncoder;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.R;
+import com.google.android.gms.maps.model.LatLng;
 
-import java.io.File;
+
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.List;
@@ -47,6 +45,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
     private final List<String> emotions_list;
     private final List<String> social_situations_list;
     private boolean photo_added;
+    private LatLng userLocation = null;
 
     public AlterMoodEventActivity(){
         super();
@@ -60,7 +59,9 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
     public void initialize(MVCModel model){
         // skip for now
     }
-
+    public LatLng getLocation() {
+        return userLocation;  // Return the location string
+    }
     public void addMoodEventCode() {
         TextView label_view = findViewById(R.id.alter_mood_main_label);
         label_view.setText("Add MoodEvent");
@@ -74,6 +75,14 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         social_situations_spinner.setAdapter(social_situations_adapter);
 
         Button confirm_button = findViewById(R.id.alter_mood_ok_button);
+
+        // Get the Get Location button
+        Button location_button = findViewById(R.id.alter_mood_location_button);
+        location_button.setOnClickListener(v -> {
+            // Start the MoodLocationActivity to get the user's location
+            Intent intent = new Intent(AlterMoodEventActivity.this, MoodLocationActivity.class);
+            startActivityForResult(intent, 1001); // 1001 is a request code for identification
+        });
 
         confirm_button.setOnClickListener(v -> {
             controller.execute(new AddMoodEventConfirmEvent(photo_added), this);
@@ -113,6 +122,28 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
             Bitmap photo = PhotoDecoderEncoder.photoDecoder(current_mood_event.getPhotoString());
             photo_button.setImageBitmap(photo);
         }
+        TextView location_text = findViewById(R.id.alter_mood_location_text);
+        Button location_button = findViewById(R.id.alter_mood_location_button);
+        LatLng location = current_mood_event.getLocation();
+        if (location == null){
+            location_button.setOnClickListener(v -> {
+                // Start the MoodLocationActivity to get the user's location
+                    Intent intent = new Intent(AlterMoodEventActivity.this, MoodLocationActivity.class);
+                    startActivityForResult(intent, 1001); // 1001 is a request code for identification
+            });
+        }
+        else{
+            String locationText = "Lat: " + String.format("%.2f", location.latitude) +
+                    ", Long: " + String.format("%.2f", location.longitude);
+            location_text.setText(locationText);
+            location_button.setText("Remove Location");
+            location_button.setOnClickListener(v -> {
+                // Start the MoodLocationActivity to get the user's location
+                controller.execute(new AlterMoodEventScreenUnsetLocationEvent(), this);
+            });
+        }
+
+
         confirm_button.setOnClickListener(v -> {
             controller.execute(new EditMoodEventConfirmEvent(current_mood_event, position, photo_added), this);
         });
@@ -205,5 +236,28 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
             uploadPhotoImage.setImageBitmap(photo);
             photo_added = true;
         }
+        else if (requestCode == 1001 && resultCode == RESULT_OK) {
+            // Retrieve the LatLng object from the result intent
+            LatLng location = data.getParcelableExtra("location");
+
+            if (location != null) {
+                userLocation = location; // Store the location as LatLng object
+                double fLatitude = Math.round(location.latitude * 100.0) / 100.0;
+                double fLongitude = Math.round(location.longitude * 100.0) / 100.0;
+
+
+                // Update the TextView with the location (you can display lat and long)
+                TextView locationTextView = findViewById(R.id.alter_mood_location_text);
+                locationTextView.setText("Lat: " + fLatitude + ", Long: " + fLongitude);
+            }
+        }
+        else {
+            // Handle failure (if location fetching failed)
+            TextView locationTextView = findViewById(R.id.alter_mood_location_text);
+            locationTextView.setText("Location fetch failed.");
+            if (userLocation == null || (userLocation.latitude == 0.0 && userLocation.longitude == 0.0)) {
+                locationTextView.setText("Unknown"); }
+        }
     }
 }
+

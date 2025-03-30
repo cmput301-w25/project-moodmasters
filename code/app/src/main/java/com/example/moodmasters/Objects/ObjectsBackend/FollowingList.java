@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
 import com.example.moodmasters.MVC.MVCBackend;
+import com.example.moodmasters.MVC.MVCBackendList;
 import com.example.moodmasters.MVC.MVCDatabase;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -26,12 +27,14 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
     private CollectionReference followingRef;
     private CollectionReference followRequestsRef;
     private List<Participant> following_list;
+    private MoodFollowingList mood_following_list;
     public static Boolean[] temp_bool_list; // temporary to support this synchronous model to tell when the mood following list is ready
 
 
     public FollowingList(String userId) {
         this.db = FirebaseFirestore.getInstance();
         this.userId = userId;
+        this.mood_following_list = new MoodFollowingList();
         this.followingRef = db.collection("participants").document(userId).collection("following");
         this.followRequestsRef = db.collection("participants").document(userId).collection("followRequests");
     }
@@ -47,14 +50,15 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
             }
         });
     }
-
     @Override
     public void setDatabaseData(MVCDatabase database, MVCModel model){
         followingRef.get().addOnCompleteListener(task -> {
+            System.out.println("REFRESH ADD COMPLETE LISTENER");
             following_list = new ArrayList<>();
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     following_list.add(new Participant(document.getId()));
+                    System.out.println("username " + document.getId());
                 }
                 updateDatabaseData(database, model);
             }
@@ -83,9 +87,9 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
         }
 
     }
-
-    public MoodFollowingList getMoodFollowingList(){
-        ArrayList<MoodEvent> followees_recent_mood_events = new ArrayList<MoodEvent>();
+    private void updateMoodFollowingList(){
+        ArrayList<MoodEvent> followees_recent_mood_events = mood_following_list.getList();
+        followees_recent_mood_events.clear();
         for (Participant participant: following_list){
             MoodHistoryList participant_history_list = participant.getMoodHistoryList();
             List<MoodEvent> followee_history_list = participant_history_list.getList();
@@ -93,6 +97,7 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
             List<MoodEvent> most_recent_mood_events = new ArrayList<MoodEvent>();
             int i = 0;
             for (MoodEvent mood_event: followee_history_list){
+                System.out.println(mood_event.getMoodEventString());
                 if (mood_event.getIsPublic()){
                     most_recent_mood_events.add(mood_event);
                     i++;
@@ -103,7 +108,18 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
             }
             followees_recent_mood_events.addAll(most_recent_mood_events);
         }
-        return new MoodFollowingList(followees_recent_mood_events);
     }
-
+    public MoodFollowingList getMoodFollowingList(){
+        System.out.println("GETMOODFOLLOWINGLIST STARTS");
+        updateMoodFollowingList();
+        return mood_following_list;
+    }
+    public Participant getParticipant(String username){
+        for (Participant participant: following_list){
+            if (participant.getUsername().equals(username)){
+                return participant;
+            }
+        }
+        return null;
+    }
 }

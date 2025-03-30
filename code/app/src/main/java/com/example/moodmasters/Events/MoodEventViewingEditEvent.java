@@ -8,7 +8,6 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
 import com.example.moodmasters.Views.MoodEventViewingActivity;
-import com.example.moodmasters.Views.MoodHistoryListActivity;
 
 public class MoodEventViewingEditEvent implements MVCController.MVCEvent {
     private static MoodEvent mood_event;

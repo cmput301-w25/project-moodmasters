@@ -11,17 +11,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Events.ChangeActivityEvent;
-import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.Events.UserSearchOkEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -29,14 +25,12 @@ public class UserSearchActivity extends AppCompatActivity implements MVCView {
     private EditText searchInput;
     private ListView searchResultsListView;
 
-
     private Button searchButton;
     private ImageButton backButton;
     private ArrayAdapter<String> adapter;
     private UserSearchOkEvent searchEvent;
     private Participant currentUser;
     private FirebaseFirestore db;
-
     public void update(MVCModel model){
         // not necessary, nothing to update
     }

@@ -9,12 +9,14 @@ import java.util.Map;
 import com.example.moodmasters.Events.LoginScreenOkEvent;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
+import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodFollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
+import com.example.moodmasters.Objects.ObjectsMisc.MoodMap;
 import com.example.moodmasters.R;
 
 /**
@@ -22,7 +24,7 @@ import com.example.moodmasters.R;
  * data manipulation and as a result do that data manipulation and update the Views that depend on that data manipulation once it has
  * finished
  * */
-public class MVCModel {
+public class MVCModel{
     private ArrayList<MVCView> views;
     private Map<BackendObject.State, MVCBackend> backend_objects;
     private Map<BackendObject.State, List<MVCView>> dependencies;
@@ -76,8 +78,8 @@ public class MVCModel {
         }
         else if (backend_object == BackendObject.State.FOLLOWINGLIST){
             FollowingList follow_list = ((Participant) backend_objects.get(BackendObject.State.USER)).getFollowingList();
-            follow_list.setDatabaseData(database, this);
             backend_objects.put(backend_object, follow_list);
+            follow_list.setDatabaseData(database, this);
         }
         else if (backend_object == BackendObject.State.MOODHISTORYLIST){
             Participant user = ((Participant) this.getBackendObject(BackendObject.State.USER));
@@ -87,6 +89,32 @@ public class MVCModel {
         else if (backend_object == BackendObject.State.MOODFOLLOWINGLIST){
             FollowingList following_list = (FollowingList) backend_objects.get(BackendObject.State.FOLLOWINGLIST);
             backend_objects.put(backend_object, following_list.getMoodFollowingList());
+        }
+        else if (backend_object == BackendObject.State.MOODMAP){
+            String username = ((Participant) backend_objects.get(BackendObject.State.USER)).getUsername();
+            List<MoodEvent> mood_history_list = new ArrayList<MoodEvent>((List<MoodEvent>) ((MoodHistoryList) backend_objects.get(BackendObject.State.MOODHISTORYLIST)).getList());
+            List<MoodEvent> mood_following_list = new ArrayList<MoodEvent>((List<MoodEvent>) ((MoodFollowingList) backend_objects.get(BackendObject.State.MOODFOLLOWINGLIST)).getList());
+            List<MoodEvent> init_mood_events = new ArrayList<MoodEvent>();
+
+            List<MoodEvent> removables = new ArrayList<MoodEvent>();
+            for (MoodEvent mood_event: mood_history_list){
+                if (mood_event.getLocation() == null){
+                    removables.add(mood_event);
+                }
+            }
+            mood_history_list.removeAll(removables);
+
+            removables = new ArrayList<MoodEvent>();
+            for (MoodEvent mood_event: mood_following_list){
+                if (mood_event.getLocation() == null){
+                    removables.add(mood_event);
+                }
+            }
+            mood_following_list.removeAll(removables);
+            init_mood_events.addAll(mood_history_list);
+            init_mood_events.addAll(mood_following_list);
+            MoodMap mood_map = new MoodMap(init_mood_events, mood_history_list, mood_following_list, username);
+            backend_objects.put(backend_object, mood_map);
         }
         System.out.println("CREATING BACKEND OBJECT " + BackendObject.getString(backend_object));
     }
@@ -288,6 +316,10 @@ public class MVCModel {
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         return obj_list.getList();
+    }
+
+    public MVCDatabase getDatabase(){
+        return database;
     }
 
 }

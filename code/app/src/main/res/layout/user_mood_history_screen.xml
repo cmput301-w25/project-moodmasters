@@ -158,4 +158,17 @@
         app:layout_constraintStart_toEndOf="@+id/user_mood_following_filter_button"
         app:layout_constraintTop_toBottomOf="@+id/user_mood_history_toolbar" />
 
+    <ImageButton
+        android:id="@+id/user_mood_history_stats_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/screen_color"
+        android:tint="@color/white"
+        android:tintMode="multiply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_info_details" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
