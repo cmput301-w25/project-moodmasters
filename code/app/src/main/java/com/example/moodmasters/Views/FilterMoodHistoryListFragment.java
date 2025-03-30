@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.moodmasters.Events.MoodHistoryListFilterEvent;
@@ -62,11 +64,33 @@ public class FilterMoodHistoryListFragment extends DialogFragment implements MVC
         ashamed_box.setChecked(emotion_filter_applied.contains(Emotion.State.ASHAMED));
         reason_edit_text.setText(String.join(" ", reason_filter_applied));
 
-        return builder.setView(view)
+        int checkmarkColor = R.color.button_color;
+        recency_box.setButtonTintList(ContextCompat.getColorStateList(getContext(), checkmarkColor));
+        happy_box.setButtonTintList(ContextCompat.getColorStateList(getContext(), checkmarkColor));
+        sad_box.setButtonTintList(ContextCompat.getColorStateList(getContext(), checkmarkColor));
+        angry_box.setButtonTintList(ContextCompat.getColorStateList(getContext(), checkmarkColor));
+        scared_box.setButtonTintList(ContextCompat.getColorStateList(getContext(), checkmarkColor));
+        surprised_box.setButtonTintList(ContextCompat.getColorStateList(getContext(), checkmarkColor));
+        disgusted_box.setButtonTintList(ContextCompat.getColorStateList(getContext(), checkmarkColor));
+        confused_box.setButtonTintList(ContextCompat.getColorStateList(getContext(), checkmarkColor));
+        ashamed_box.setButtonTintList(ContextCompat.getColorStateList(getContext(), checkmarkColor));
+
+        AlertDialog dialog = builder.setView(view)
                 .setNegativeButton("Cancel", null)
-                .setPositiveButton("Add", (dialog, which) -> {
+                .setPositiveButton("Filter", (dialogInterface, which) -> {
                     controller.execute(new MoodHistoryListFilterEvent(view), getContext());
                 })
                 .create();
+
+        dialog.setOnShowListener(dialogInterface -> {
+            Button positive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            Button negative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+            positive.setTextColor(ContextCompat.getColor(getContext(), R.color.button_color));
+            negative.setTextColor(ContextCompat.getColor(getContext(), R.color.button_color));
+        });
+
+        return dialog;
+
     }
 }

@@ -71,7 +71,8 @@ public class UserSearchActivity extends AppCompatActivity implements MVCView {
 
         searchResultsListView.setOnItemClickListener((parent, view, position, id) -> {
             String selectedUser = (String) parent.getItemAtPosition(position);
-            checkIfAlreadyFollowing(selectedUser);
+            //checkIfAlreadyFollowing(selectedUser);
+            navigateToProfile(selectedUser);
         });
     }
 

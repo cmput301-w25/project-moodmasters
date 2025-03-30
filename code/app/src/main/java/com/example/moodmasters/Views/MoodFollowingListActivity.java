@@ -9,10 +9,13 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.moodmasters.Events.ChangeActivityEvent;
+import com.example.moodmasters.Events.MoodFollowingListEvent;
 import com.example.moodmasters.Events.LogOutEvent;
 import com.example.moodmasters.Events.ShowFollowRequestsEvent;
 import com.example.moodmasters.Events.ShowMapEvent;
 import com.example.moodmasters.Events.ShowMoodFollowingEvent;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
 import com.example.moodmasters.Events.MoodFollowingListShowFilterEvent;
@@ -52,7 +55,7 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
         });
 
         TextView username_view = findViewById(R.id.user_mood_following_label);
-        username_view.setText(username);
+        //username_view.setText(username);
 
         if (!controller.existsBackendObject(BackendObject.State.MOODFOLLOWINGLIST)){
             controller.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
@@ -123,4 +126,6 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
     public MoodFollowingListView getMoodFollowingListView(){
         return mood_following_view;
     }
+
+
 }

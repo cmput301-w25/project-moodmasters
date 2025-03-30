@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_color">
+    android:background="@color/background_color">
 
     <ImageButton
         android:id="@+id/map_screen_filter_button"

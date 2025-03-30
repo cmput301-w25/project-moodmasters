@@ -80,18 +80,6 @@
         app:layout_constraintTop_toTopOf="@+id/view_mood_toolbar" />
 
 
-    <Button
-        android:id="@+id/view_mood_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/button_color"
-        android:text="Delete"
-        android:textSize="24sp"
-        app:iconPadding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/view_mood_photo_view"
@@ -110,34 +98,54 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
-
-    <Button
-        android:id="@+id/view_mood_comments_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/button_color"
-        android:text="Comments"
-        android:textSize="24sp"
+    <ImageButton
+        android:id="@+id/view_mood_delete_button"
+        android:layout_width="96dp"
+        android:layout_height="81dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Delete a mood event"
+        android:src="@drawable/delete_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintStart_toEndOf="@+id/view_mood_comments_button"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_photo_view"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/view_mood_comments_button"
+        android:layout_width="96dp"
+        android:layout_height="81dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="View mood comments"
+        android:scaleType="centerInside"
+        android:src="@drawable/comments_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_mood_photo_view"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
+    <ImageButton
         android:id="@+id/view_mood_edit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="96dp"
+        android:layout_height="81dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/button_color"
-        android:text="Edit"
-        android:textSize="24sp"
-        app:iconPadding="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Edit mood event"
+        android:src="@drawable/edit_icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/view_mood_comments_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_mood_photo_view"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/view_mood_situation_label"

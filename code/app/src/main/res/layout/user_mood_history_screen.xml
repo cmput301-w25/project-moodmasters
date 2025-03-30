@@ -13,7 +13,8 @@
         android:background="@color/background_color"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
@@ -34,9 +35,78 @@
         android:textColor="@color/text_color"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/user_mood_history_toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/user_mood_history_toolbar"
-        app:layout_constraintStart_toStartOf="@+id/user_mood_history_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.228"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/user_mood_history_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/followers_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/user_mood_history_toolbar"
+        app:layout_constraintEnd_toStartOf="@+id/following_container"
+        app:layout_constraintTop_toTopOf="@+id/user_mood_history_label"
+        app:layout_constraintBottom_toBottomOf="@+id/user_mood_history_label">
+
+        <TextView
+            android:id="@+id/followers_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/text_color"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/followers_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Followers"
+            android:textColor="@color/text_color"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/following_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_mood_history_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_mood_history_toolbar"
+        app:layout_constraintTop_toTopOf="@+id/user_mood_history_label"
+        app:layout_constraintVertical_bias="0.51">
+
+        <TextView
+            android:id="@+id/following_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/text_color"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/following_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Following"
+            android:textColor="@color/text_color"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/mood_following_list"
@@ -100,6 +170,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_info_details" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
