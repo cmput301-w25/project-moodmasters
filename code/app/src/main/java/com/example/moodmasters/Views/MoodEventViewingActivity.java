@@ -126,7 +126,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         ImageButton exit_button = findViewById(R.id.view_mood_x_button);
         ImageButton edit_button = findViewById(R.id.view_mood_edit_button);
         ImageButton delete_button = findViewById(R.id.view_mood_delete_button);
-        ImageButton viewCommentsButton = findViewById(R.id.view_mood_comments_button);
+        ImageButton view_comments_button = findViewById(R.id.view_mood_comments_button);
 
         exit_button.setOnClickListener(v -> {
             controller.execute(new ExitMoodEventViewingEvent(), this);
