@@ -59,12 +59,18 @@ public class AddMoodCommentScreenOkEvent implements MVCController.MVCEvent {
         String username = ((Participant) model.getBackendObject(BackendObject.State.USER)).getUsername();
 
         Comment new_comment = new Comment(username, comment_string, datetime);
-        comments_list.add(new_comment);
         MoodEvent new_mood_event = new MoodEvent(mood_event.getDatetime(), mood_event.getEpochTime(), mood_event.getMood(),
                 mood_event.getIsPublic(), mood_event.getReason(), mood_event.getSituation(), mood_event.getLocation(),
-                mood_event.getUsername(), mood_event.getPhotoString(), comments_list);
+                mood_event.getUsername(), mood_event.getPhotoString(), new ArrayList<Comment>());
         if (mood_event_list_type.equals("MoodHistoryList")){
-            model.replaceObjectBackendList(BackendObject.State.MOODHISTORYLIST, position, new_mood_event);
+            MoodHistoryList creator_mood_history = (MoodHistoryList) model.getBackendObject(BackendObject.State.MOODHISTORYLIST) ;
+            MoodEvent old_mood_event = creator_mood_history.getObjectPosition(position);
+            creator_mood_history.replaceObjectPosition(position, new_mood_event);
+            creator_mood_history.removeDatabaseData(model.getDatabase(), old_mood_event);
+            comments_list.add(new_comment);
+            new_mood_event.setComments(comments_list);
+            creator_mood_history.addDatabaseData(model.getDatabase(), new_mood_event);
+            model.notifyViews(BackendObject.State.MOODHISTORYLIST);
         }
         else if (mood_event_list_type.equals("MoodFollowingList")){
             FollowingList following_list = (FollowingList) model.getBackendObject(BackendObject.State.FOLLOWINGLIST);
@@ -72,15 +78,16 @@ public class AddMoodCommentScreenOkEvent implements MVCController.MVCEvent {
             Participant creator = following_list.getParticipant(mood_event.getUsername());
             MoodHistoryList creator_mood_history = creator.getMoodHistoryList();
             List<MoodEvent> creator_mood_history_list = creator_mood_history.getList();
-
+            System.out.println("AddMoodCommentScreenOkEvent CONTAINS: " + creator_mood_history_list.contains(mood_event));
             // have to code this manually instead of using replaceObjectBackendList, might be better to use dependency injection for that method,
             // and also need to create method for replacing object with another object in MVCBackendList
             int mood_history_position = creator_mood_history_list.indexOf(mood_event);
             creator_mood_history.replaceObjectPosition(mood_history_position, new_mood_event);
-            creator_mood_history.removeDatabaseData(model.getDatabase(), mood_event);
-            creator_mood_history.addDatabaseData(model.getDatabase(), new_mood_event);
-
             mood_following_list.replaceObjectPosition(position, new_mood_event);
+            creator_mood_history.removeDatabaseData(model.getDatabase(), mood_event);
+            comments_list.add(new_comment);
+            new_mood_event.setComments(comments_list);
+            creator_mood_history.addDatabaseData(model.getDatabase(), new_mood_event);
 
             model.notifyViews(BackendObject.State.MOODFOLLOWINGLIST);
         }

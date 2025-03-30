@@ -23,11 +23,15 @@ import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.PhotoDecoderEncoder;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
+import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
+import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
+import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CommentViewingActivity extends AppCompatActivity implements MVCView {
     private MoodEvent mood_event;
@@ -40,7 +44,7 @@ public class CommentViewingActivity extends AppCompatActivity implements MVCView
         mood_event = MoodEventViewCommentsEvent.getMoodEvent();
         position = MoodEventViewCommentsEvent.getPosition();
         mood_event_list_type = MoodEventViewCommentsEvent.getMoodEventListType();
-        comments_list = new ArrayList<Comment>(mood_event.getComments()); // new comment list on replacement
+        comments_list = mood_event.getComments(); // new comment list on replacement
     }
     public void initialize(MVCModel model){
         return;
@@ -53,6 +57,11 @@ public class CommentViewingActivity extends AppCompatActivity implements MVCView
         }
         if (mood_event_list_type.equals("MoodFollowingList")){
             mood_event = model.getFromBackendList(BackendObject.State.MOODFOLLOWINGLIST, position);
+            FollowingList following_list = (FollowingList) model.getBackendObject(BackendObject.State.FOLLOWINGLIST);
+            Participant creator = following_list.getParticipant(mood_event.getUsername());
+            MoodHistoryList creator_mood_history = creator.getMoodHistoryList();
+            List<MoodEvent> creator_mood_history_list = creator_mood_history.getList();
+            System.out.println("CONTAINS MOOD EVENT " + creator_mood_history_list.contains(mood_event));
         }
     }
     public void setScreen(){

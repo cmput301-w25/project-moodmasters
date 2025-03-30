@@ -45,8 +45,11 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
     public void update(MVCModel model){
         if ((edit_clicked || comment_clicked) && mood_event_list_type.equals("MoodHistoryList")){
             displayed_mood_event = model.getFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
-            setScreen();
         }
+        else if ((edit_clicked || comment_clicked) && mood_event_list_type.equals("MoodFollowingList")){
+            displayed_mood_event = model.getFromBackendList(BackendObject.State.MOODFOLLOWINGLIST, position);
+        }
+        setScreen();
     }
     public void initialize(MVCModel model){
         // skip for now
