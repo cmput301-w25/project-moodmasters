@@ -63,8 +63,6 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
         okButton = findViewById(R.id.ok_button);
 
 
-        // TODO: retrieve the passed MoodEvent Object
-
         // Get the list of comments from the MoodEvent Object
         List<Comment> comments = mood_event.getComments();
 
@@ -85,10 +83,10 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
             // Create the new Comment object with username, timestamp, and the new content
             Comment newComment = new Comment(username, timestamp, newCommentContent);
 
-            // TODO: Add new comment to the list of comments in MoodEvent Object
+            // Add new comment to the list of comments in MoodEvent Object
             comments.add(newComment);
             mood_event.setComments(comments);
-            // TODO: Update the MoodEvent with this new comment
+            // Update the MoodEvent with this new comment
             controller.execute(new AddCommentConfirmEvent(mood_event, position), this);
 
         });

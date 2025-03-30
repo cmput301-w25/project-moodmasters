@@ -37,7 +37,6 @@ public class AddCommentConfirmEvent implements MVCController.MVCEvent {
 
         // Fetch comments from current MoodEvent
         List<Comment> updatedComments = mood_event.getComments();
-        CommentAdapter commentAdapter = ViewMoodCommentActivity.getAdapter();
 
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
 
@@ -46,7 +45,7 @@ public class AddCommentConfirmEvent implements MVCController.MVCEvent {
                 mood_event.getIsPublic(), mood_event.getReason(), mood_event.getSituation(), mood_event.getLocation(), user.getUsername(), mood_event.getComments());
 
         model.replaceObjectBackendList(BackendObject.State.MOODHISTORYLIST, position, new_mood_event);
-        commentAdapter.notifyDataSetChanged();
+
         ((AddCommentActivity) context).finish();
         }
     }
