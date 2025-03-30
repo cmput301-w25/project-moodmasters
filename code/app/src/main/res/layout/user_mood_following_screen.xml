@@ -62,8 +62,8 @@
         android:id="@+id/user_mood_following_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Username"
+        android:layout_marginStart="148dp"
+        android:text="Mood Feed"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/text_color"
         android:textSize="24sp"
@@ -84,15 +84,17 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ListView
-            android:id="@+id/mood_following_list"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/background_color"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_mood_following_filter_button"></ListView>
+        android:id="@+id/mood_following_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/background_color"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_mood_following_filter_button">
+
+        </ListView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

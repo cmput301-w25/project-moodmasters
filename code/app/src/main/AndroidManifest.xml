@@ -53,6 +53,10 @@
             android:exported="true"/>
         <activity android:name=".Views.MoodFollowingListActivity"
             android:exported="true"/>
+        <activity android:name=".Views.FollowListActivity"
+            android:exported="true"/>
+        <activity android:name=".Views.FollowersListActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
