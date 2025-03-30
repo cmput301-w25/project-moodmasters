@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.moodmasters.Events.DeleteMoodEventConfirmEvent;
 import com.example.moodmasters.Events.ExitMoodEventViewingEvent;
+import com.example.moodmasters.Events.MoodEventViewCommentsEvent;
 import com.example.moodmasters.Events.MoodEventViewingEditEvent;
 import com.example.moodmasters.Events.MoodFollowingListClickMoodEvent;
 import com.example.moodmasters.Events.MoodHistoryListClickMoodEvent;
@@ -27,7 +28,6 @@ import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsApp.PhotoDecoderEncoder;
 import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.Objects.ObjectsMisc.CommentAdapter;
 import com.example.moodmasters.R;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -35,13 +35,15 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
     private MoodEvent displayed_mood_event;
     private int position;
     private boolean edit_clicked;
+    private boolean comment_clicked;
     private String mood_event_list;
     public MoodEventViewingActivity(){
         super();
         edit_clicked = false;
+        comment_clicked = false;
     }
     public void update(MVCModel model){
-        if (edit_clicked && mood_event_list.equals("MoodHistoryList")){
+        if ((edit_clicked || comment_clicked) && mood_event_list.equals("MoodHistoryList")){
             displayed_mood_event = model.getFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
             setScreen();
         }
@@ -120,7 +122,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         ImageButton exit_button = findViewById(R.id.view_mood_x_button);
         Button edit_button = findViewById(R.id.view_mood_edit_button);
         Button delete_button = findViewById(R.id.view_mood_delete_button);
-        Button viewCommentsButton = findViewById(R.id.view_mood_comments_button);
+        Button view_comments_button = findViewById(R.id.view_mood_comments_button);
 
         exit_button.setOnClickListener(v -> {
             controller.execute(new ExitMoodEventViewingEvent(), this);
@@ -128,9 +130,11 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         if (mood_event_list.equals("MoodHistoryList")){
             edit_button.setOnClickListener(v -> {
                 edit_clicked = true;
+                comment_clicked = false;
                 controller.execute(new MoodEventViewingEditEvent(displayed_mood_event, position), this);
             });
             delete_button.setOnClickListener(v -> {
+                comment_clicked = false;
                 edit_clicked = false;
                 controller.execute(new DeleteMoodEventConfirmEvent(displayed_mood_event, position), this);
             });
@@ -141,20 +145,15 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         }
         // Set visibility based on the activity's context
         if (mood_event_list.equals("MoodHistoryList") || mood_event_list.equals("MoodFollowingList")) {
-            viewCommentsButton.setVisibility(View.VISIBLE);
+            view_comments_button.setVisibility(View.VISIBLE);
         } else {
-            viewCommentsButton.setVisibility(View.GONE); // Hide button if not needed
+            view_comments_button.setVisibility(View.GONE); // Hide button if not needed
         }
         // Handle the "View Comments" button click
-        viewCommentsButton.setOnClickListener(v -> {
-            // Create an Intent to go to CommentsActivity
-            Intent intent = new Intent(MoodEventViewingActivity.this, CommentViewingActivity.class);
-
-            // Optionally pass the MoodEvent object to the next activity
-            // intent.putExtra("MoodEvent", displayed_mood_event); // Pass MoodEvent to the next activity
-
-            // Start CommentsActivity
-            startActivity(intent);
+        view_comments_button.setOnClickListener(v -> {
+            comment_clicked = true;
+            edit_clicked = false;
+            controller.execute(new MoodEventViewCommentsEvent(displayed_mood_event, position), this);
         });
     }
 }

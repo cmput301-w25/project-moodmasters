@@ -4,13 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.util.Pair;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,14 +18,12 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
 import com.example.moodmasters.Events.AddMoodEventConfirmEvent;
 import com.example.moodmasters.Events.AlterMoodEventCancelEvent;
 import com.example.moodmasters.Events.EditMoodEventConfirmEvent;
 import com.example.moodmasters.Events.MoodEventViewingEditEvent;
 import com.example.moodmasters.Events.UploadPhotoEvent;
-import com.example.moodmasters.Views.MoodLocationActivity;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
@@ -39,7 +34,6 @@ import com.example.moodmasters.R;
 import com.google.android.gms.maps.model.LatLng;
 
 
-import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.List;

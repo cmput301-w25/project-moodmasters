@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.moodmasters.Objects.ObjectsApp.Comment;
 import com.example.moodmasters.Objects.ObjectsApp.PhotoDecoderEncoder;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
@@ -82,7 +84,8 @@ public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
 
         Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
         MoodEvent new_mood_event = new MoodEvent(datetime, epoch_time, mood_list.getMood(emotion),
-                is_public, reason_string, social_situation, location, user.getUsername(), photo_string);
+                is_public, reason_string, social_situation, location, user.getUsername(), photo_string,
+                new ArrayList<Comment>());
         model.addToBackendList(BackendObject.State.MOODHISTORYLIST, new_mood_event);
         ((AlterMoodEventActivity) context).finish();
 
