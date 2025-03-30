@@ -2,6 +2,7 @@ package com.example.moodmasters.Events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
@@ -31,6 +32,10 @@ public class ShowProfileStatisticsEvent implements MVCController.MVCEvent {
 
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
+        if (mood_events.isEmpty()) {
+            Toast.makeText(context, "No moods to show statistics on!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         context.startActivity(new Intent(context, ProfileStatisticsActivity.class));
     }
 }
