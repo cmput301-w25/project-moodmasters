@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moodmasters.Events.AddMoodEventConfirmEvent;
 import com.example.moodmasters.Events.AlterMoodEventCancelEvent;
+import com.example.moodmasters.Events.AlterMoodEventScreenUnsetLocationEvent;
 import com.example.moodmasters.Events.EditMoodEventConfirmEvent;
 import com.example.moodmasters.Events.MoodEventViewingEditEvent;
 import com.example.moodmasters.Events.UploadPhotoEvent;
@@ -121,12 +122,26 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
             Bitmap photo = PhotoDecoderEncoder.photoDecoder(current_mood_event.getPhotoString());
             photo_button.setImageBitmap(photo);
         }
+        TextView location_text = findViewById(R.id.alter_mood_location_text);
         Button location_button = findViewById(R.id.alter_mood_location_button);
-        location_button.setOnClickListener(v -> {
-            // Start the MoodLocationActivity to get the user's location
-            Intent intent = new Intent(AlterMoodEventActivity.this, MoodLocationActivity.class);
-            startActivityForResult(intent, 1001); // 1001 is a request code for identification
-        });
+        LatLng location = current_mood_event.getLocation();
+        if (location == null){
+            location_button.setOnClickListener(v -> {
+                // Start the MoodLocationActivity to get the user's location
+                    Intent intent = new Intent(AlterMoodEventActivity.this, MoodLocationActivity.class);
+                    startActivityForResult(intent, 1001); // 1001 is a request code for identification
+            });
+        }
+        else{
+            String locationText = "Lat: " + String.format("%.2f", location.latitude) +
+                    ", Long: " + String.format("%.2f", location.longitude);
+            location_text.setText(locationText);
+            location_button.setText("Remove Location");
+            location_button.setOnClickListener(v -> {
+                // Start the MoodLocationActivity to get the user's location
+                controller.execute(new AlterMoodEventScreenUnsetLocationEvent(), this);
+            });
+        }
 
 
         confirm_button.setOnClickListener(v -> {
