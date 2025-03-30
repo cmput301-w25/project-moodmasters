@@ -318,4 +318,8 @@ public class MVCModel{
         return obj_list.getList();
     }
 
+    public MVCDatabase getDatabase(){
+        return database;
+    }
+
 }

@@ -34,10 +34,12 @@ public class CommentViewingActivity extends AppCompatActivity implements MVCView
     private int position;
     private ArrayList<Comment> comments_list;
     private CommentViewingAdapter comments_adapter;
+    private String mood_event_list_type;
     public CommentViewingActivity(){
         super();
         mood_event = MoodEventViewCommentsEvent.getMoodEvent();
         position = MoodEventViewCommentsEvent.getPosition();
+        mood_event_list_type = MoodEventViewCommentsEvent.getMoodEventListType();
         comments_list = new ArrayList<Comment>(mood_event.getComments()); // new comment list on replacement
     }
     public void initialize(MVCModel model){
@@ -46,7 +48,12 @@ public class CommentViewingActivity extends AppCompatActivity implements MVCView
 
     public void update(MVCModel model){
         // not really necessary but feels proper
-        mood_event = model.getFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
+        if (mood_event_list_type.equals("MoodHistoryList")){
+            mood_event = model.getFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
+        }
+        if (mood_event_list_type.equals("MoodFollowingList")){
+            mood_event = model.getFromBackendList(BackendObject.State.MOODFOLLOWINGLIST, position);
+        }
     }
     public void setScreen(){
         TextView emoji_view = findViewById(R.id.view_mood_emoji_label);
@@ -66,18 +73,23 @@ public class CommentViewingActivity extends AppCompatActivity implements MVCView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_mood_comment);  // What it looks like when you click "Comments"
         setScreen();
-        controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
+        if (mood_event_list_type.equals("MoodHistoryList")){
+            controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
+        }
+        if (mood_event_list_type.equals("MoodFollowingList")){
+            controller.addBackendView(this, BackendObject.State.MOODFOLLOWINGLIST);
+        }
         // Reference the ListView by the correct ID
         ListView comments_list_view = findViewById(R.id.view_comment_list); // ListView for the comments
         Button add_comment_button = findViewById(R.id.add_comment_button); // Add comment button
 
         // Initialize the list of comments
-        comments_adapter = new CommentViewingAdapter(this, comments_list); // Converts each item in the ArrayList to be displayed onto screen
+        comments_adapter = new CommentViewingAdapter(this, comments_list, mood_event_list_type); // Converts each item in the ArrayList to be displayed onto screen
         comments_list_view.setAdapter(comments_adapter);  // Set the adapter for the ListView
 
         // Handle "Add Comment" Button Click
         add_comment_button.setOnClickListener(v -> {
-            controller.execute(new CommentViewingScreenAddCommentEvent(mood_event, position, comments_list), this);
+            controller.execute(new CommentViewingScreenAddCommentEvent(mood_event, position, comments_list, mood_event_list_type), this);
         });
         // Initialize the x_button to be used if the user wants to leave the comments
         ImageButton x_button = findViewById(R.id.view_mood_x_button);

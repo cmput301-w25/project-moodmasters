@@ -15,10 +15,12 @@ public class CommentViewingScreenAddCommentEvent implements MVCController.MVCEve
     private static MoodEvent mood_event;
     private static int position;
     private static ArrayList<Comment> comments_list;
-    public CommentViewingScreenAddCommentEvent(MoodEvent init_mood_event, int init_position, ArrayList<Comment> init_comments_list){
+    private static String mood_event_list_type;
+    public CommentViewingScreenAddCommentEvent(MoodEvent init_mood_event, int init_position, ArrayList<Comment> init_comments_list, String init_mood_event_list_type){
         mood_event = init_mood_event;
         position = init_position;
         comments_list = init_comments_list;
+        mood_event_list_type = init_mood_event_list_type;
     }
     public static MoodEvent getMoodEvent(){
         return mood_event;
@@ -28,6 +30,9 @@ public class CommentViewingScreenAddCommentEvent implements MVCController.MVCEve
     }
     public static ArrayList<Comment> getCommentList(){
         return comments_list;
+    }
+    public static String getMoodEventListType(){
+        return mood_event_list_type;
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller){

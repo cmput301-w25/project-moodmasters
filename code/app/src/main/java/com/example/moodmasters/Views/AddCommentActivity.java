@@ -21,12 +21,14 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
     private MoodEvent mood_event;
     private int position;
     private ArrayList<Comment> comments_list;
+    private String mood_event_list_type;
 
     public AddCommentActivity(){
         super();
         mood_event = CommentViewingScreenAddCommentEvent.getMoodEvent();
         position = CommentViewingScreenAddCommentEvent.getPosition();
         comments_list = CommentViewingScreenAddCommentEvent.getCommentList();
+        mood_event_list_type = CommentViewingScreenAddCommentEvent.getMoodEventListType();
     }
     public void initialize(MVCModel model) {
         // not necessary, nothing to initialize
@@ -53,7 +55,7 @@ public class AddCommentActivity extends AppCompatActivity implements MVCView {
 
         // Handle OK Button Click
         ok_button.setOnClickListener(v -> {
-            controller.execute(new AddMoodCommentScreenOkEvent(mood_event, position, comments_list), this);
+            controller.execute(new AddMoodCommentScreenOkEvent(mood_event, position, comments_list, mood_event_list_type), this);
         });
     }
 

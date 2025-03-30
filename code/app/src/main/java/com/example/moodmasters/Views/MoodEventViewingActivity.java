@@ -36,14 +36,14 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
     private int position;
     private boolean edit_clicked;
     private boolean comment_clicked;
-    private String mood_event_list;
+    private String mood_event_list_type;
     public MoodEventViewingActivity(){
         super();
         edit_clicked = false;
         comment_clicked = false;
     }
     public void update(MVCModel model){
-        if ((edit_clicked || comment_clicked) && mood_event_list.equals("MoodHistoryList")){
+        if ((edit_clicked || comment_clicked) && mood_event_list_type.equals("MoodHistoryList")){
             displayed_mood_event = model.getFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
             setScreen();
         }
@@ -88,7 +88,8 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
             String locationText = "Lat: " + String.format("%.2f", location.latitude) +
                     ", Long: " + String.format("%.2f", location.longitude);
             location_view.setText(locationText);
-        } else {
+        }
+        else {
             location_view.setText("Unknown");
         }
 
@@ -102,13 +103,13 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         setContentView(R.layout.view_mood_screen);
         System.out.println("MOODEVENTVIEWINGACTIVITY ONCREATE");
         Intent i = getIntent();
-        mood_event_list = i.getStringExtra("MoodEventList");
-        if (mood_event_list.equals("MoodHistoryList")){
+        mood_event_list_type = i.getStringExtra("MoodEventList");
+        if (mood_event_list_type.equals("MoodHistoryList")){
             displayed_mood_event = MoodHistoryListClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
             position = MoodHistoryListClickMoodEvent.getPosition();
             controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
         }
-        else if (mood_event_list.equals("MoodFollowingList")){
+        else if (mood_event_list_type.equals("MoodFollowingList")){
             displayed_mood_event = MoodFollowingListClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
             position = MoodFollowingListClickMoodEvent.getPosition();
             controller.addBackendView(this, BackendObject.State.MOODFOLLOWINGLIST);
@@ -127,7 +128,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         exit_button.setOnClickListener(v -> {
             controller.execute(new ExitMoodEventViewingEvent(), this);
         });
-        if (mood_event_list.equals("MoodHistoryList")){
+        if (mood_event_list_type.equals("MoodHistoryList")){
             edit_button.setOnClickListener(v -> {
                 edit_clicked = true;
                 comment_clicked = false;
@@ -139,12 +140,12 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
                 controller.execute(new DeleteMoodEventConfirmEvent(displayed_mood_event, position), this);
             });
         }
-        else if (mood_event_list.equals("MoodFollowingList")){
+        else if (mood_event_list_type.equals("MoodFollowingList")){
             ((ViewManager) edit_button.getParent()).removeView(edit_button);
             ((ViewManager) delete_button.getParent()).removeView(delete_button);
         }
         // Set visibility based on the activity's context
-        if (mood_event_list.equals("MoodHistoryList") || mood_event_list.equals("MoodFollowingList")) {
+        if (mood_event_list_type.equals("MoodHistoryList") || mood_event_list_type.equals("MoodFollowingList")) {
             view_comments_button.setVisibility(View.VISIBLE);
         } else {
             view_comments_button.setVisibility(View.GONE); // Hide button if not needed
@@ -153,7 +154,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         view_comments_button.setOnClickListener(v -> {
             comment_clicked = true;
             edit_clicked = false;
-            controller.execute(new MoodEventViewCommentsEvent(displayed_mood_event, position), this);
+            controller.execute(new MoodEventViewCommentsEvent(displayed_mood_event, position, mood_event_list_type), this);
         });
     }
 }

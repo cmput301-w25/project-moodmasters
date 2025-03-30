@@ -21,11 +21,17 @@ import java.util.List;
 
 public class CommentViewingAdapter extends ArrayAdapter<Comment> implements MVCView {
     private Context context;
-
-    public CommentViewingAdapter(Context context, ArrayList<Comment> comments) {
+    private String mood_event_list_type;
+    public CommentViewingAdapter(Context context, ArrayList<Comment> comments, String init_mood_event_list_type) {
         super(context, 0, comments);
         this.context = context;
-        controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
+        this.mood_event_list_type = init_mood_event_list_type;
+        if (mood_event_list_type.equals("MoodHistoryList")){
+            controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
+        }
+        if (mood_event_list_type.equals("MoodFollowingList")){
+            controller.addBackendView(this, BackendObject.State.MOODFOLLOWINGLIST);
+        }
     }
     public void initialize(MVCModel model){
         return;
