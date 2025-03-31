@@ -198,24 +198,20 @@ public class ProfileStatisticsScreenActivity extends AppCompatActivity implement
 
     public void showMoodStatistics() {
         ArrayList<PieEntry> pie_values = new ArrayList<>();
+        ArrayList<Integer> colors = new ArrayList<>();
+
         HashMap<String, Integer> mood_counts = getEmotionCounts();
 
         Set<String> mood_set = mood_counts.keySet();
         String[] mood_keys = new String[mood_set.size()];
         mood_set.toArray(mood_keys);
 
-        for (int i = 0; i < mood_set.size(); i++) {
-            pie_values.add(new PieEntry(mood_counts.get(mood_keys[i]), mood_keys[i]));
-        }
-
-        ArrayList<Integer> colors = new ArrayList<>();
-
-        for (int c : ColorTemplate.LIBERTY_COLORS) {
-            colors.add(c);
+        for (String mood : mood_keys) {
+            pie_values.add(new PieEntry(mood_counts.get(mood), mood));
+            colors.add(getMoodColor(mood)); // Matching color for each mood
         }
 
         String display_string = username + "'s top mood is " + getTop(mood_counts, mood_keys);
-
         display_label.setText(display_string);
 
         PieDataSet pie_set = new PieDataSet(pie_values, "");
@@ -281,6 +277,29 @@ public class ProfileStatisticsScreenActivity extends AppCompatActivity implement
         PieData pie_data = new PieData(pie_set);
         pie_data.setDrawValues(false);
         pie_chart.setData(pie_data);
+    }
+
+    private int getMoodColor(String mood) {
+        switch (mood.toLowerCase()) {
+            case "happy":
+                return getResources().getColor(R.color.mood_happy_color, getTheme());
+            case "sad":
+                return getResources().getColor(R.color.mood_sad_color, getTheme());
+            case "angry":
+                return getResources().getColor(R.color.mood_angry_color, getTheme());
+            case "scared":
+                return getResources().getColor(R.color.mood_scared_color, getTheme());
+            case "disgusted":
+                return getResources().getColor(R.color.mood_disgusted_color, getTheme());
+            case "confused":
+                return getResources().getColor(R.color.mood_confused_color, getTheme());
+            case "ashamed":
+                return getResources().getColor(R.color.mood_ashamed_color, getTheme());
+            case "surprised":
+                return getResources().getColor(R.color.mood_surprised_color, getTheme());
+            default:
+                return getResources().getColor(R.color.button_color, getTheme()); // Fallback
+        }
     }
 
     @Override
