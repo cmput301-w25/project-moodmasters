@@ -168,6 +168,10 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
 
         Intent i = getIntent();
         String event = i.getStringExtra("Event");
+        if (event == null) {
+            event = "AddMoodEvent";
+        }
+
         if (event.equals("AddMoodEvent")) {
             addMoodEventCode();
         }

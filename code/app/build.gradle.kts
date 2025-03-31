@@ -46,6 +46,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:+")
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    implementation(libs.espresso.intents)
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-core:5.7.0")
     testImplementation("org.mockito:mockito-inline:5.2.0")

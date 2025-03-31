@@ -187,4 +187,15 @@
         app:layout_constraintTop_toBottomOf="@+id/alter_mood_enter_reason"
         app:srcCompat="@android:drawable/ic_menu_camera" />
 
+    <ImageView
+        android:id="@+id/alter_mood_photo_preview"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/alter_mood_photo_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
