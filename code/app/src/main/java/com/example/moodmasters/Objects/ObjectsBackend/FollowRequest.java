@@ -26,6 +26,15 @@ public class FollowRequest extends MVCBackend implements MVCDatabase.Fetch, MVCD
         username = init_username;
         target_username = init_target_username;
     }
+    /**
+     * Function to fetch a follow request already existing on database
+     * @param database
+     *  Database object that stores documents and collections
+     * @param model
+     *  MVCModel that is needed to get other necessary data that might be needed in the function
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     @Override
     public void fetchDatabaseData(MVCDatabase database, MVCModel model, OnSuccessFetchListener listener) {
         DocumentReference user_ref = database.getDocument(username);
@@ -58,7 +67,15 @@ public class FollowRequest extends MVCBackend implements MVCDatabase.Fetch, MVCD
             listener.onSuccess(FollowRequest.this, false);
         });
     }
-
+    /**
+     * function for creating a new follow request on the database
+     * @param database
+     *  Database object that stores documents and collections
+     * @param model
+     *  MVCModel that is needed to get other necessary data that might be needed in the function
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     @Override
     public void createDatabaseData(MVCDatabase database, MVCModel model, OnSuccessCreateListener listener) {
         DocumentReference target_ref = database.getDocument(target_username);
@@ -75,6 +92,15 @@ public class FollowRequest extends MVCBackend implements MVCDatabase.Fetch, MVCD
                 //Toast.makeText(this, "Error sending request", Toast.LENGTH_SHORT).show();
             });
     }
+    /**
+     * function for adding accepting a follow request and adding it on the database
+     * @param database
+     *  Database object that stores documents and collections
+     * @param object
+     *  object to add to the database
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     @Override
     public <T> void addDatabaseData(MVCDatabase database, T object, OnSuccessAddListener listener) {
         String following_user = (String) object;
@@ -103,6 +129,15 @@ public class FollowRequest extends MVCBackend implements MVCDatabase.Fetch, MVCD
                 .addOnFailureListener(e -> listener.onSuccess(FollowRequest.this, false));
     }
 
+    /**
+     * Function for ignoring a follow request and putting it on the database
+     * @param database
+     *  Database object that stores documents and collections
+     * @param object
+     *  object to remove to the database
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     @Override
     public <T> void removeDatabaseData(MVCDatabase database, T object, OnSuccessRemoveListener listener) {
         String following_user = (String) object;

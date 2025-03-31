@@ -34,6 +34,15 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Fetch, MVCD
         this.following_list_usernames = new ArrayList<String>();
         this.mood_following_list = new MoodFollowingList();
     }
+    /**
+     * Function for fetching the following list of a user and each participant of the following lists mood history
+     * @param database
+     *  Database object that stores documents and collections
+     * @param model
+     *  MVCModel that is needed to get other necessary data that might be needed in the function
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     @Override
     public void fetchDatabaseData(MVCDatabase database, MVCModel model, OnSuccessFetchListener listener){
         database.addCollection("participants");
@@ -73,6 +82,15 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Fetch, MVCD
             }
         });
     }
+    /**
+     * Function for removing a follower from a the following list in the database
+     * @param database
+     *  Database object that stores documents and collections
+     * @param object
+     *  object to remove to the database
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     @Override
     public <T> void removeDatabaseData(MVCDatabase database, T object, OnSuccessRemoveListener listener) {
         String followee = (String) object;
@@ -111,11 +129,22 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Fetch, MVCD
             followees_recent_mood_events.addAll(most_recent_mood_events);
         }
     }
+    /**
+     * Gets the mood following list updated to the most recent version locally
+     * @return
+     *  Returns the MoodFollowingList produced
+     * */
     public MoodFollowingList getMoodFollowingList(){
-        System.out.println("GETMOODFOLLOWINGLIST STARTS");
         updateMoodFollowingList();
         return mood_following_list;
     }
+    /**
+     * Gets the Participant in the following list associated with the username
+     * @param username
+     *  the username of the participant that is wanted to be retrieved
+     * @return
+     *  The participant with the same username
+     * */
     public Participant getParticipant(String username){
         for (Participant participant: following_list){
             if (participant.getUsername().equals(username)){
@@ -124,9 +153,19 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Fetch, MVCD
         }
         return null;
     }
+    /**
+     * Gets the current following list
+     * @return
+     *  The current following list
+     * */
     public List<Participant> getFollowingList(){
         return following_list;
     }
+    /**
+     * @param username
+     *  participant with this username to remove
+     *
+     * */
     public void removeFollowingListElement(String username){
         Participant removable;
         int index = 0;
@@ -139,6 +178,11 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Fetch, MVCD
         following_list.remove(index);
         following_list_usernames.remove(index);
     }
+    /**
+     * Getter for people following
+     * @return
+     *  List corresponding to the names of all participants in the following list
+     * */
     public ArrayList<String> getFollowingListUsernames(){
         return following_list_usernames;
     }

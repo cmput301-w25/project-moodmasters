@@ -34,6 +34,15 @@ public class Counters extends MVCBackend implements MVCDatabase.Fetch{
         username = null;
     }
 
+    /**
+     * Fuction for fetching the followers and following count from the database
+     * @param database
+     *  Database object that stores documents and collections
+     * @param model
+     *  MVCModel that is needed to get other necessary data that might be needed in the function
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     @Override
     public void fetchDatabaseData(MVCDatabase database, MVCModel model, OnSuccessFetchListener listener){
         database.addCollection("participants");
@@ -48,9 +57,19 @@ public class Counters extends MVCBackend implements MVCDatabase.Fetch{
             });
         });
     }
+    /**
+     * Getter for returning the amount of followers
+     * @return
+     *  Returns amount of followers
+     * */
     public String getFollowers(){
         return followers;
     }
+    /**
+     * Getter for returning the amount following
+     * @return
+     *  Returns the amount following
+     * */
     public String getFollowing(){
         return following;
     }

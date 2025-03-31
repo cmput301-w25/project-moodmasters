@@ -17,6 +17,15 @@ public class MVCDatabase {
         public interface OnSuccessFetchListener {
             void onSuccess(MVCBackend backend_object, boolean result);
         }
+        /**
+         * Interface for fetching database from the database
+         * @param database
+         *  Database object that stores documents and collections
+         * @param model
+         *  MVCModel that is needed to get other necessary data that might be needed in the function
+         * @param listener
+         *  Listener that will be executed after the query is done
+         * */
         public void fetchDatabaseData(MVCDatabase database, MVCModel model, OnSuccessFetchListener listener); // necessary
     }
     /**
@@ -26,6 +35,15 @@ public class MVCDatabase {
         public interface OnSuccessCreateListener {
             void onSuccess(MVCBackend backend_object, boolean result);
         }
+        /**
+         * Interface for creating database on the database
+         * @param database
+         *  Database object that stores documents and collections
+         * @param model
+         *  MVCModel that is needed to get other necessary data that might be needed in the function
+         * @param listener
+         *  Listener that will be executed after the query is done
+         * */
         public void createDatabaseData(MVCDatabase database, MVCModel model, OnSuccessCreateListener listener); // necessary
     }
     /**
@@ -35,6 +53,15 @@ public class MVCDatabase {
         public interface OnSuccessAddListener {
             void onSuccess(MVCBackend backend_object, boolean result);
         }
+        /**
+         * Interface for adding database on the database
+         * @param database
+         *  Database object that stores documents and collections
+         * @param object
+         *  object to add to the database
+         * @param listener
+         *  Listener that will be executed after the query is done
+         * */
         public <T> void addDatabaseData(MVCDatabase database, T object, OnSuccessAddListener listener);
     }
     /**
@@ -44,6 +71,15 @@ public class MVCDatabase {
         public interface OnSuccessRemoveListener {
             void onSuccess(MVCBackend backend_object, boolean result);
         }
+        /**
+         * Interface for remove database on the database
+         * @param database
+         *  Database object that stores documents and collections
+         * @param object
+         *  object to remove to the database
+         * @param listener
+         *  Listener that will be executed after the query is done
+         * */
         public <T> void removeDatabaseData(MVCDatabase database, T object, OnSuccessRemoveListener listener);
     }
     private FirebaseFirestore db;

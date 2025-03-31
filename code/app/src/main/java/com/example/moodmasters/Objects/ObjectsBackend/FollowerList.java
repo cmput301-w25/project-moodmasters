@@ -29,6 +29,15 @@ public class FollowerList extends MVCBackend implements MVCDatabase.Fetch, MVCDa
         follower_list = new ArrayList<String>();
     }
 
+    /**
+     * Function responsible for fetching from the database the amount of participants a user is following
+     * @param database
+     *  Database object that stores documents and collections
+     * @param model
+     *  MVCModel that is needed to get other necessary data that might be needed in the function
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     @Override
     public void fetchDatabaseData(MVCDatabase database, MVCModel model, OnSuccessFetchListener listener) {
         DocumentReference doc_ref = database.getDocument(username);
@@ -44,6 +53,15 @@ public class FollowerList extends MVCBackend implements MVCDatabase.Fetch, MVCDa
         });
     }
 
+    /**
+     * Function responsible for removing a follower from a user's follower list
+     * @param database
+     *  Database object that stores documents and collections
+     * @param object
+     *  object to remove to the database
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     @Override
     public <T> void removeDatabaseData(MVCDatabase database, T object, OnSuccessRemoveListener listener) {
         String follower = (String) object;
@@ -63,9 +81,19 @@ public class FollowerList extends MVCBackend implements MVCDatabase.Fetch, MVCDa
                 });
     }
 
+    /**
+     * Getter for returning follower list
+     * @return
+     *  Returns follower list
+     * */
     public ArrayList<String> getFollowerList(){
         return follower_list;
     }
+    /**
+     * Gets rid of an element of the follow_list array
+     * @param follower
+     *  Element of array to remove
+     * */
     public void removeFollowerListElement(String follower){
         follower_list.remove(follower);
     }
