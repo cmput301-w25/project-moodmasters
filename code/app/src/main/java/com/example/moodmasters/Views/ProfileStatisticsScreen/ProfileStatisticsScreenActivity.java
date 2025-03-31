@@ -37,7 +37,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
+/**
+ * Activity that is responsible for displaying the statistics related to a user's mood history
+ * list
+ * */
 public class ProfileStatisticsScreenActivity extends AppCompatActivity implements MVCView {
     private List<MoodEvent> mood_list;
     private List<Mood> moods;

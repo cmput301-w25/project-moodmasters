@@ -3,7 +3,9 @@ package com.example.moodmasters.Objects.ObjectsApp;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 
 import java.util.HashMap;
-
+/**
+ * Class that represents a comment a user can type on a mood event
+ * */
 public class Comment {
     private String username;
     private String content;

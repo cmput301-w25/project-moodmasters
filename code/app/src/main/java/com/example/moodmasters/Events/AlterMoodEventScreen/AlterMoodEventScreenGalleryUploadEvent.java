@@ -1,4 +1,4 @@
-package com.example.moodmasters.Views.AlterMoodEventScreen;
+package com.example.moodmasters.Events.AlterMoodEventScreen;
 
 import android.content.Context;
 
@@ -6,10 +6,11 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
+import com.example.moodmasters.Views.AlterMoodEventScreen.AlterMoodEventScreenActivity;
 
-public class AlterMoodEventScreenUploadFromGallery implements MVCController.MVCEvent {
+public class AlterMoodEventScreenGalleryUploadEvent implements MVCController.MVCEvent {
     private DialogFragment fragment;
-    public AlterMoodEventScreenUploadFromGallery(DialogFragment init_fragment){
+    public AlterMoodEventScreenGalleryUploadEvent(DialogFragment init_fragment){
         fragment = init_fragment;
     }
     @Override

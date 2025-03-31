@@ -10,7 +10,11 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-
+/**
+ * Class that represents the mood following list for a user and will store the mood events of the
+ * participants a user is following
+ *
+ * */
 public class MoodFollowingList extends MoodEventList {
     private static final int mood_events_per_participant = 3;
     public MoodFollowingList(ArrayList<MoodEvent> list) {

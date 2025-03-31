@@ -24,22 +24,34 @@ import com.example.moodmasters.Views.MoodHistoryListScreen.MoodHistoryListScreen
 
 import java.security.InvalidParameterException;
 import java.util.Objects;
-
+/**
+ * Class that is responsible for handling the UI interaction of logging in or signing up from the
+ * LoginSignupScreen
+ * */
 public class LoginSignupScreenOkEvent implements MVCController.MVCEvent {
     private static String username;
     private String password;
     private boolean signup;
-
+    /**
+     * Returns the username the user wants to login or signup as
+     * @return
+     *  The username the user typed in the username field
+     * */
     public static String getUsername(){
         return username;
     }
-    public String getPassword(){
-        return password;
-    }
-    public boolean getSignUp(){
-        return signup;
-    }
 
+    /**
+     * Executes code that is necessary for the UI interaction of signing up or logging into the app,
+     * corresponds checking whether the user intends to login or signup and whether the data they have
+     * entered in the password and username fields is consistent with what is in the database
+     * @param context
+     *  The app context that can be used to bring up new UI elements like fragments and activities
+     * @param model
+     *  The model that the controller can interact with for possible data manipulation
+     * @param controller
+     *  The controller responsible for executing the MVCEvent in the first place
+     * */
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         // Allow the same action for both Login and Sign Up (minimal changes)

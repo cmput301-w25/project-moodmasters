@@ -22,6 +22,11 @@ import com.example.moodmasters.R;
 import com.example.moodmasters.Views.AlterMoodEventScreen.AlterMoodEventScreenActivity;
 import com.google.android.gms.maps.model.LatLng;
 
+/**
+ * Class that is responsible for handling the UI interaction of editing a mood event in the
+ * AlterMoodEventScreen, this means replacing the mood event with the newly edited mood event
+ * and updating the database with said new mood event
+ * */
 public class AlterMoodEventScreenEditEvent implements MVCController.MVCEvent {
     private MoodEvent mood_event;
     private int position;
@@ -31,6 +36,16 @@ public class AlterMoodEventScreenEditEvent implements MVCController.MVCEvent {
         position = init_position;
         photo_added = init_photo_added;
     }
+    /**
+     * Executes code that is necessary for the UI interaction of confirming that you want to edit
+     * a pre-existing mood event in your mood history list
+     * @param context
+     *  The app context that can be used to bring up new UI elements like fragments and activities
+     * @param model
+     *  The model that the controller can interact with for possible data manipulation
+     * @param controller
+     *  The controller responsible for executing the MVCEvent in the first place
+     * */
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         AlterMoodEventScreenActivity activity = (AlterMoodEventScreenActivity) context;

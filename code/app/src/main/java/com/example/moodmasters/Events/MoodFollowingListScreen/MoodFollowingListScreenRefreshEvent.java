@@ -26,9 +26,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * Class that is responsible for handling the UI interaction of refreshing the mood following list
+ * in the MoodFollowingListScreen
+ * */
 public class MoodFollowingListScreenRefreshEvent implements MVCController.MVCEvent {
     private Context context;
+    /**
+     * Executes code that is necessary for the UI interaction of refreshing the mood following list,
+     * encompasses updating the local data with the database data, notifying affected views, then turning
+     * off refreshing on the swipe container
+     * @param context
+     *  The app context that can be used to bring up new UI elements like fragments and activities
+     * @param model
+     *  The model that the controller can interact with for possible data manipulation
+     * @param controller
+     *  The controller responsible for executing the MVCEvent in the first place
+     * */
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         this.context = context;

@@ -27,44 +27,27 @@ public class MoodHistoryListScreenListView implements MVCView {
     private MoodHistoryListScreenAdapter mood_history_adapter;
     private Context context;
     private boolean isSorted = false; // Track if the list is sorted
-    private List<MoodEvent> originalList; // Store original order
     public MoodHistoryListScreenListView(Context init_context){
         context = init_context;
         mood_history_list = ((MoodHistoryListScreenActivity) context).findViewById(R.id.mood_following_list);
-        //  FOLLOWERS / FOLLOWING SETUP
-        LinearLayout followersContainer = ((MoodHistoryListScreenActivity) context).findViewById(R.id.followers_container);
-        LinearLayout followingContainer = ((MoodHistoryListScreenActivity) context).findViewById(R.id.following_container);
+
         TextView usernameLabel = ((MoodHistoryListScreenActivity) context).findViewById(R.id.user_mood_history_label);
 
         String username = LoginSignupScreenOkEvent.getUsername();
         usernameLabel.setText(username);
 
-        followersContainer.setOnClickListener(v -> {
-            openFollowList("followers", username);
-        });
-        followingContainer.setOnClickListener(v -> {
-            openFollowList("following", username);
-        });
         controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
         setListElementClicker();
     }
 
     public void initialize(MVCModel model){
         List<MoodEvent> moodList = model.getBackendList(BackendObject.State.MOODHISTORYLIST);
-        originalList = new ArrayList<>(moodList);
         mood_history_adapter = new MoodHistoryListScreenAdapter(context, model.getBackendList(BackendObject.State.MOODHISTORYLIST));
         mood_history_list.setAdapter(mood_history_adapter);
     }
 
     public void update(MVCModel model){
         return;
-    }
-
-    public void setMoodEvents(List<MoodEvent> moodEvents) {
-        originalList = new ArrayList<>(moodEvents); // Update the original list
-        mood_history_adapter.clear();
-        mood_history_adapter.addAll(moodEvents);
-        mood_history_adapter.notifyDataSetChanged();
     }
 
     public void setListElementClicker(){
@@ -85,7 +68,8 @@ public class MoodHistoryListScreenListView implements MVCView {
         if (isSorted) {
             // Sort by epoch time (most recent first)
             moodList.sort((a, b) -> Long.compare(a.getEpochTime(), b.getEpochTime()));
-        } else {
+        }
+        else {
             // Sort by epoch time (most recent first)
             moodList.sort((a, b) -> Long.compare(b.getEpochTime(), a.getEpochTime()));
         }
@@ -102,30 +86,4 @@ public class MoodHistoryListScreenListView implements MVCView {
         return mood_history_adapter;
     }
 
-    private void openFollowList(String listType, String username) {
-        Intent intent;
-
-        if (listType.equals("followers")) {
-            intent = new Intent(context, FollowersListScreenActivity.class);
-        } else {
-            intent = new Intent(context, FollowingListScreenActivity.class);
-        }
-
-        intent.putExtra("username", username);
-        context.startActivity(intent);
-    }
-
-    public void refreshFollowerCounts() {
-        String username = LoginSignupScreenOkEvent.getUsername();
-        TextView followersNumber = ((MoodHistoryListScreenActivity) context).findViewById(R.id.followers_number);
-        TextView followingNumber = ((MoodHistoryListScreenActivity) context).findViewById(R.id.following_number);
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("participants").document(username).collection("followers")
-                .get().addOnSuccessListener(snapshot -> followersNumber.setText(String.valueOf(snapshot.size())));
-
-        db.collection("participants").document(username).collection("following")
-                .get().addOnSuccessListener(snapshot -> followingNumber.setText(String.valueOf(snapshot.size())));
-    }
 }

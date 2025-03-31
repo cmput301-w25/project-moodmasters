@@ -17,7 +17,10 @@ import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Objects.ObjectsMisc.FilterMoodEventMap;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
-
+/**
+ * Class that is responsible for displaying a dialog fragment that allows us to filter our
+ * mood event map
+ * */
 public class MoodEventMapScreenFilterFragment extends DialogFragment implements MVCView {
     private FilterMoodEventMap filter;
     private boolean location_status;

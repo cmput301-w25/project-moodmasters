@@ -14,7 +14,9 @@ import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 
 import java.util.ArrayList;
-
+/**
+ * Adapter class that will control what is displayed on the CommentViewingScreen listview
+ * */
 public class CommentViewingScreenAdapter extends ArrayAdapter<Comment> implements MVCView {
     private Context context;
     private String mood_event_list_type;

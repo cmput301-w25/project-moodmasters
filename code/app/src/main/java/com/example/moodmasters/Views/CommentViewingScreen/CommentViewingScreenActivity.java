@@ -26,7 +26,9 @@ import com.example.moodmasters.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Activity that is responsible for giving a UI for viewing the comments of a mood event
+ * */
 public class CommentViewingScreenActivity extends AppCompatActivity implements MVCView {
     private MoodEvent mood_event;
     private int position;

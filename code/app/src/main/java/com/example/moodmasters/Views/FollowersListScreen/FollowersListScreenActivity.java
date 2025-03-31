@@ -19,7 +19,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Activity that is responsible for giving a UI for viewing the followers for a user
+ * */
 public class FollowersListScreenActivity extends AppCompatActivity implements MVCView {
     private FirebaseFirestore db;
     private ListView list_view;

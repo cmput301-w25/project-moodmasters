@@ -40,9 +40,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Fetch, MVCDat
         this.following_list = new FollowingList(init_username);
     }
 
-    /*
-    * just temporary for now while i add multithreading (if i have time)
-    * */
+
     public void fetchDatabaseData(MVCDatabase database, MVCModel model, OnSuccessFetchListener listener){
         database.addCollection("participants");
         database.addDocument(username);

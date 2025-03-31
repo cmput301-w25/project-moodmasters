@@ -17,7 +17,9 @@ import com.example.moodmasters.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
-
+/**
+ * Activity that is responsible for giving a UI for viewing the follow requests a user recieves
+ * */
 public class FollowRequestsScreenActivity extends AppCompatActivity implements MVCView {
     private List<String> follow_requests_list;
     private FollowRequestsScreenAdapter adapter;

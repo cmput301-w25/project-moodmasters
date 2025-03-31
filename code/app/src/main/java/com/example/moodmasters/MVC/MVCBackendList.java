@@ -80,12 +80,25 @@ public abstract class MVCBackendList <T> extends MVCBackend implements MVCDataba
         }
         object_list.set(position, new_object);
     }
+    /**
+     * Adds all objects in the argument to the list
+     * @param other_object_list
+     *  Specifies the list of objects to add to our current list
+     * */
     public void addAllObjects(List<T> other_object_list){
         object_list.addAll(other_object_list);
     }
+    /**
+     * Removes all objects from the list
+     * */
     public void clearAllObjects(){
         object_list.clear();
     }
+    /**
+     * Gets the list
+     * @return
+     *  Returns the list
+     * */
     public ArrayList<T> getList(){
         return object_list;
     }

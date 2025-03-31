@@ -28,11 +28,25 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * Class that is responsible for handling the add mood event UI interaction in the
+ * AlterMoodEventScreen
+ * */
 public class AlterMoodEventScreenAddEvent implements MVCController.MVCEvent {
     private boolean photo_added;
-    public AlterMoodEventScreenAddEvent(boolean init_photo_added){
+    public AlterMoodEventScreenAddEvent(boolean init_photo_added) {
         photo_added = init_photo_added;
     }
+    /**
+     * Executes code that is necessary for the UI interaction of adding a new mood event to the
+     * mood history list
+     * @param context
+     *  The app context that can be used to bring up new UI elements like fragments and activities
+     * @param model
+     *  The model that the controller can interact with for possible data manipulation
+     * @param controller
+     *  The controller responsible for executing the MVCEvent in the first place
+     * */
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         AlterMoodEventScreenActivity activity = (AlterMoodEventScreenActivity) context;

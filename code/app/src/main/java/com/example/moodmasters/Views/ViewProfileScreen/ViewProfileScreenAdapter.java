@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Adapter class that will control what is displayed on the ViewProfileScreen listview
+ * */
 public class ViewProfileScreenAdapter extends ArrayAdapter<MoodEvent> implements MVCView {
     private Context context;
     private List<MoodEvent> target_mood_events;

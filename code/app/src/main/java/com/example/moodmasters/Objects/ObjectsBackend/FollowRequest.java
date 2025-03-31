@@ -9,6 +9,10 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.util.HashMap;
 
+/**
+ * Class that represents a follow request a user can make or has made, contains code for getting the follow request, creating one,
+ * accepting one, and ignoring one (fetch, create, add, remove respectively)
+ * */
 public class FollowRequest extends MVCBackend implements MVCDatabase.Fetch, MVCDatabase.Create, MVCDatabase.Add, MVCDatabase.Remove{
     String status;
     String username;

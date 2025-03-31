@@ -24,6 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * Activity that is responsible for giving a UI for viewing another participants profile
+ * */
 public class ViewProfileScreenActivity extends AppCompatActivity implements MVCView {
     private String target_username;
     private String status;

@@ -18,7 +18,9 @@ import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 
 import java.util.ArrayList;
-
+/**
+ * Adapter class that will control what is displayed on the MoodHistoryListScreen listview
+ * */
 public class MoodHistoryListScreenAdapter extends ArrayAdapter<MoodEvent> implements MVCView {
     private Context context;
     public MoodHistoryListScreenAdapter(Context context, ArrayList<MoodEvent> mood_events) {

@@ -10,7 +10,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Arrays;
-
+/**
+ * Class that represents the counters for following and followers in the mood history list,
+ * will be responsible for keeping track and updating the counters in accordance with the database
+ * */
 public class Counters extends MVCBackend implements MVCDatabase.Fetch{
     private String username;
     private String followers;

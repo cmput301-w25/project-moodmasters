@@ -19,7 +19,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Activity that is responsible for giving a UI for viewing the participants the user is following
+ * */
 public class FollowingListScreenActivity extends AppCompatActivity implements MVCView {
     private ListView listView;
     private FollowingListScreenAdapter adapter;

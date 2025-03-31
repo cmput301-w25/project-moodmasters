@@ -34,7 +34,6 @@ public class MVCModel{
     private Map<BackendObject.State, MVCBackend> backend_objects;
     private Map<BackendObject.State, List<MVCView>> dependencies;
     private MVCDatabase database;
-    private MVCController.MVCEvent last_event;
 
     /**
      * Empty constructor for the Model, initializes all members to empty
@@ -154,7 +153,13 @@ public class MVCModel{
         backend_objects.remove(backend_object);
         dependencies.remove(backend_object);
     }
-
+    /**
+     * Checks if a backend object exists or not
+     * @param backend_object
+     *  The backend object to return from the Model
+     * @return
+     *  A boolean showing whether the backed object exists or not
+     * */
     public boolean existsBackendObject(BackendObject.State backend_object){
         MVCBackend object = backend_objects.get(backend_object);
         return object != null;
@@ -228,12 +233,6 @@ public class MVCModel{
         }
     }
 
-    public void setLastEvent(MVCController.MVCEvent new_event){
-        last_event = new_event;
-    }
-    public MVCController.MVCEvent getLastEvent(){
-        return last_event;
-    }
     /**
      * Adds a new object to a backend object only if that backend object is a List, if it isn't a exception is
      * thrown
@@ -340,23 +339,59 @@ public class MVCModel{
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         return obj_list.getList();
     }
+    /**
+     * Fetches the database to update the backend object
+     * @param backend_object
+     *  The backend object to execute a database fetch for
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     public void fetchDatabaseDataBackendObject(BackendObject.State backend_object, MVCDatabase.Fetch.OnSuccessFetchListener listener){
         MVCDatabase.Fetch fetch_object = (MVCDatabase.Fetch) backend_objects.get(backend_object);
         fetch_object.fetchDatabaseData(database, this, listener);
     }
+    /**
+     * Creates a new object in the database associated to the backend object
+     * @param backend_object
+     *  The backend object to execute a database create for
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     public void createDatabaseDataBackendObject(BackendObject.State backend_object, MVCDatabase.Create.OnSuccessCreateListener listener){
         MVCDatabase.Create create_object = (MVCDatabase.Create) backend_objects.get(backend_object);
         create_object.createDatabaseData(database, this, listener);
     }
+    /**
+     * Removes a object from the database associated to the backend object
+     * @param backend_object
+     *  The backend object to execute a database remove for
+     * @param object
+     *  Object that will be removed
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     public <T> void removeDatabaseDataBackendObject(BackendObject.State backend_object, T object, MVCDatabase.Remove.OnSuccessRemoveListener listener){
         MVCDatabase.Remove fetch_object = (MVCDatabase.Remove) backend_objects.get(backend_object);
         fetch_object.removeDatabaseData(database, object, listener);
     }
+    /**
+     * Adds a object from the database associated to the backend object
+     * @param backend_object
+     *  The backend object to execute a database add for
+     * @param object
+     *  Object that will be added
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
     public <T> void addDatabaseDataBackendObject(BackendObject.State backend_object, T object, MVCDatabase.Add.OnSuccessAddListener listener){
         MVCDatabase.Add fetch_object = (MVCDatabase.Add) backend_objects.get(backend_object);
         fetch_object.addDatabaseData(database, object, listener);
     }
-
+    /**
+     * Returns the MVCDatabase instance
+     * @return
+     *  MVCDatabase instance
+     * */
     public MVCDatabase getDatabase(){
         return database;
     }

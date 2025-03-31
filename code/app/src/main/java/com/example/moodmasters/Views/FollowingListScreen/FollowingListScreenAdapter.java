@@ -20,7 +20,9 @@ import com.example.moodmasters.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
-
+/**
+ * Adapter class that will control what is displayed on the FollowingListScreen listview
+ * */
 public class FollowingListScreenAdapter extends ArrayAdapter<String> implements MVCView {
     private final Context context;
     public FollowingListScreenAdapter(Context context, List<String> users) {

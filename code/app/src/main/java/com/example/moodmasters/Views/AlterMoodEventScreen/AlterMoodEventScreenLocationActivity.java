@@ -14,7 +14,10 @@ import com.google.android.gms.maps.model.LatLng;
 import android.content.Intent;
 import android.location.LocationListener;
 import android.location.LocationManager;
-
+/**
+ * Activity that is responsible for giving a waiting screen while the user's location is being retrieved when
+ * the user selects they want the mood event to save their location
+ * */
 public class AlterMoodEventScreenLocationActivity extends AppCompatActivity {
 
     private LocationManager locationManager;

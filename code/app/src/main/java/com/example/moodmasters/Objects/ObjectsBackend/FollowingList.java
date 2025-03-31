@@ -16,7 +16,10 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * Class that represents the following list which has a multitude of uses like for the mood following list,
+ * nad for the following activity
+ * */
 public class FollowingList extends MVCBackend implements MVCDatabase.Fetch, MVCDatabase.Remove{
     private String username;
     private List<Participant> following_list;

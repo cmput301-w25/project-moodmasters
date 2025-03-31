@@ -29,7 +29,10 @@ import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.google.android.gms.maps.model.LatLng;
-
+/**
+ * Activity that is responsible for giving a UI for viewing all the details related to a mood event
+ * and giving options to interact with the mood event
+ * */
 public class MoodEventViewingScreenActivity extends AppCompatActivity implements MVCView {
     private MoodEvent displayed_mood_event;
     private int position;

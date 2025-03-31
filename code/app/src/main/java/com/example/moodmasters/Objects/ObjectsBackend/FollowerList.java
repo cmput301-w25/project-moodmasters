@@ -13,7 +13,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Class that represents the follower list that is used for the follower list activity
+ * */
 public class FollowerList extends MVCBackend implements MVCDatabase.Fetch, MVCDatabase.Remove{
     private String username;
     private ArrayList<String> follower_list;
@@ -42,6 +44,7 @@ public class FollowerList extends MVCBackend implements MVCDatabase.Fetch, MVCDa
         });
     }
 
+    @Override
     public <T> void removeDatabaseData(MVCDatabase database, T object, OnSuccessRemoveListener listener) {
         String follower = (String) object;
         DocumentReference user_ref = database.getDocument(username);

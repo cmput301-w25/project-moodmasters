@@ -14,6 +14,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.security.InvalidParameterException;
 import java.util.List;
 
+/**
+ * Class that stores all the map objects and methods for the MoodEventMap, responsible for displaying
+ * mood events on the map, deleting them, etc
+ * */
 public class MoodMap extends MVCBackend {
     String username;
     Double user_longitude;
@@ -35,23 +39,6 @@ public class MoodMap extends MVCBackend {
         google_map.clear();
     }
     public void displayMoodEvents(Context context) {
-        /*
-        Bitmap bitmap = Bitmap.createBitmap(24, 24, Bitmap.Config.RGB_565);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(LINE_WIDTH);
-        paint.setColor(Color.YELLOW);
-        canvas.drawText("😐", 0, 0, paint);
-
-        if (user_longitude != null && user_latitude != null){
-            MarkerOptions marker = new MarkerOptions();
-            marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            google_map.addMarker(marker
-                    .position(new LatLng(user_latitude, user_longitude))
-                    .title(username));
-        }
-         */
         for (int i = 0; i < mood_events.size(); i++) {
             MoodEvent event = mood_events.get(i);
             String emoji = context.getResources().getString(event.getMood().getEmoticon());

@@ -33,7 +33,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+/**
+ * Activity that is responsible for giving a UI for viewing a map showing the mood events of the user and
+ * participants the user is following
+ * */
 public class MoodEventMapScreenActivity extends AppCompatActivity implements OnMapReadyCallback, MVCView {
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap google_map;

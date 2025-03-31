@@ -24,7 +24,10 @@ import com.example.moodmasters.Views.ViewProfileScreen.ViewProfileScreenActivity
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-
+/**
+ * Activity that is responsible for giving a UI for the user search functionality so a user can
+ * find other participants
+ * */
 public class UserSearchScreenActivity extends AppCompatActivity implements MVCView {
     private ArrayAdapter<String> adapter;
 

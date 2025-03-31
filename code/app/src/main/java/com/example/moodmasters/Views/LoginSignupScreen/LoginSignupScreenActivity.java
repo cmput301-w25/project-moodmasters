@@ -15,7 +15,6 @@ import com.example.moodmasters.R;
 
 /**
  * Startup activity for the app that allows a user to signup or login and access the app
- *
  * */
 public class LoginSignupScreenActivity extends AppCompatActivity implements MVCView {
     private boolean isSignUp = false;

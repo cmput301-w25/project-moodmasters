@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class that is responsible for helping search for users during user search in the UserSearchScreen
+ * */
 public class UserSearch extends MVCBackend implements MVCDatabase.Fetch {
     List<String> participant_list_string;
     List<Participant> participant_list;

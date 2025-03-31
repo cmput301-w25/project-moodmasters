@@ -33,7 +33,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * Activity that is responsible for giving a UI for displaying the mood events a user
+ * has created
+ * */
 public class MoodHistoryListScreenActivity extends AppCompatActivity implements MVCView {
     private MoodHistoryListScreenListView mood_history_view;
     private String username;
@@ -118,19 +121,6 @@ public class MoodHistoryListScreenActivity extends AppCompatActivity implements 
         });
 
         mood_history_view.setListElementClicker();
-    }
-    private void openFollowList(String listType, String username) {
-        Intent intent;
-
-        if (listType.equals("followers")) {
-            intent = new Intent(this, FollowersListScreenActivity.class);
-        }
-        else {
-            intent = new Intent(this, FollowingListScreenActivity.class);
-        }
-
-        intent.putExtra("username", username);
-        startActivity(intent);
     }
     protected void setupBottomNav(BottomNavigationView bottomNav, int currentItemId) {
         is_nav_setup = true;

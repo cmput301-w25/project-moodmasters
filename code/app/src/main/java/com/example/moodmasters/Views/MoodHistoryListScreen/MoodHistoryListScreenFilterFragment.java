@@ -21,7 +21,10 @@ import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 
 import java.util.List;
-
+/**
+ * Class that is responsible for displaying a dialog fragment allowing us to filter our
+ * mood history list
+ * */
 public class MoodHistoryListScreenFilterFragment extends DialogFragment implements MVCView {
     private List<String> reason_filter_applied;
     private List<Emotion.State> emotion_filter_applied;

@@ -15,7 +15,9 @@ import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.R;
 
 import java.util.ArrayList;
-
+/**
+ * Activity that is responsible for giving a UI for adding a comment into a mood event
+ * */
 public class AddMoodCommentScreenActivity extends AppCompatActivity implements MVCView {
     private MoodEvent mood_event;
     private int position;

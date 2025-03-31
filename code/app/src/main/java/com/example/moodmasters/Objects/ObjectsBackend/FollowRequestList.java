@@ -7,7 +7,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-
+/**
+ * Class that is responsible for groups of follow requests, more specifically for the FollowRequests activity and retrieving
+ * all the follow requests for the user
+ * */
 public class FollowRequestList extends MVCBackend implements MVCDatabase.Fetch, MVCDatabase.Add, MVCDatabase.Remove {
     private ArrayList<FollowRequest> follow_requests;
     private ArrayList<String> follow_requests_string;

@@ -18,12 +18,26 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Class that is responsible for handling the UI interaction of filtering the mood following list in
+ * the MoodFollowingListScreen
+ * */
 public class MoodFollowingListScreenFilterEvent implements MVCController.MVCEvent{
     private View fragment_view;
     public MoodFollowingListScreenFilterEvent(View init_fragment_view){
         fragment_view = init_fragment_view;
     }
+    /**
+     * Executes code that is necessary for the UI interaction of filtering the mood following list,
+     * encompasses checking what filters were checked, then querying the backend to apply each of the
+     * filters checked
+     * @param context
+     *  The app context that can be used to bring up new UI elements like fragments and activities
+     * @param model
+     *  The model that the controller can interact with for possible data manipulation
+     * @param controller
+     *  The controller responsible for executing the MVCEvent in the first place
+     * */
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         MoodEventList mood_event_list = (MoodEventList) model.getBackendObject(BackendObject.State.MOODFOLLOWINGLIST);

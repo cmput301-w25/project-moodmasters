@@ -22,7 +22,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * Adapter class that will control what is displayed on the FollowRequestsScreen listview
+ * */
 public class FollowRequestsScreenAdapter extends ArrayAdapter<String> implements MVCView {
     private Context context;
     private List<String> requests;

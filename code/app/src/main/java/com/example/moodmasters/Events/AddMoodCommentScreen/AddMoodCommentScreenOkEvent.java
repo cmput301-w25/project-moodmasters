@@ -22,6 +22,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class responsible for handling the UI interactions related to add comment button in the
+ * AddMoodCommentScreen
+ * */
 public class AddMoodCommentScreenOkEvent implements MVCController.MVCEvent {
     private MoodEvent mood_event;
     private int position;
@@ -33,7 +37,16 @@ public class AddMoodCommentScreenOkEvent implements MVCController.MVCEvent {
         comments_list = init_comments_list;
         mood_event_list_type = init_mood_event_list_type;
     }
-
+    /**
+     * This function contains all the code for adding a mood event comment once the ok button has been
+     * hit on the AddMoodCommentScreen
+     * @param context
+     *  The app context that can be used to bring up new UI elements like fragments and activities
+     * @param model
+     *  The model that the controller can interact with for possible data manipulation
+     * @param controller
+     *  The controller responsible for executing the MVCEvent in the first place
+     * */
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller){
         AddMoodCommentScreenActivity activity = (AddMoodCommentScreenActivity) context;

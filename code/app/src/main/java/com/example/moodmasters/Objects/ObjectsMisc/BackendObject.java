@@ -1,7 +1,8 @@
 package com.example.moodmasters.Objects.ObjectsMisc;
 
-import com.example.moodmasters.MVC.MVCModel;
-
+/**
+ * A Static Class that stores the enums related to the backend objects and corresponding methods for each enum
+ * */
 public class BackendObject {
     public enum State{
         USER,           /* the currently logged in participant which will be defined as user*/

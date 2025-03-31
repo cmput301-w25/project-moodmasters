@@ -39,7 +39,10 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.List;
-
+/**
+ * Activity that is responsible for giving a UI for editing the details of a mood event to either add
+ * or replace pre-existing mood event
+ * */
 public class AlterMoodEventScreenActivity extends AppCompatActivity implements MVCView {
     private static final int PICK_IMAGE_REQUEST = 102;
     private static final int REQUEST_IMAGE_CAPTURE = 103;

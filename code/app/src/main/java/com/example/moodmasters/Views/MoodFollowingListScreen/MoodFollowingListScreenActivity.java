@@ -26,7 +26,10 @@ import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-
+/**
+ * Activity that is responsible for giving a UI for viewing the mood events for the participants a user
+ * is following
+ * */
 public class MoodFollowingListScreenActivity extends AppCompatActivity implements MVCView {
     private MoodFollowingListScreenListView mood_following_view;
     private String username;

@@ -14,8 +14,20 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Views.MoodEventMapScreen.MoodEventMapScreenActivity;
 
 import java.util.Objects;
-
+/**
+ * Class that is responsible for handling the UI interaction of bringing up the MoodEventMapScreen
+ * */
 public class MoodEventMapScreenShowEvent implements MVCController.MVCEvent {
+    /**
+     * Executes code that is necessary for the UI interaction of bringing up the MoodEventMapScreen,
+     * encompasses just checking for internet connectivity then just starting the activity
+     * @param context
+     *  The app context that can be used to bring up new UI elements like fragments and activities
+     * @param model
+     *  The model that the controller can interact with for possible data manipulation
+     * @param controller
+     *  The controller responsible for executing the MVCEvent in the first place
+     * */
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         ConnectivityManager connectivityManager = getSystemService(context, ConnectivityManager.class);
