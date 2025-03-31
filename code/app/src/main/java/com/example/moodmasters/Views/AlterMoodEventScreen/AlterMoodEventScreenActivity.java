@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -36,6 +37,7 @@ import com.example.moodmasters.R;
 import com.google.android.gms.maps.model.LatLng;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.List;
@@ -50,6 +52,7 @@ public class AlterMoodEventScreenActivity extends AppCompatActivity implements M
     private final List<String> social_situations_list;
     private boolean photo_added;
     private LatLng userLocation = null;
+    private static final int MAX_IMAGE_SIZE = 65536;
 
     public AlterMoodEventScreenActivity(){
         super();
@@ -227,6 +230,16 @@ public class AlterMoodEventScreenActivity extends AppCompatActivity implements M
             catch (Exception e){
                 return;
             }
+
+            int originalSize = getBitmapSize(bitmap);
+            Log.d("ImageSize", "Original image size: " + originalSize + " bytes");
+
+            if (getBitmapSize(bitmap) > MAX_IMAGE_SIZE) {
+                // Compress image
+                bitmap = compressImage(bitmap);
+            }
+            Log.d("ImageSize", "New image size: " + getBitmapSize(bitmap) + " bytes");
+
             // Replace the photo icon with the selected image.
             uploadPhotoImage.setImageBitmap(bitmap);
             photo_added = true;
@@ -259,5 +272,62 @@ public class AlterMoodEventScreenActivity extends AppCompatActivity implements M
                 locationTextView.setText("Unknown"); }
         }
     }
+    private int getBitmapSize(Bitmap bitmap) {
+        // Calculate size of the bitmap (in bytes)
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray.length;
+    }
+    // Compress the image to reduce its size if it's over the limit
+    private Bitmap compressImage(Bitmap original) {
+        Log.d("ImageSize", "Being compressed");
+
+        int maxWidth = 800;  // Set the max width you want
+        int maxHeight = 800; // Set the max height you want
+
+        // Calculate aspect ratio and determine new width/height
+        float aspectRatio = original.getWidth() / (float) original.getHeight();
+        int newWidth = maxWidth;
+        int newHeight = (int) (maxWidth / aspectRatio);
+
+        if (newHeight > maxHeight) {
+            newHeight = maxHeight;
+            newWidth = (int) (maxHeight * aspectRatio);
+        }
+
+        // Resize the image
+        Bitmap resized = Bitmap.createScaledBitmap(original, newWidth, newHeight, true);
+
+        // Start with a high compression quality (e.g., 80%)
+        int quality = 80;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        resized.compress(Bitmap.CompressFormat.JPEG, quality, outputStream); // Compress with initial quality
+        byte[] byteArray = outputStream.toByteArray();
+
+        // Check if the image size exceeds the MAX_IMAGE_SIZE
+        while (byteArray.length > MAX_IMAGE_SIZE && quality > 10) {
+            Log.d("ImageSize", "Image size too large: " + byteArray.length + " bytes. Reducing quality...");
+
+            // Reduce the quality by 5 instead of 10 to make it more aggressive in reducing size
+            outputStream.reset();  // Reset the stream
+            quality -= 5;  // Decrease the quality in smaller steps for better control
+            resized.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+
+            byteArray = outputStream.toByteArray();
+
+            if (quality <= 10) {
+                // If quality drops below 10%, stop further reduction
+                Log.d("ImageSize", "Quality dropped too low, stopping compression.");
+                break;
+            }
+        }
+
+        Log.d("ImageSize", "Final image size: " + byteArray.length + " bytes");
+
+        // Return the compressed Bitmap
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+    }
+
 }
 
