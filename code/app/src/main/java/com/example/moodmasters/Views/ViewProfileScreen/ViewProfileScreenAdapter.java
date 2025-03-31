@@ -11,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.example.moodmasters.MVC.MVCDatabase;
+import com.example.moodmasters.MVC.MVCModel;
+import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,67 +25,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ViewProfileScreenAdapter extends ArrayAdapter<MoodEvent> {
+public class ViewProfileScreenAdapter extends ArrayAdapter<MoodEvent> implements MVCView {
     private Context context;
-    private FirebaseFirestore db;
-    private MVCDatabase database; // Assuming you need an MVCDatabase instance
+    private List<MoodEvent> target_mood_events;
 
-    public ViewProfileScreenAdapter(Context context) {
-        super(context, 0, new ArrayList<>());
+    public ViewProfileScreenAdapter(Context context, List<MoodEvent> init_target_mood_events) {
+        super(context, 0, init_target_mood_events);
+        this.target_mood_events = init_target_mood_events;
         this.context = context;
-        this.db = FirebaseFirestore.getInstance();
-        this.database = new MVCDatabase(); // Initialize MVCDatabase if needed
+        controller.addBackendView(this, BackendObject.State.USERSEARCH);
     }
-
-    public void fetchMoodEvents(String username) {
-        db.collection("participants")
-                .document(username)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        System.out.println("GOT DOC SNAP " + username);
-
-                        if (document != null && document.exists()) {
-                            System.out.println("Data fetched for: " + username);
-                            List<Map<String, Object>> rawMoodHistory = (List<Map<String, Object>>) document.get("list");
-
-                            if (rawMoodHistory != null) {
-                                List<HashMap<String, Object>> convertedList = new ArrayList<>();
-                                for (Map<String, Object> map : rawMoodHistory) {
-                                    convertedList.add(new HashMap<>(map));
-                                }
-                                updateMoodEvents(convertedList);
-                            } else {
-                                System.out.println("No mood events found for " + username);
-                            }
-                        } else {
-                            System.out.println("No such document for " + username);
-                        }
-                    } else {
-                        System.err.println("Error fetching document: " + task.getException());
-                    }
-                });
-    }
-
-    private void updateMoodEvents(List<HashMap<String, Object>> rawMoodHistory) {
-        clear(); // Clears the existing mood events in the adapter
-        List<MoodEvent> moodEvents = new ArrayList<>();
-        for (HashMap<String, Object> rawMood : rawMoodHistory) {
-            try {
-                Object isPublicObj = rawMood.get("isPublic");
-                boolean isPublic = isPublicObj instanceof Boolean && (Boolean) isPublicObj;
-
-                if (isPublic) {
-                    MoodEvent moodEvent = new MoodEvent(rawMood);
-                    moodEvents.add(moodEvent);
-                }
-            } catch (Exception e) {
-                System.err.println("Error parsing MoodEvent: " + e.getMessage());
+    @Override
+    public void update(MVCModel model) {
+        target_mood_events.sort((a, b) -> Long.compare(a.getEpochTime(), b.getEpochTime()));
+        ArrayList<MoodEvent> removables = new ArrayList<MoodEvent>();
+        int amount = 0;
+        for (MoodEvent mood_event: target_mood_events){
+            if (mood_event.getIsPublic() && amount < 3){
+                amount++;
+                continue;
             }
+            removables.add(mood_event);
         }
-        addAll(moodEvents);
+        target_mood_events.removeAll(removables);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void initialize(MVCModel model) {
+
     }
 
     @NonNull
@@ -110,5 +81,6 @@ public class ViewProfileScreenAdapter extends ArrayAdapter<MoodEvent> {
 
         return view;
     }
+
 }
 

@@ -11,12 +11,14 @@ import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsBackend.Counters;
+import com.example.moodmasters.Objects.ObjectsBackend.FollowRequest;
 import com.example.moodmasters.Objects.ObjectsBackend.FollowerList;
 import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodFollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+import com.example.moodmasters.Objects.ObjectsBackend.UserSearch;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
@@ -97,6 +99,18 @@ public class MVCModel{
         else if (backend_object == BackendObject.State.COUNTERS){
             Counters counters = new Counters(((Participant) backend_objects.get(BackendObject.State.USER)).getUsername());
             backend_objects.put(backend_object, counters);
+        }
+        else if (backend_object == BackendObject.State.COUNTERS){
+            Counters counters = new Counters(((Participant) backend_objects.get(BackendObject.State.USER)).getUsername());
+            backend_objects.put(backend_object, counters);
+        }
+        else if (backend_object == BackendObject.State.USERSEARCH){
+            UserSearch user_search = new UserSearch(((Participant) backend_objects.get(BackendObject.State.USER)).getUsername());
+            backend_objects.put(backend_object, user_search);
+        }
+        else if (backend_object == BackendObject.State.FOLLOWREQUEST){
+            FollowRequest follow_request = new FollowRequest(((Participant) backend_objects.get(BackendObject.State.USER)).getUsername());
+            backend_objects.put(backend_object, follow_request);
         }
         else if (backend_object == BackendObject.State.MOODMAP){
             String username = ((Participant) backend_objects.get(BackendObject.State.USER)).getUsername();

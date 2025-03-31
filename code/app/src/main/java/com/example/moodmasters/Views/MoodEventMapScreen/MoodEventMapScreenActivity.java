@@ -151,11 +151,6 @@ public class MoodEventMapScreenActivity extends AppCompatActivity implements OnM
                 return true;
             }
 
-            if (itemId == R.id.user_mood_history_show_map_button) {
-                controller.execute(new MoodEventMapScreenShowEvent(), this);
-                return true;
-            }
-
             if (itemId == R.id.home_button) {
                 controller.execute(new MoodHistoryListScreenShowEvent(), this);
                 return true;

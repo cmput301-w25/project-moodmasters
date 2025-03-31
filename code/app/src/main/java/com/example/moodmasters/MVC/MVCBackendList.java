@@ -83,6 +83,9 @@ public abstract class MVCBackendList <T> extends MVCBackend implements MVCDataba
     public void addAllObjects(List<T> other_object_list){
         object_list.addAll(other_object_list);
     }
+    public void clearAllObjects(){
+        object_list.clear();
+    }
     public ArrayList<T> getList(){
         return object_list;
     }

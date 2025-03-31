@@ -27,7 +27,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Fetch, MVCDat
     private String password;            /*could be a source of vulnerability but considering the scope of this app its fine*/
     private String username;
     private MoodHistoryList mood_history_list;
-    private FollowingList followingList;
+    private FollowingList following_list;
 
     /**
      * Participant constructor.
@@ -37,7 +37,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Fetch, MVCDat
     public Participant(String init_username){
         username = init_username;
         mood_history_list = new MoodHistoryList(this);
-        this.followingList = new FollowingList(init_username);
+        this.following_list = new FollowingList(init_username);
     }
 
     /*
@@ -53,6 +53,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Fetch, MVCDat
                 if (task.isSuccessful()) {
                     DocumentSnapshot snapshot = task.getResult();
                     if (snapshot.exists()) {
+                        mood_history_list.clearAllObjects();
                         ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
                         password = (String) snapshot.get("password");
                         ArrayList list = (ArrayList) snapshot.get("list");
@@ -60,7 +61,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Fetch, MVCDat
                             MoodEvent mood_event = new MoodEvent((HashMap) list.get(i));
                             mood_array_list.add(mood_event);
                         }
-                        mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
+                        mood_history_list.addAllObjects(mood_array_list);
                         listener.onSuccess(Participant.this, true);
                     }
                     else{
@@ -112,7 +113,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Fetch, MVCDat
     }
 
     public FollowingList getFollowingList() {
-        return followingList;
+        return following_list;
     }
     public String getPassword(){
         return password;

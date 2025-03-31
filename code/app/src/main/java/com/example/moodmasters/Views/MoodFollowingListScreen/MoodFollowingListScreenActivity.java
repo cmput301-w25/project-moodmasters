@@ -14,6 +14,7 @@ import com.example.moodmasters.Events.FollowRequestsScreen.FollowRequestsScreenS
 import com.example.moodmasters.Events.MoodEventMapScreen.MoodEventMapScreenShowEvent;
 import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenShowEvent;
 
+import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenUserSearchEvent;
 import com.example.moodmasters.Events.MoodHistoryListScreen.MoodHistoryListScreenShowEvent;
 import com.example.moodmasters.Views.MoodHistoryListScreen.MoodHistoryListScreenActivity;
 import com.example.moodmasters.Views.UserSearchScreen.UserSearchScreenActivity;
@@ -49,14 +50,13 @@ public class MoodFollowingListScreenActivity extends AppCompatActivity implement
         BottomNavigationView nav = findViewById(R.id.bottom_navigation_view);
         setupBottomNav(nav, R.id.mood_following_list_button);
 
-        ImageButton userSearch = findViewById(R.id.user_search_button);
-        userSearch.setOnClickListener(v -> {
-            Intent intent = new Intent(this, UserSearchScreenActivity.class);
-            startActivity(intent);
+        ImageButton user_search = findViewById(R.id.user_search_button);
+        user_search.setOnClickListener(v -> {
+            controller.execute(new MoodFollowingListScreenUserSearchEvent(), this);
         });
 
         TextView username_view = findViewById(R.id.user_mood_following_label);
-        //username_view.setText(username);
+        username_view.setText(username);
 
         if (!controller.existsBackendObject(BackendObject.State.MOODFOLLOWINGLIST)){
             controller.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
@@ -109,11 +109,6 @@ public class MoodFollowingListScreenActivity extends AppCompatActivity implement
 
             if (itemId == R.id.options_follow_requests_button) {
                 controller.execute(new FollowRequestsScreenShowEvent(), this);
-                return true;
-            }
-
-            if (itemId == R.id.mood_following_list_button) {
-                controller.execute(new MoodFollowingListScreenShowEvent(), this);
                 return true;
             }
 

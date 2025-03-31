@@ -1,7 +1,6 @@
 package com.example.moodmasters.Views.ViewProfileScreen;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -9,24 +8,28 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
+import com.example.moodmasters.Events.ViewProfileScreen.ViewProfileScreenBackEvent;
+import com.example.moodmasters.Events.ViewProfileScreen.ViewProfileScreenFollowEvent;
+import com.example.moodmasters.Events.ViewProfileScreen.ViewProfileScreenRefreshEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
-import com.example.moodmasters.Objects.ObjectsApp.FollowRequest;
+import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsBackend.FollowRequest;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+import com.example.moodmasters.Objects.ObjectsBackend.UserSearch;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+
 public class ViewProfileScreenActivity extends AppCompatActivity implements MVCView {
-    private TextView usernameTextView;
-    private Button followButton;
-    private FirebaseFirestore db;
-    private String targetUsername;
-    private String currentUsername;
-    private ListView moodListView;
+    private String target_username;
+    private String status;
     private ViewProfileScreenAdapter adapter;
+    private ArrayList<MoodEvent> target_mood_events;
+    private Participant selected_participant;
 
     @Override
     public void update(MVCModel model) {
@@ -35,107 +38,53 @@ public class ViewProfileScreenActivity extends AppCompatActivity implements MVCV
 
     @Override
     public void initialize(MVCModel model) {
-        // Initialize current user details
-        Participant user = ((Participant) model.getBackendObject(BackendObject.State.USER));
-        currentUsername = user.getUsername();
+        selected_participant = ((UserSearch) model.getBackendObject(BackendObject.State.USERSEARCH)).getParticipant(target_username);
+        target_mood_events = selected_participant.getMoodHistoryList().getList();
+        target_mood_events.sort((a, b) -> Long.compare(a.getEpochTime(), b.getEpochTime()));
+        ArrayList<MoodEvent> removables = new ArrayList<MoodEvent>();
+        int amount = 0;
+        for (MoodEvent mood_event: target_mood_events){
+            if (mood_event.getIsPublic() && amount < 3){
+                amount++;
+                continue;
+            }
+            removables.add(mood_event);
+        }
+        target_mood_events.removeAll(removables);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
+        target_username = getIntent().getStringExtra("selected_user");
+        status = getIntent().getStringExtra("follow_request_status");
+        controller.addBackendView(this, BackendObject.State.USERSEARCH);
 
-        usernameTextView = findViewById(R.id.usernameTextView);
-        followButton = findViewById(R.id.followButton);
-        moodListView = findViewById(R.id.mood_list_view);
-        db = FirebaseFirestore.getInstance();
-        targetUsername = getIntent().getStringExtra("selectedUser");
-        currentUsername = LoginSignupScreenOkEvent.getUsername();
+        TextView username_text_view = findViewById(R.id.usernameTextView);
+        Button follow_button = findViewById(R.id.followButton);
+        ListView mood_list_view = findViewById(R.id.mood_list_view);
 
 
-        adapter = new ViewProfileScreenAdapter(this);
-        moodListView.setAdapter(adapter);
+        adapter = new ViewProfileScreenAdapter(this, target_mood_events);
+        mood_list_view.setAdapter(adapter);
 
-        if (targetUsername != null) {
-            usernameTextView.setText(targetUsername);
-            adapter.fetchMoodEvents(targetUsername);
-            checkFollowState();
-        }
+        username_text_view.setText(target_username);
+        follow_button.setText(status);
 
-        SwipeRefreshLayout swipeContainer = findViewById(R.id.swipe_container);
-        swipeContainer.setOnRefreshListener(() -> {
-            if (targetUsername != null) {
-                adapter.fetchMoodEvents(targetUsername);
-            }
+        SwipeRefreshLayout swipe_container = findViewById(R.id.swipe_container);
+        swipe_container.setOnRefreshListener(() -> {
+            controller.execute(new ViewProfileScreenRefreshEvent(selected_participant), this);
         });
 
-        followButton.setOnClickListener(v -> sendFollowRequest());
-        findViewById(R.id.backButton).setOnClickListener(v -> finish());
+        follow_button.setOnClickListener(v -> {
+            controller.execute(new ViewProfileScreenFollowEvent(status),this);
+        });
+        findViewById(R.id.backButton).setOnClickListener(v -> {
+            controller.execute(new ViewProfileScreenBackEvent(),this);
+        });
     }
-
-    private void sendFollowRequest() {
-        String currentText = followButton.getText().toString();
-        if (targetUsername == null || currentUsername == null || currentUsername.equals(targetUsername)) {
-            Toast.makeText(this, "Invalid request", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (currentText.equals("Requested")) {
-            Toast.makeText(this, "Follow request already sent", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (currentText.equals("Following")) {
-            Toast.makeText(this, "Already following", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        DocumentReference followRequestRef = db.collection("participants")
-                .document(targetUsername)
-                .collection("followRequests")
-                .document(currentUsername);
-
-        followRequestRef.set(new FollowRequest(currentUsername))
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Follow request sent!", Toast.LENGTH_SHORT).show();
-                    followButton.setText("Requested");
-                })
-                .addOnFailureListener(e -> Toast.makeText(this, "Error sending request", Toast.LENGTH_SHORT).show());
+    public ViewProfileScreenAdapter getAdapter(){
+        return adapter;
     }
-    private void checkFollowState() {
-        if (currentUsername.equals(targetUsername)) {
-            followButton.setVisibility(View.GONE);
-            return;
-        }
-
-        // 1. Check if current user is following the target
-        db.collection("participants")
-                .document(currentUsername)
-                .collection("following")
-                .document(targetUsername)
-                .get()
-                .addOnSuccessListener(snapshot -> {
-                    if (snapshot.exists()) {
-                        followButton.setText("Following");
-                    } else {
-                        // 2. If not following, check if follow request was already sent
-                        db.collection("participants")
-                                .document(targetUsername)
-                                .collection("followRequests")
-                                .document(currentUsername)
-                                .get()
-                                .addOnSuccessListener(requestSnap -> {
-                                    if (requestSnap.exists()) {
-                                        followButton.setText("Requested");
-                                    } else {
-                                        followButton.setText("Follow");
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error checking follow status", Toast.LENGTH_SHORT).show();
-                });
-    }
-
-
 }

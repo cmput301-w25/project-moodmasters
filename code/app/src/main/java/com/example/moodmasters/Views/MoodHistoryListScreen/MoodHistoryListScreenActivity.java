@@ -153,11 +153,6 @@ public class MoodHistoryListScreenActivity extends AppCompatActivity implements 
                 return true;
             }
 
-            if (itemId == R.id.home_button) {
-                controller.execute(new MoodHistoryListScreenShowEvent(), this);
-                return true;
-            }
-
             if (itemId == R.id.options_follow_requests_button) {
                 controller.execute(new FollowRequestsScreenShowEvent(), this);
                 return true;

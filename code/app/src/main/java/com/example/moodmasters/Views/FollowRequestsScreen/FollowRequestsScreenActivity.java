@@ -107,11 +107,6 @@ public class FollowRequestsScreenActivity extends AppCompatActivity implements M
                 return true;
             }
 
-            if (itemId == R.id.options_follow_requests_button) {
-                controller.execute(new FollowRequestsScreenShowEvent(), this);
-                return true;
-            }
-
             if (itemId == R.id.mood_following_list_button) {
                 controller.execute(new MoodFollowingListScreenShowEvent(), this);
                 return true;

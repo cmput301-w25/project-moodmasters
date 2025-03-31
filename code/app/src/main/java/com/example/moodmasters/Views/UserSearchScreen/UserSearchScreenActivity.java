@@ -13,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moodmasters.Events.UserSearchScreen.UserSearchScreenCancelEvent;
 import com.example.moodmasters.Events.UserSearchScreen.UserSearchScreenOkEvent;
+import com.example.moodmasters.Events.UserSearchScreen.UserSearchScreenViewProfileEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+import com.example.moodmasters.Objects.ObjectsBackend.UserSearch;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.ViewProfileScreen.ViewProfileScreenActivity;
@@ -24,80 +26,44 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class UserSearchScreenActivity extends AppCompatActivity implements MVCView {
-    private EditText searchInput;
-    private ListView searchResultsListView;
-    private Button searchButton;
-    private ImageButton backButton;
     private ArrayAdapter<String> adapter;
-    private Participant currentUser;
-    private FirebaseFirestore db;
+
     public void update(MVCModel model){
-        // not necessary, nothing to update
+        adapter.notifyDataSetChanged();
     }
 
     public void initialize(MVCModel model){
-        currentUser = (Participant) model.getBackendObject(BackendObject.State.USER);
+        UserSearch user_search = (UserSearch) model.getBackendObject(BackendObject.State.USERSEARCH);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, user_search.getParticipantListString());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_search_screen);
-        searchInput = findViewById(R.id.searchInput);
-        searchResultsListView = findViewById(R.id.searchResultsListView);
-        backButton = findViewById(R.id.backButton);
-        searchButton = findViewById(R.id.searchButton);
-        db = FirebaseFirestore.getInstance();
+        controller.addBackendView(this, BackendObject.State.USERSEARCH);
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>());
-        searchResultsListView.setAdapter(adapter);
+        ListView search_results_list_view = findViewById(R.id.searchResultsListView);
+        ImageButton back_button = findViewById(R.id.backButton);
+        Button search_button = findViewById(R.id.searchButton);
+
+        search_results_list_view.setAdapter(adapter);
 
         // Retrieve the current participant's username
-        controller.addBackendView(this, BackendObject.State.USER);
 
         // Handle Back Button
-        backButton.setOnClickListener(v -> {
+        back_button.setOnClickListener(v -> {
             controller.execute(new UserSearchScreenCancelEvent(), this);
         });
 
         // Handle Search Button
-        searchButton.setOnClickListener(v -> {
-            String query = searchInput.getText().toString();
-            controller.execute(new UserSearchScreenOkEvent(currentUser, query, adapter), this);
+        search_button.setOnClickListener(v -> {
+            controller.execute(new UserSearchScreenOkEvent(), this);
         });
 
-        searchResultsListView.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedUser = (String) parent.getItemAtPosition(position);
-            //checkIfAlreadyFollowing(selectedUser);
-            navigateToProfile(selectedUser);
+        search_results_list_view.setOnItemClickListener((parent, view, position, id) -> {
+            controller.execute(new UserSearchScreenViewProfileEvent((String) parent.getItemAtPosition(position)), this);
         });
     }
 
-    private void checkIfAlreadyFollowing(String targetUser) {
-        String currentUsername = currentUser.getUsername();
-
-        db.collection("participants")
-                .document(currentUsername)
-                .collection("following")
-                .document(targetUser)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        // Show Toast: Already following
-                        Toast.makeText(UserSearchScreenActivity.this, "You already follow " + targetUser, Toast.LENGTH_SHORT).show();
-                    } else {
-                        navigateToProfile(targetUser);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    // If Firestore fails (collection missing), assume empty and allow navigation
-                    navigateToProfile(targetUser);
-                });
-    }
-
-    private void navigateToProfile(String targetUser) {
-        Intent intent = new Intent(UserSearchScreenActivity.this, ViewProfileScreenActivity.class);
-        intent.putExtra("selectedUser", targetUser);
-        startActivity(intent);
-    }
 }

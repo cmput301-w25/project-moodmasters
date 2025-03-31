@@ -11,7 +11,9 @@ public class BackendObject {
         MOODHISTORYLIST,
         MOODFOLLOWINGLIST,       /* used later for final checkpoint */
         MOODMAP,
-        COUNTERS
+        COUNTERS,
+        USERSEARCH,
+        FOLLOWREQUEST
     }
 
     public static String getString(BackendObject.State backend_object){
@@ -38,6 +40,12 @@ public class BackendObject {
         }
         if (backend_object == BackendObject.State.COUNTERS){
             return "COUNTERS";
+        }
+        if (backend_object == BackendObject.State.USERSEARCH){
+            return "USERSEARCH";
+        }
+        if (backend_object == BackendObject.State.FOLLOWREQUEST){
+            return "FOLLOWREQUEST";
         }
         return "Error";         /* impossible to get here */
     }
