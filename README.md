@@ -24,9 +24,8 @@ The Mood Masters app allows users to track their moods over time. Create Mood Ev
 
 ## Setup Instructions
 
-1. [Step 1]
-2. [Step 2]
-3. [Step 3]
+1. Download & open the code folder in Android Studio
+2. Run the app via an emulator or device
 
 ## Documentation
 
