@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.Views.SignupLoginScreenActivity;
+import com.example.moodmasters.Views.LoginSignupScreen.LoginSignupScreenActivity;
 
 public class LoginSignupScreenLogOutEvent implements MVCController.MVCEvent {
     @Override
@@ -15,11 +15,12 @@ public class LoginSignupScreenLogOutEvent implements MVCController.MVCEvent {
         model.removeBackendObject(BackendObject.State.MOODHISTORYLIST);
         model.removeBackendObject(BackendObject.State.FOLLOWINGLIST);
         model.removeBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
+        model.removeBackendObject(BackendObject.State.COUNTERS);
         //MoodHistoryListActivity mood_history_list = (MoodHistoryListActivity) context;
         //model.removeView(mood_history_list);
         //model.removeView(mood_history_list.getMoodHistoryListView());
         //model.removeView(mood_history_list.getMoodHistoryListView().getMoodHistoryArrayAdapter());
-        Intent intent = new Intent(context, SignupLoginScreenActivity.class);
+        Intent intent = new Intent(context, LoginSignupScreenActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }

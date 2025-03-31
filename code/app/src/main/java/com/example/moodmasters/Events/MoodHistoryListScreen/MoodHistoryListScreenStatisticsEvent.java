@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Views.ProfileStatisticsActivity;
+import com.example.moodmasters.Views.ProfileStatisticsScreen.ProfileStatisticsScreenActivity;
 
 import java.util.List;
 
@@ -34,6 +34,6 @@ public class MoodHistoryListScreenStatisticsEvent implements MVCController.MVCEv
             Toast.makeText(context, "No moods to show statistics on!", Toast.LENGTH_SHORT).show();
             return;
         }
-        context.startActivity(new Intent(context, ProfileStatisticsActivity.class));
+        context.startActivity(new Intent(context, ProfileStatisticsScreenActivity.class));
     }
 }

@@ -7,7 +7,7 @@ import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.Comment;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Views.AddCommentActivity;
+import com.example.moodmasters.Views.AddMoodCommentScreen.AddMoodCommentScreenActivity;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,7 @@ public class CommentViewingScreenAddCommentEvent implements MVCController.MVCEve
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller){
-        Intent intent = new Intent(context, AddCommentActivity.class);
+        Intent intent = new Intent(context, AddMoodCommentScreenActivity.class);
         context.startActivity(intent);
     }
 }

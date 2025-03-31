@@ -19,10 +19,10 @@ public class MoodFollowingList extends MoodEventList {
     public MoodFollowingList() {
         super();
     }
-    public void removeDatabaseData(MVCDatabase database, Object object){
+    public void removeDatabaseData(MVCDatabase database, Object object, OnSuccessRemoveListener listener){
         // not needed for mood following list
     }
-    public void addDatabaseData(MVCDatabase database, Object object){
+    public void addDatabaseData(MVCDatabase database, Object object, OnSuccessAddListener listener){
         // not needed for mood following list
     }
     public static int getMoodEventsPerParticipant(){

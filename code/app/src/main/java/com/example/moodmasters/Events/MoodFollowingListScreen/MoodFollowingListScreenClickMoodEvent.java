@@ -6,8 +6,8 @@ import android.content.Intent;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Views.MoodEventViewingActivity;
-import com.example.moodmasters.Views.MoodFollowingListActivity;
+import com.example.moodmasters.Views.MoodEventViewingScreen.MoodEventViewingScreenActivity;
+import com.example.moodmasters.Views.MoodFollowingListScreen.MoodFollowingListScreenActivity;
 
 public class MoodFollowingListScreenClickMoodEvent implements MVCController.MVCEvent{
     private static MoodEvent mood_event;
@@ -24,7 +24,7 @@ public class MoodFollowingListScreenClickMoodEvent implements MVCController.MVCE
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        Intent i = new Intent((MoodFollowingListActivity) context, MoodEventViewingActivity.class);
+        Intent i = new Intent((MoodFollowingListScreenActivity) context, MoodEventViewingScreenActivity.class);
         i.putExtra("MoodEventList", "MoodFollowingList");
         context.startActivity(i);
     }

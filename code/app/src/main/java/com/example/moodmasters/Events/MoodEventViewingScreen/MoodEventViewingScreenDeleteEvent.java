@@ -5,7 +5,7 @@ import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.Views.MoodEventViewingActivity;
+import com.example.moodmasters.Views.MoodEventViewingScreen.MoodEventViewingScreenActivity;
 
 public class MoodEventViewingScreenDeleteEvent implements MVCController.MVCEvent {
     private final MoodEvent moodEvent;
@@ -18,8 +18,8 @@ public class MoodEventViewingScreenDeleteEvent implements MVCController.MVCEvent
 
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        model.removeFromBackendList(BackendObject.State.MOODHISTORYLIST, position);
-        model.removeView((MoodEventViewingActivity) context);
-        ((MoodEventViewingActivity) context).finish();
+        model.removeFromBackendList(BackendObject.State.MOODHISTORYLIST, position, (w, v) -> {});
+        model.removeView((MoodEventViewingScreenActivity) context);
+        ((MoodEventViewingScreenActivity) context).finish();
     }
 }

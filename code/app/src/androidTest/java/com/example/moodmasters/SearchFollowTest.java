@@ -15,7 +15,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
-import com.example.moodmasters.Views.SignupLoginScreenActivity;
+import com.example.moodmasters.Views.LoginSignupScreen.LoginSignupScreenActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.junit.After;
@@ -35,8 +35,8 @@ import java.util.Objects;
 @LargeTest
 public class SearchFollowTest {
     @Rule
-    public ActivityScenarioRule<SignupLoginScreenActivity> scenario = new
-            ActivityScenarioRule<SignupLoginScreenActivity>(SignupLoginScreenActivity.class);
+    public ActivityScenarioRule<LoginSignupScreenActivity> scenario = new
+            ActivityScenarioRule<LoginSignupScreenActivity>(LoginSignupScreenActivity.class);
 
     @BeforeClass
     public static void setup(){

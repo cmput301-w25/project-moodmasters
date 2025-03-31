@@ -2,7 +2,6 @@ package com.example.moodmasters.MVC;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -12,14 +11,29 @@ public class MVCDatabase {
     public interface Update {
         public void updateDatabaseData(MVCDatabase database, MVCModel model);
     }
-    public interface Set {
-        public void setDatabaseData(MVCDatabase database, MVCModel model); // necessary
+    public interface Fetch {
+        public interface OnSuccessFetchListener {
+            void onSuccess(MVCBackend backend_object, boolean result);
+        }
+        public void fetchDatabaseData(MVCDatabase database, MVCModel model, OnSuccessFetchListener listener); // necessary
+    }
+    public interface Create {
+        public interface OnSuccessCreateListener {
+            void onSuccess(MVCBackend backend_object, boolean result);
+        }
+        public void createDatabaseData(MVCDatabase database, MVCModel model, OnSuccessCreateListener listener); // necessary
     }
     public interface Add{
-        public <T> void addDatabaseData(MVCDatabase database, T object);
+        public interface OnSuccessAddListener {
+            void onSuccess(MVCBackend backend_object, boolean result);
+        }
+        public <T> void addDatabaseData(MVCDatabase database, T object, OnSuccessAddListener listener);
     }
     public interface Remove{
-        public <T> void removeDatabaseData(MVCDatabase database, T object);
+        public interface OnSuccessRemoveListener {
+            void onSuccess(MVCBackend backend_object, boolean result);
+        }
+        public <T> void removeDatabaseData(MVCDatabase database, T object, OnSuccessRemoveListener listener);
     }
     private FirebaseFirestore db;
     private CollectionReference collection_ref;
@@ -31,10 +45,16 @@ public class MVCDatabase {
     }
 
     public void addCollection(String collection_name){
+        if (collection_ref != null){
+            return;
+        }
         collection_ref = db.collection(collection_name);
     }
 
     public void addDocument(String document_name){
+        if (doc_ref.containsKey(document_name)){
+            return;
+        }
         doc_ref.put(document_name, collection_ref.document(document_name));
     }
 

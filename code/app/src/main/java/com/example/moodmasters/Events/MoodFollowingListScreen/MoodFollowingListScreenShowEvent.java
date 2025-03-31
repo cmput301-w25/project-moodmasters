@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.Views.MoodFollowingListActivity;
+import com.example.moodmasters.Views.MoodFollowingListScreen.MoodFollowingListScreenActivity;
 
 import java.util.Objects;
 
@@ -24,6 +24,6 @@ public class MoodFollowingListScreenShowEvent implements MVCController.MVCEvent 
             Toast.makeText(context, "You're offline! Please connect to the internet", Toast.LENGTH_SHORT).show();
             return;
         }
-        context.startActivity(new Intent(context, MoodFollowingListActivity.class));
+        context.startActivity(new Intent(context, MoodFollowingListScreenActivity.class));
     }
 }

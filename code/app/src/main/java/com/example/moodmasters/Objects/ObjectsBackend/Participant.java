@@ -2,22 +2,18 @@ package com.example.moodmasters.Objects.ObjectsBackend;
 
 import androidx.annotation.NonNull;
 
-import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
-import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenRefreshEvent;
 import com.example.moodmasters.MVC.MVCBackend;
 import com.example.moodmasters.MVC.MVCDatabase;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,10 +23,12 @@ import java.util.Map;
  * member by calling setDatabaseData. This member will also be stored in the model as the
  * MOODHISTORYLIST backend object.
  * */
-public class Participant extends MVCBackend implements MVCDatabase.Set{
+public class Participant extends MVCBackend implements MVCDatabase.Fetch, MVCDatabase.Create{
+    private String password;            /*could be a source of vulnerability but considering the scope of this app its fine*/
     private String username;
     private MoodHistoryList mood_history_list;
     private FollowingList followingList;
+
     /**
      * Participant constructor.
      * @param init_username
@@ -38,70 +36,14 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
      */
     public Participant(String init_username){
         username = init_username;
+        mood_history_list = new MoodHistoryList(this);
         this.followingList = new FollowingList(init_username);
-    }
-
-
-    public void setDatabaseData(MVCDatabase database, MVCModel model){
-        LoginSignupScreenOkEvent last_event = (LoginSignupScreenOkEvent) model.getLastEvent();
-        String password = last_event.getPassword();
-        // TODO: password hashing here
-        database.addCollection("participants");
-        database.addDocument(username);
-        DocumentReference doc_ref = database.getDocument(username);
-        doc_ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot snapshot = task.getResult();
-
-                    if (last_event.getSignUp()) {
-                        // Sign Up: Check if the username already exists
-                        if (snapshot.exists()) {
-                            last_event.setAction("SignupError");
-                        }
-                        else {
-                            last_event.setAction("GoMoodHistoryActivity");
-                            mood_history_list = new MoodHistoryList(Participant.this);
-                            Map<String, Object> map = new HashMap<String, Object>();
-                            map.put("list", mood_history_list.getList());
-                            map.put("password", password);
-                            doc_ref.set(map);
-                        }
-                    }
-                    else {
-                        // Login: Check if the username exists
-                        if (snapshot.exists()) {
-                            String database_password = (String) snapshot.get("password");
-                            if (database_password.equals(password)){
-                                last_event.setAction("GoMoodHistoryActivity");
-                                ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
-                                ArrayList list = (ArrayList) snapshot.get("list");
-                                for (int i = 0; i < list.size(); i++) {
-                                    mood_array_list.add(new MoodEvent((HashMap) list.get(i)));
-                                }
-                                mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
-                            }
-                            else{
-                                last_event.setAction("PasswordError");
-                            }
-
-                        }
-                        else {
-                            last_event.setAction("LoginError");
-                        }
-                    }
-                    // not ideal but will work for now, adding multithreading would be better
-                    ((LoginSignupScreenOkEvent) model.getLastEvent()).afterDatabaseQuery();
-                }
-            }
-        });
     }
 
     /*
     * just temporary for now while i add multithreading (if i have time)
     * */
-    public void setDatabaseData2(MVCDatabase database, MVCModel model, int index){
+    public void fetchDatabaseData(MVCDatabase database, MVCModel model, OnSuccessFetchListener listener){
         database.addCollection("participants");
         database.addDocument(username);
         DocumentReference doc_ref = database.getDocument(username);
@@ -112,46 +54,41 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
                     DocumentSnapshot snapshot = task.getResult();
                     if (snapshot.exists()) {
                         ArrayList<MoodEvent> mood_array_list = new ArrayList<>();
+                        password = (String) snapshot.get("password");
                         ArrayList list = (ArrayList) snapshot.get("list");
-                        String print = username + "\n";
                         for (int i = 0; i < list.size(); i++) {
                             MoodEvent mood_event = new MoodEvent((HashMap) list.get(i));
-                            print = print + mood_event.getMoodEventString() + "\n";
                             mood_array_list.add(mood_event);
                         }
-                        System.out.println(print);
                         mood_history_list = new MoodHistoryList(mood_array_list, Participant.this);
+                        listener.onSuccess(Participant.this, true);
                     }
                     else{
-                        throw new InvalidParameterException("Error: user in following list does not exist");
-                    }
-                    FollowingList.temp_bool_list[index] = true;
-                    if (!Arrays.asList(FollowingList.temp_bool_list).contains(false)){
-                        model.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
-                        Arrays.fill(FollowingList.temp_bool_list, false);
-                        try{
-                            MoodFollowingListScreenRefreshEvent last_event = (MoodFollowingListScreenRefreshEvent) model.getLastEvent();
-                            model.notifyViews(BackendObject.State.MOODFOLLOWINGLIST);
-                            last_event.updateSwipeContainer();
-                        }
-                        catch (Exception ignore){
-
-                        }
-
+                        listener.onSuccess(Participant.this, false);
                     }
                 }
             }
         });
     }
 
-    /**
-     * This handles the updating of MoodHistoryList data into the database.
-     * @param doc_ref
-     *  This is the DocumentReference which references the document where the user's
-     *  data is stored.
-     */
-    public void updateDatabaseData(DocumentReference doc_ref){
-        doc_ref.set(mood_history_list);
+    public void createDatabaseData(MVCDatabase database, MVCModel model, OnSuccessCreateListener listener){
+        database.addCollection("participants");
+        database.addDocument(username);
+        DocumentReference doc_ref = database.getDocument(username);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", mood_history_list.getList());
+        map.put("password", password);
+        doc_ref.set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    listener.onSuccess(Participant.this, true);
+                }
+                else{
+                    listener.onSuccess(Participant.this, false);
+                }
+            }
+        });
     }
 
     /**
@@ -167,8 +104,20 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
     public MoodHistoryList getMoodHistoryList(){
         return this.mood_history_list;
     }
+    public void setMoodHistoryList(MoodHistoryList new_mood_history_list){
+        mood_history_list = new_mood_history_list;
+    }
+    public void addAllMoodHistoryList(List<MoodEvent> mood_event_list){
+        mood_history_list.addAllObjects(mood_event_list);
+    }
 
     public FollowingList getFollowingList() {
         return followingList;
+    }
+    public String getPassword(){
+        return password;
+    }
+    public void setPassword(String new_password){
+        password = new_password;
     }
 }

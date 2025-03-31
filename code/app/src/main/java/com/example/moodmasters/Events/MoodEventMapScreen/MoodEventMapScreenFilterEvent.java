@@ -9,12 +9,12 @@ import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
-import com.example.moodmasters.Views.FilterMoodEventMapFragment;
+import com.example.moodmasters.Views.MoodEventMapScreen.MoodEventMapScreenFilterFragment;
 
 public class MoodEventMapScreenFilterEvent implements MVCController.MVCEvent{
     private final View fragment_view;
-    private final FilterMoodEventMapFragment dialog_fragment;
-    public MoodEventMapScreenFilterEvent(View init_fragment_view, FilterMoodEventMapFragment init_dialog_fragment){
+    private final MoodEventMapScreenFilterFragment dialog_fragment;
+    public MoodEventMapScreenFilterEvent(View init_fragment_view, MoodEventMapScreenFilterFragment init_dialog_fragment){
         fragment_view = init_fragment_view;
         dialog_fragment = init_dialog_fragment;
     }

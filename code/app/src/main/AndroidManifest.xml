@@ -26,7 +26,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyASOCDuytDfNXgBBvEXslZ_BaG-eCeodzU"/>
         <activity
-            android:name=".Views.SignupLoginScreenActivity"
+            android:name=".Views.LoginSignupScreen.LoginSignupScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,45 +35,45 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Views.MoodHistoryListActivity"
+            android:name=".Views.MoodHistoryListScreen.MoodHistoryListScreenActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".Views.AlterMoodEventActivity"
+            android:name=".Views.AlterMoodEventScreen.AlterMoodEventScreenActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".Views.MoodEventViewingActivity"
+            android:name=".Views.MoodEventViewingScreen.MoodEventViewingScreenActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".Views.MoodEventMapActivity"
+            android:name=".Views.MoodEventMapScreen.MoodEventMapScreenActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".Views.UserSearchActivity"
+            android:name=".Views.UserSearchScreen.UserSearchScreenActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".Views.ViewProfileActivity"
+        <activity android:name=".Views.ViewProfileScreen.ViewProfileScreenActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".Views.FollowRequestsActivity"
+        <activity android:name=".Views.FollowRequestsScreen.FollowRequestsScreenActivity"
             android:exported="true"/>
-        <activity android:name=".Views.MoodFollowingListActivity"
+        <activity android:name=".Views.MoodFollowingListScreen.MoodFollowingListScreenActivity"
             android:exported="true"/>
-        <activity android:name=".Views.FollowListActivity"
+        <activity android:name=".Views.FollowingListScreen.FollowingListScreenActivity"
             android:exported="true"/>
-        <activity android:name=".Views.FollowersListActivity"
+        <activity android:name=".Views.FollowersListScreen.FollowersListScreenActivity"
             android:exported="true"/>
         <activity
-            android:name=".Views.ProfileStatisticsActivity"
+            android:name=".Views.ProfileStatisticsScreen.ProfileStatisticsScreenActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".Views.CommentViewingActivity"
+        <activity android:name=".Views.CommentViewingScreen.CommentViewingScreenActivity"
             android:exported="true"/>
-        <activity android:name=".Views.AddCommentActivity"
+        <activity android:name=".Views.AddMoodCommentScreen.AddMoodCommentScreenActivity"
             android:exported="true"/>
-        <activity android:name=".Views.MoodLocationActivity"
+        <activity android:name=".Views.AlterMoodEventScreen.AlterMoodEventScreenLocationActivity"
             android:exported="true"/>
     </application>
 

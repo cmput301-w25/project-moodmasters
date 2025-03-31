@@ -19,7 +19,7 @@ import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-import com.example.moodmasters.Views.AlterMoodEventActivity;
+import com.example.moodmasters.Views.AlterMoodEventScreen.AlterMoodEventScreenActivity;
 import com.google.android.gms.maps.model.LatLng;
 
 public class AlterMoodEventScreenEditEvent implements MVCController.MVCEvent {
@@ -33,7 +33,7 @@ public class AlterMoodEventScreenEditEvent implements MVCController.MVCEvent {
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        AlterMoodEventActivity activity = (AlterMoodEventActivity) context;
+        AlterMoodEventScreenActivity activity = (AlterMoodEventScreenActivity) context;
 
         Spinner emotions_spinner = activity.findViewById(R.id.alter_mood_emotion_spinner);
         String emotion_string = emotions_spinner.getSelectedItem().toString().trim();
@@ -77,7 +77,7 @@ public class AlterMoodEventScreenEditEvent implements MVCController.MVCEvent {
         MoodEvent new_mood_event = new MoodEvent(mood_event.getDatetime(), mood_event.getEpochTime(), mood_list.getMood(emotion),
                                                     is_public, reason_string, social_situation, location, user.getUsername(), photo_string,
                                                     mood_event.getComments());
-        model.replaceObjectBackendList(BackendObject.State.MOODHISTORYLIST, position, new_mood_event);
-        ((AlterMoodEventActivity) context).finish();
+        model.replaceObjectBackendList(BackendObject.State.MOODHISTORYLIST, position, new_mood_event, (w, v) -> {}, (w, v) -> {});
+        ((AlterMoodEventScreenActivity) context).finish();
     }
 }

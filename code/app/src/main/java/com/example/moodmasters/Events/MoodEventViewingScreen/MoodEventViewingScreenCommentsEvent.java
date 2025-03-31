@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Views.CommentViewingActivity;
+import com.example.moodmasters.Views.CommentViewingScreen.CommentViewingScreenActivity;
 
 public class MoodEventViewingScreenCommentsEvent implements MVCController.MVCEvent {
     private static MoodEvent mood_event;
@@ -28,7 +28,7 @@ public class MoodEventViewingScreenCommentsEvent implements MVCController.MVCEve
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller){
-        Intent intent = new Intent(context, CommentViewingActivity.class);
+        Intent intent = new Intent(context, CommentViewingScreenActivity.class);
         context.startActivity(intent);
     }
 }

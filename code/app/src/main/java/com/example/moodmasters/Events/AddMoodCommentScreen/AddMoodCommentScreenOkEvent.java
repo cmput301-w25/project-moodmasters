@@ -1,25 +1,20 @@
 package com.example.moodmasters.Events.AddMoodCommentScreen;
 
 import android.content.Context;
-import android.content.Intent;
 import android.icu.util.Calendar;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.Comment;
-import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodFollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
-import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-import com.example.moodmasters.Views.AddCommentActivity;
-import com.example.moodmasters.Views.AlterMoodEventActivity;
+import com.example.moodmasters.Views.AddMoodCommentScreen.AddMoodCommentScreenActivity;
 
 import java.security.InvalidParameterException;
 import java.text.DateFormat;
@@ -41,7 +36,7 @@ public class AddMoodCommentScreenOkEvent implements MVCController.MVCEvent {
 
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller){
-        AddCommentActivity activity = (AddCommentActivity) context;
+        AddMoodCommentScreenActivity activity = (AddMoodCommentScreenActivity) context;
 
         EditText comment_text = activity.findViewById(R.id.comment_edit_text);
         String comment_string = comment_text.getText().toString().trim();
@@ -66,10 +61,10 @@ public class AddMoodCommentScreenOkEvent implements MVCController.MVCEvent {
             MoodHistoryList creator_mood_history = (MoodHistoryList) model.getBackendObject(BackendObject.State.MOODHISTORYLIST) ;
             MoodEvent old_mood_event = creator_mood_history.getObjectPosition(position);
             creator_mood_history.replaceObjectPosition(position, new_mood_event);
-            creator_mood_history.removeDatabaseData(model.getDatabase(), old_mood_event);
+            creator_mood_history.removeDatabaseData(model.getDatabase(), old_mood_event, (v, w) -> {});
             comments_list.add(new_comment);
             new_mood_event.setComments(comments_list);
-            creator_mood_history.addDatabaseData(model.getDatabase(), new_mood_event);
+            creator_mood_history.addDatabaseData(model.getDatabase(), new_mood_event, (v, w) -> {});
             model.notifyViews(BackendObject.State.MOODHISTORYLIST);
         }
         else if (mood_event_list_type.equals("MoodFollowingList")){
@@ -84,10 +79,10 @@ public class AddMoodCommentScreenOkEvent implements MVCController.MVCEvent {
             int mood_history_position = creator_mood_history_list.indexOf(mood_event);
             creator_mood_history.replaceObjectPosition(mood_history_position, new_mood_event);
             mood_following_list.replaceObjectPosition(position, new_mood_event);
-            creator_mood_history.removeDatabaseData(model.getDatabase(), mood_event);
+            creator_mood_history.removeDatabaseData(model.getDatabase(), mood_event, (v, w) -> {});
             comments_list.add(new_comment);
             new_mood_event.setComments(comments_list);
-            creator_mood_history.addDatabaseData(model.getDatabase(), new_mood_event);
+            creator_mood_history.addDatabaseData(model.getDatabase(), new_mood_event, (v, w) -> {});
 
             model.notifyViews(BackendObject.State.MOODFOLLOWINGLIST);
         }
