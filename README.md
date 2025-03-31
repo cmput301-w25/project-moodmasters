@@ -30,7 +30,7 @@ The Mood Masters app allows users to track their moods over time. Create Mood Ev
 
 ## Documentation
 
-- [Wiki Link]
-- [Scrum Board]
-- [UI Mockups]
-- [UML]
+- [[Wiki Link](https://github.com/cmput301-w25/project-moodmasters/wiki)]
+- [[Scrum Board](https://github.com/orgs/cmput301-w25/projects/22/views/1)]
+- [[UI Mockups](https://github.com/cmput301-w25/project-moodmasters/wiki/UI-Mockup)]
+- [[UML](https://github.com/cmput301-w25/project-moodmasters/wiki/UML-Class-Diagram)]
