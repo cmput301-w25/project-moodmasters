@@ -19,9 +19,9 @@ import java.util.List;
  * mood events on the map, deleting them, etc
  * */
 public class MoodMap extends MVCBackend {
-    String username;
-    Double user_longitude;
-    Double user_latitude;
+    private String username;
+    private Double user_longitude;
+    private Double user_latitude;
     private GoogleMap google_map;
     private List<MoodEvent> mood_events;
     private FilterMoodEventMap filter_mood_map;
