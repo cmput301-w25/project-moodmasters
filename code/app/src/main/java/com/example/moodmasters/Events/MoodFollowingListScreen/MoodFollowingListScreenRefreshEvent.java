@@ -36,6 +36,7 @@ public class MoodFollowingListScreenRefreshEvent implements MVCController.MVCEve
         following_list.fetchDatabaseData(model.getDatabase(), model, (v, w) -> {
             if (w){
                 model.notifyViews(BackendObject.State.FOLLOWINGLIST);
+                model.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
                 updateSwipeContainer();
             }
             else{

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
+import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Views.FollowRequestsScreen.FollowRequestsScreenActivity;
 
 import java.util.Objects;
@@ -24,6 +25,14 @@ public class FollowRequestsScreenShowEvent implements MVCController.MVCEvent {
             Toast.makeText(context, "You're offline! Please connect to the internet", Toast.LENGTH_SHORT).show();
             return;
         }
-        context.startActivity(new Intent(context, FollowRequestsScreenActivity.class));
+        model.createBackendObject(BackendObject.State.FOLLOWREQUESTLIST);
+        model.fetchDatabaseDataBackendObject(BackendObject.State.FOLLOWREQUESTLIST, (w, v) -> {
+            if (v){
+                context.startActivity(new Intent(context, FollowRequestsScreenActivity.class));
+            }
+            else{
+                Toast.makeText(context, "Error There Was An Issue Getting The Following Requests From The Database", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

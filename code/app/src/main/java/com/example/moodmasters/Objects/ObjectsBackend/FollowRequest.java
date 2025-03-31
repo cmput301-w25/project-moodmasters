@@ -9,13 +9,18 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.util.HashMap;
 
-public class FollowRequest extends MVCBackend implements MVCDatabase.Fetch, MVCDatabase.Create{
+public class FollowRequest extends MVCBackend implements MVCDatabase.Fetch, MVCDatabase.Create, MVCDatabase.Add, MVCDatabase.Remove{
     String status;
     String username;
     String target_username;
     public FollowRequest(String init_username){
         status = null;
         username = init_username;
+    }
+    public FollowRequest(String init_username, String init_target_username){
+        status = null;
+        username = init_username;
+        target_username = init_target_username;
     }
     @Override
     public void fetchDatabaseData(MVCDatabase database, MVCModel model, OnSuccessFetchListener listener) {
@@ -66,6 +71,45 @@ public class FollowRequest extends MVCBackend implements MVCDatabase.Fetch, MVCD
                 //Toast.makeText(this, "Error sending request", Toast.LENGTH_SHORT).show();
             });
     }
+    @Override
+    public <T> void addDatabaseData(MVCDatabase database, T object, OnSuccessAddListener listener) {
+        String following_user = (String) object;
+        DocumentReference user_ref = database.getDocument(username);
+        database.addDocument(following_user);
+        DocumentReference following_ref = database.getDocument(following_user);
+        user_ref.collection("followers").document(following_user)
+                .set(new HashMap<>()) // Ensures Firestore initializes the collection
+
+                .addOnSuccessListener(aVoid -> {
+                    // Add the current user to the requester's "following" list
+                    following_ref.collection("following").document(username)
+                            .set(new HashMap<>()) // Ensures Firestore initializes the collection
+
+                            .addOnSuccessListener(aVoid2 -> {
+                                // Remove from follow requests after both operations succeed
+                                user_ref.collection("followRequests").document(following_user)
+                                        .delete()
+                                        .addOnSuccessListener(aVoid3 -> {
+                                            listener.onSuccess(FollowRequest.this, true);
+                                        })
+                                        .addOnFailureListener(e -> listener.onSuccess(FollowRequest.this, false));
+                            })
+                            .addOnFailureListener(e -> listener.onSuccess(FollowRequest.this, false));
+                })
+                .addOnFailureListener(e -> listener.onSuccess(FollowRequest.this, false));
+    }
+
+    @Override
+    public <T> void removeDatabaseData(MVCDatabase database, T object, OnSuccessRemoveListener listener) {
+        String following_user = (String) object;
+        DocumentReference user_ref = database.getDocument(username);
+        database.addDocument(following_user);
+        user_ref.collection("followRequests").document(following_user).delete().addOnSuccessListener(aVoid -> {
+            listener.onSuccess(FollowRequest.this, true);
+        }).addOnFailureListener(e -> {
+            listener.onSuccess(FollowRequest.this, false);
+        });
+    }
     public String getStatus(){
         return status;
     }
@@ -75,6 +119,7 @@ public class FollowRequest extends MVCBackend implements MVCDatabase.Fetch, MVCD
     public String getTargetUsername(){
         return target_username;
     }
+
     public void setTargetUsername(String new_target_username){
         target_username = new_target_username;
     }

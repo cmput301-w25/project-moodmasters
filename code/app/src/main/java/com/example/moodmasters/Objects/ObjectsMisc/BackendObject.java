@@ -13,7 +13,8 @@ public class BackendObject {
         MOODMAP,
         COUNTERS,
         USERSEARCH,
-        FOLLOWREQUEST
+        FOLLOWREQUEST,
+        FOLLOWREQUESTLIST
     }
 
     public static String getString(BackendObject.State backend_object){
@@ -46,6 +47,9 @@ public class BackendObject {
         }
         if (backend_object == BackendObject.State.FOLLOWREQUEST){
             return "FOLLOWREQUEST";
+        }
+        if (backend_object == BackendObject.State.FOLLOWREQUESTLIST){
+            return "FOLLOWREQUESTLIST";
         }
         return "Error";         /* impossible to get here */
     }
