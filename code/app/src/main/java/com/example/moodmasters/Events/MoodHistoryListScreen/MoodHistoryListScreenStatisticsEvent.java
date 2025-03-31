@@ -1,4 +1,4 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.MoodHistoryListScreen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +11,11 @@ import com.example.moodmasters.Views.ProfileStatisticsActivity;
 
 import java.util.List;
 
-public class ShowProfileStatisticsEvent implements MVCController.MVCEvent {
+public class MoodHistoryListScreenStatisticsEvent implements MVCController.MVCEvent {
     private static List<MoodEvent> mood_events;
     private static String username;
 
-    public ShowProfileStatisticsEvent(List<MoodEvent> init_events, String init_username) {
+    public MoodHistoryListScreenStatisticsEvent(List<MoodEvent> init_events, String init_username) {
         mood_events = init_events;
         username = init_username;
     }

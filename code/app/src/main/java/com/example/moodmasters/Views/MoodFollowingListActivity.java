@@ -10,13 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenLogOutEvent;
-import com.example.moodmasters.Events.ShowFollowRequestsEvent;
-import com.example.moodmasters.Events.ShowMapEvent;
-import com.example.moodmasters.Events.ShowMoodFollowingEvent;
+import com.example.moodmasters.Events.FollowRequestsScreen.FollowRequestsScreenShowEvent;
+import com.example.moodmasters.Events.MoodEventMapScreen.MoodEventMapScreenShowEvent;
+import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenShowEvent;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
-import com.example.moodmasters.Events.MoodFollowingListShowFilterEvent;
+import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenRefreshEvent;
+import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenShowFilterEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
@@ -67,12 +67,12 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
 
         ImageButton filter_button = findViewById(R.id.user_mood_following_filter_button);
         filter_button.setOnClickListener(v -> {
-            controller.execute(new MoodFollowingListShowFilterEvent(), this);
+            controller.execute(new MoodFollowingListScreenShowFilterEvent(), this);
         });
 
         SwipeRefreshLayout swipe_container = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         swipe_container.setOnRefreshListener(() -> {
-            controller.execute(new MoodFollowingListRefreshEvent(), this);
+            controller.execute(new MoodFollowingListScreenRefreshEvent(), this);
         });
         mood_following_view.setListElementClicker();
 
@@ -95,7 +95,7 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
             }
 
             if (itemId == R.id.user_mood_history_show_map_button) {
-                controller.execute(new ShowMapEvent(), this);
+                controller.execute(new MoodEventMapScreenShowEvent(), this);
                 return true;
             }
 
@@ -105,12 +105,12 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
             }
 
             if (itemId == R.id.options_follow_requests_button) {
-                controller.execute(new ShowFollowRequestsEvent(), this);
+                controller.execute(new FollowRequestsScreenShowEvent(), this);
                 return true;
             }
 
             if (itemId == R.id.mood_following_list_button) {
-                controller.execute(new ShowMoodFollowingEvent(), this);
+                controller.execute(new MoodFollowingListScreenShowEvent(), this);
                 return true;
             }
 

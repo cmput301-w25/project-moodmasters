@@ -3,7 +3,7 @@ package com.example.moodmasters.Objects.ObjectsBackend;
 import androidx.annotation.NonNull;
 
 import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
-import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
+import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenRefreshEvent;
 import com.example.moodmasters.MVC.MVCBackend;
 import com.example.moodmasters.MVC.MVCDatabase;
 import com.example.moodmasters.MVC.MVCModel;
@@ -130,7 +130,7 @@ public class Participant extends MVCBackend implements MVCDatabase.Set{
                         model.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
                         Arrays.fill(FollowingList.temp_bool_list, false);
                         try{
-                            MoodFollowingListRefreshEvent last_event = (MoodFollowingListRefreshEvent) model.getLastEvent();
+                            MoodFollowingListScreenRefreshEvent last_event = (MoodFollowingListScreenRefreshEvent) model.getLastEvent();
                             model.notifyViews(BackendObject.State.MOODFOLLOWINGLIST);
                             last_event.updateSwipeContainer();
                         }

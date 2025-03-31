@@ -1,4 +1,4 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.MoodFollowingListScreen;
 
 import android.content.Context;
 import android.view.View;
@@ -19,14 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MoodHistoryListFilterEvent implements MVCController.MVCEvent{
+public class MoodFollowingListScreenFilterEvent implements MVCController.MVCEvent{
     private View fragment_view;
-    public MoodHistoryListFilterEvent(View init_fragment_view){
+    public MoodFollowingListScreenFilterEvent(View init_fragment_view){
         fragment_view = init_fragment_view;
     }
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
-        MoodEventList mood_event_list = (MoodEventList) model.getBackendObject(BackendObject.State.MOODHISTORYLIST);
+        MoodEventList mood_event_list = (MoodEventList) model.getBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
         FilterMoodEventList filter = mood_event_list.getFilter();
         CheckBox recency_box = fragment_view.findViewById(R.id.mood_filter_location_recency_checkbox);
         CheckBox happy_box = fragment_view.findViewById(R.id.mood_filter_happy_checkbox);
@@ -80,7 +80,7 @@ public class MoodHistoryListFilterEvent implements MVCController.MVCEvent{
             mood_event_list.wordFilterMoodEventList(word);
         }
 
-        model.notifyViews(BackendObject.State.MOODHISTORYLIST);         /*have to do this manually here but its fine*/
+        model.notifyViews(BackendObject.State.MOODFOLLOWINGLIST);         /*have to do this manually here but its fine*/
 
     }
 }

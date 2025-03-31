@@ -1,18 +1,18 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.UserSearchScreen;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.moodmasters.MVC.MVCController;
+import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -23,17 +23,22 @@ import java.util.Objects;
  * A class that will search firebase participants based on username
  * */
 
-public class UserSearchOkEvent {
+public class UserSearchScreenOkEvent implements MVCController.MVCEvent{
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference usersRef = db.collection("participants"); // Firestore Collection
-    private String currentUsername; // Store logged-in participant's username
+    private CollectionReference users_ref; // Firestore Collection
+    private String current_username; // Store logged-in participant's username
+    private String inputQuery;
+    private ArrayAdapter<String> adapter;
 
-    public UserSearchOkEvent(Participant user) {
-        this.currentUsername = user.getUsername().trim(); // Keep exact username from Firestore
+    public UserSearchScreenOkEvent(Participant user, String inputQuery, ArrayAdapter<String> adapter) {
+        this.current_username = user.getUsername().trim(); // Keep exact username from Firestore
+        this.inputQuery = inputQuery;
+        this.adapter = adapter;
     }
-
-    public void executeSearch(Activity activity, String inputQuery, ListView listView, ArrayAdapter<String> adapter) {
+    @Override
+    public void executeEvent(Context context, MVCModel model, MVCController controller) {
+        Activity activity = (Activity) context;
+        users_ref = model.getDatabase().getCollection();
         ConnectivityManager connectivityManager = activity.getSystemService(ConnectivityManager.class);
         Network currentNetwork = connectivityManager.getActiveNetwork();
         if (currentNetwork == null || !Objects.requireNonNull(connectivityManager.getNetworkCapabilities(currentNetwork)).hasCapability(NET_CAPABILITY_VALIDATED)) {
@@ -48,11 +53,7 @@ public class UserSearchOkEvent {
 
         final String searchQuery = inputQuery.trim().toLowerCase(Locale.ROOT); // Case-insensitive search
 
-        /*
-        * Needs to be changed to a query in the backend
-        *
-        * */
-        usersRef.get().addOnCompleteListener(task -> {
+        users_ref.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 ArrayList<String> searchResults = new ArrayList<>();
 
@@ -66,7 +67,7 @@ public class UserSearchOkEvent {
                 }
 
                 // Remove the current user from the results
-                searchResults.remove(currentUsername);
+                searchResults.remove(current_username);
 
                 adapter.clear();
                 adapter.addAll(searchResults);
@@ -76,9 +77,12 @@ public class UserSearchOkEvent {
                     Toast.makeText(activity, "No matching users found.", Toast.LENGTH_SHORT).show();
                 }
 
-            } else {
+            }
+            else {
                 Toast.makeText(activity, "Error searching users.", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
+
 }

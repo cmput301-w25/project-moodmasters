@@ -1,4 +1,4 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.MoodFollowingListScreen;
 
 import android.content.Context;
 
@@ -6,13 +6,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-import com.example.moodmasters.Views.MoodEventViewingActivity;
 import com.example.moodmasters.Views.MoodFollowingListActivity;
 
-public class MoodFollowingListRefreshEvent implements MVCController.MVCEvent {
+public class MoodFollowingListScreenRefreshEvent implements MVCController.MVCEvent {
     private Context context;
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {

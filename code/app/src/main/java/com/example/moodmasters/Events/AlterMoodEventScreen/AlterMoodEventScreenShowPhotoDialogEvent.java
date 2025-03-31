@@ -1,4 +1,4 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.AlterMoodEventScreen;
 
 import android.content.Context;
 
@@ -9,7 +9,7 @@ import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Views.PhotoUploadFragment;
 
-public class UploadPhotoEvent implements MVCController.MVCEvent {
+public class AlterMoodEventScreenShowPhotoDialogEvent implements MVCController.MVCEvent {
     @Override
     public void executeEvent(Context context, MVCModel backend, MVCController controller) {
         FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();

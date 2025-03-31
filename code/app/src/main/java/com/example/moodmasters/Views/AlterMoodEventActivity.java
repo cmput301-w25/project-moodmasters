@@ -24,7 +24,7 @@ import com.example.moodmasters.Events.AlterMoodEventScreen.AlterMoodEventScreenC
 import com.example.moodmasters.Events.AlterMoodEventScreen.AlterMoodEventScreenUnsetLocationEvent;
 import com.example.moodmasters.Events.AlterMoodEventScreen.AlterMoodEventScreenEditEvent;
 import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScreenEditEvent;
-import com.example.moodmasters.Events.UploadPhotoEvent;
+import com.example.moodmasters.Events.AlterMoodEventScreen.AlterMoodEventScreenShowPhotoDialogEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
@@ -187,7 +187,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         ImageView uploadPhotoImage = findViewById(R.id.alter_mood_photo_button);
         uploadPhotoImage.setOnClickListener(v -> {
             // Show dialog to let user choose between camera or gallery.
-            controller.execute(new UploadPhotoEvent(), this);
+            controller.execute(new AlterMoodEventScreenShowPhotoDialogEvent(), this);
         });
 
     }

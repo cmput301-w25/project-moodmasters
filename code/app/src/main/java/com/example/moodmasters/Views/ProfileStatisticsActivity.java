@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Events.ProfileStatisticsBackEvent;
-import com.example.moodmasters.Events.ShowProfileStatisticsEvent;
+import com.example.moodmasters.Events.ProfileStatisticsScreen.ProfileStatisticsScreenBackEvent;
+import com.example.moodmasters.Events.MoodHistoryListScreen.MoodHistoryListScreenStatisticsEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
@@ -30,8 +30,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.DefaultValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -52,8 +50,8 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
 
     public ProfileStatisticsActivity() {
         super();
-        mood_list = ShowProfileStatisticsEvent.getMoodEvents();
-        username = ShowProfileStatisticsEvent.getUsername();
+        mood_list = MoodHistoryListScreenStatisticsEvent.getMoodEvents();
+        username = MoodHistoryListScreenStatisticsEvent.getUsername();
         controller.addBackendView(this);
     }
 
@@ -346,7 +344,7 @@ public class ProfileStatisticsActivity extends AppCompatActivity implements MVCV
 
         Button back_button = findViewById(R.id.profile_statistics_back_button);
         back_button.setOnClickListener(v -> {
-            controller.execute(new ProfileStatisticsBackEvent(), this);
+            controller.execute(new ProfileStatisticsScreenBackEvent(), this);
         });
 
         username_label.setText(username + "'s Statistics");

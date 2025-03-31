@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
-import com.example.moodmasters.Events.MoodHistoryListClickMoodEvent;
+import com.example.moodmasters.Events.MoodHistoryListScreen.MoodHistoryListScreenClickMoodEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -64,7 +64,7 @@ public class MoodHistoryListView implements MVCView {
         mood_history_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                controller.execute(new MoodHistoryListClickMoodEvent(mood_history_adapter.getItem(position), position), context);
+                controller.execute(new MoodHistoryListScreenClickMoodEvent(mood_history_adapter.getItem(position), position), context);
             }
         });
     }

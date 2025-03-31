@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenLogOutEvent;
-import com.example.moodmasters.Events.ShowFollowRequestsEvent;
-import com.example.moodmasters.Events.ShowMapEvent;
-import com.example.moodmasters.Events.ShowMoodFollowingEvent;
+import com.example.moodmasters.Events.FollowRequestsScreen.FollowRequestsScreenShowEvent;
+import com.example.moodmasters.Events.MoodEventMapScreen.MoodEventMapScreenShowEvent;
+import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenShowEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -96,7 +96,7 @@ public class FollowRequestsActivity extends AppCompatActivity implements MVCView
             }
 
             if (itemId == R.id.user_mood_history_show_map_button) {
-                controller.execute(new ShowMapEvent(), this);
+                controller.execute(new MoodEventMapScreenShowEvent(), this);
                 return true;
             }
 
@@ -106,12 +106,12 @@ public class FollowRequestsActivity extends AppCompatActivity implements MVCView
             }
 
             if (itemId == R.id.options_follow_requests_button) {
-                controller.execute(new ShowFollowRequestsEvent(), this);
+                controller.execute(new FollowRequestsScreenShowEvent(), this);
                 return true;
             }
 
             if (itemId == R.id.mood_following_list_button) {
-                controller.execute(new ShowMoodFollowingEvent(), this);
+                controller.execute(new MoodFollowingListScreenShowEvent(), this);
                 return true;
             }
 

@@ -1,4 +1,4 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.MoodFollowingListScreen;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -15,7 +15,7 @@ import com.example.moodmasters.Views.MoodFollowingListActivity;
 
 import java.util.Objects;
 
-public class ShowMoodFollowingEvent implements MVCController.MVCEvent {
+public class MoodFollowingListScreenShowEvent implements MVCController.MVCEvent {
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         ConnectivityManager connectivityManager = getSystemService(context, ConnectivityManager.class);

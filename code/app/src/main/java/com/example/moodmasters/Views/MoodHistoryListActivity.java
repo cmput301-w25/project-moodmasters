@@ -9,12 +9,12 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenLogOutEvent;
-import com.example.moodmasters.Events.MoodHistoryListShowFilterEvent;
-import com.example.moodmasters.Events.MoodHistoryListAddEvent;
-import com.example.moodmasters.Events.ShowFollowRequestsEvent;
-import com.example.moodmasters.Events.ShowMapEvent;
-import com.example.moodmasters.Events.ShowMoodFollowingEvent;
-import com.example.moodmasters.Events.ShowProfileStatisticsEvent;
+import com.example.moodmasters.Events.MoodHistoryListScreen.MoodHistoryListScreenShowFilterEvent;
+import com.example.moodmasters.Events.MoodHistoryListScreen.MoodHistoryListScreenAddEvent;
+import com.example.moodmasters.Events.FollowRequestsScreen.FollowRequestsScreenShowEvent;
+import com.example.moodmasters.Events.MoodEventMapScreen.MoodEventMapScreenShowEvent;
+import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenShowEvent;
+import com.example.moodmasters.Events.MoodHistoryListScreen.MoodHistoryListScreenStatisticsEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -60,7 +60,7 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
 
         ImageButton add_button = findViewById(R.id.user_mood_history_add_button);
         add_button.setOnClickListener(v -> {
-            controller.execute(new MoodHistoryListAddEvent(), this);
+            controller.execute(new MoodHistoryListScreenAddEvent(), this);
         });
 
         ImageButton sort_button = findViewById(R.id.user_mood_following_sort_button);
@@ -70,12 +70,12 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
 
         ImageButton filter_button = findViewById(R.id.user_mood_following_filter_button);
         filter_button.setOnClickListener(v -> {
-            controller.execute(new MoodHistoryListShowFilterEvent(), this);
+            controller.execute(new MoodHistoryListScreenShowFilterEvent(), this);
         });
 
         ImageButton stats_button = findViewById(R.id.user_mood_history_stats_button);
         stats_button.setOnClickListener(v -> {
-            controller.execute(new ShowProfileStatisticsEvent(mood_list, username), this);
+            controller.execute(new MoodHistoryListScreenStatisticsEvent(mood_list, username), this);
         });
 
         mood_history_view.setListElementClicker();
@@ -97,7 +97,7 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
             }
 
             if (itemId == R.id.user_mood_history_show_map_button) {
-                controller.execute(new ShowMapEvent(), this);
+                controller.execute(new MoodEventMapScreenShowEvent(), this);
                 return true;
             }
 
@@ -107,12 +107,12 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
             }
 
             if (itemId == R.id.options_follow_requests_button) {
-                controller.execute(new ShowFollowRequestsEvent(), this);
+                controller.execute(new FollowRequestsScreenShowEvent(), this);
                 return true;
             }
 
             if (itemId == R.id.mood_following_list_button) {
-                controller.execute(new ShowMoodFollowingEvent(), this);
+                controller.execute(new MoodFollowingListScreenShowEvent(), this);
                 return true;
             }
 

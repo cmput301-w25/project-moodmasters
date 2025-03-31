@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.moodmasters.Events.MoodHistoryListFilterEvent;
+import com.example.moodmasters.Events.MoodHistoryListScreen.MoodHistoryListScreenFilterEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
@@ -78,7 +78,7 @@ public class FilterMoodHistoryListFragment extends DialogFragment implements MVC
         AlertDialog dialog = builder.setView(view)
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Filter", (dialogInterface, which) -> {
-                    controller.execute(new MoodHistoryListFilterEvent(view), getContext());
+                    controller.execute(new MoodHistoryListScreenFilterEvent(view), getContext());
                 })
                 .create();
 

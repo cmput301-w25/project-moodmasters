@@ -11,7 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Events.UserSearchOkEvent;
+import com.example.moodmasters.Events.UserSearchScreen.UserSearchScreenCancelEvent;
+import com.example.moodmasters.Events.UserSearchScreen.UserSearchScreenOkEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
@@ -24,11 +25,9 @@ import java.util.ArrayList;
 public class UserSearchActivity extends AppCompatActivity implements MVCView {
     private EditText searchInput;
     private ListView searchResultsListView;
-
     private Button searchButton;
     private ImageButton backButton;
     private ArrayAdapter<String> adapter;
-    private UserSearchOkEvent searchEvent;
     private Participant currentUser;
     private FirebaseFirestore db;
     public void update(MVCModel model){
@@ -55,18 +54,15 @@ public class UserSearchActivity extends AppCompatActivity implements MVCView {
         // Retrieve the current participant's username
         controller.addBackendView(this, BackendObject.State.USER);
 
-        searchEvent = new UserSearchOkEvent(currentUser);
-
         // Handle Back Button
         backButton.setOnClickListener(v -> {
-            controller.removeBackendView(this); // sufficient for now
-            finish();
+            controller.execute(new UserSearchScreenCancelEvent(), this);
         });
 
         // Handle Search Button
         searchButton.setOnClickListener(v -> {
             String query = searchInput.getText().toString();
-            searchEvent.executeSearch(this, query, searchResultsListView, adapter);
+            controller.execute(new UserSearchScreenOkEvent(currentUser, query, adapter), this);
         });
 
         searchResultsListView.setOnItemClickListener((parent, view, position, id) -> {

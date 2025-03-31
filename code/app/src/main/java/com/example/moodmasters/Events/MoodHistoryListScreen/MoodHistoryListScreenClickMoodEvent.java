@@ -1,4 +1,4 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.MoodHistoryListScreen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,10 @@ import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Views.MoodHistoryListActivity;
 import com.example.moodmasters.Views.MoodEventViewingActivity;
 
-public class MoodHistoryListClickMoodEvent implements MVCController.MVCEvent{
+public class MoodHistoryListScreenClickMoodEvent implements MVCController.MVCEvent{
     private static MoodEvent mood_event;
     private static int position;
-    public MoodHistoryListClickMoodEvent(MoodEvent init_mood_event, int init_position){
+    public MoodHistoryListScreenClickMoodEvent(MoodEvent init_mood_event, int init_position){
         mood_event = init_mood_event;
         position = init_position;
     }

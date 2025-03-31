@@ -1,25 +1,18 @@
 package com.example.moodmasters.Objects.ObjectsBackend;
 
-import androidx.annotation.NonNull;
-
-import com.example.moodmasters.Events.MoodFollowingListRefreshEvent;
+import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenRefreshEvent;
 import com.example.moodmasters.MVC.MVCBackend;
-import com.example.moodmasters.MVC.MVCBackendList;
 import com.example.moodmasters.MVC.MVCDatabase;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDatabase.Update{
     private FirebaseFirestore db;
@@ -70,7 +63,7 @@ public class FollowingList extends MVCBackend implements MVCDatabase.Set, MVCDat
         if (following_list.size() == 0){
             model.createBackendObject(BackendObject.State.MOODFOLLOWINGLIST);
             try{
-                MoodFollowingListRefreshEvent last_event = (MoodFollowingListRefreshEvent) model.getLastEvent();
+                MoodFollowingListScreenRefreshEvent last_event = (MoodFollowingListScreenRefreshEvent) model.getLastEvent();
                 model.notifyViews(BackendObject.State.MOODFOLLOWINGLIST);
                 last_event.updateSwipeContainer();
             }

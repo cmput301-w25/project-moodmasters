@@ -1,5 +1,4 @@
-// com.example.moodmasters.Events.UserSearchEvent.java
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.MoodEventMapScreen;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -12,12 +11,11 @@ import android.widget.Toast;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.MVC.MVCView;
-import com.example.moodmasters.Views.UserSearchActivity;
+import com.example.moodmasters.Views.MoodEventMapActivity;
 
 import java.util.Objects;
 
-public class UserSearchEvent implements MVCController.MVCEvent {
+public class MoodEventMapScreenShowEvent implements MVCController.MVCEvent {
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         ConnectivityManager connectivityManager = getSystemService(context, ConnectivityManager.class);
@@ -27,7 +25,6 @@ public class UserSearchEvent implements MVCController.MVCEvent {
             return;
         }
 
-        Intent intent = new Intent(context, UserSearchActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, MoodEventMapActivity.class));
     }
 }

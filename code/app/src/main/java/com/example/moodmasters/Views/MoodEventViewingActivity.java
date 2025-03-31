@@ -19,7 +19,7 @@ import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScr
 import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScreenCommentsEvent;
 import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScreenEditEvent;
 import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenClickMoodEvent;
-import com.example.moodmasters.Events.MoodHistoryListClickMoodEvent;
+import com.example.moodmasters.Events.MoodHistoryListScreen.MoodHistoryListScreenClickMoodEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
@@ -107,8 +107,8 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         Intent i = getIntent();
         mood_event_list_type = i.getStringExtra("MoodEventList");
         if (mood_event_list_type.equals("MoodHistoryList")){
-            displayed_mood_event = MoodHistoryListClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
-            position = MoodHistoryListClickMoodEvent.getPosition();
+            displayed_mood_event = MoodHistoryListScreenClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
+            position = MoodHistoryListScreenClickMoodEvent.getPosition();
             controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
         }
         else if (mood_event_list_type.equals("MoodFollowingList")){
