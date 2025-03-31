@@ -13,9 +13,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// This class will be responsible for the filtering of the MoodEventList, will also save the words that were
-// filtered out for easy reversion of filtering, i recommend using map for keeping track of the moodevents
-// filtered out and using a string as a key to specify what filter, your free to come up with a format for the key
+
+/**
+ * Class that is responsible for filtering mood event lists
+ * */
 public class FilterMoodEventList{
     private final List<MoodEvent> filtered_out;
     private final List<Emotion.State> emotion_filter;

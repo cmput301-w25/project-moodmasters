@@ -4,9 +4,13 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Base64;
 
+import androidx.annotation.NonNull;
+
 import com.example.moodmasters.MVC.MVCDatabase;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
 import com.example.moodmasters.Objects.ObjectsMisc.MoodEventList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,12 +37,32 @@ public class MoodHistoryList extends MoodEventList {
     public MoodHistoryList() {
         super();
     }
-    public void removeDatabaseData(MVCDatabase database, Object object){
+    public void removeDatabaseData(MVCDatabase database, Object object, OnSuccessRemoveListener listener){
         DocumentReference doc_ref = database.getDocument(participant.getUsername());
-        doc_ref.update("list", FieldValue.arrayRemove(object));
+        doc_ref.update("list", FieldValue.arrayRemove(object)).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    listener.onSuccess(MoodHistoryList.this, true);
+                }
+                else{
+                    listener.onSuccess(MoodHistoryList.this, false);
+                }
+            }
+        });
     }
-    public void addDatabaseData(MVCDatabase database, Object object){
+    public void addDatabaseData(MVCDatabase database, Object object, OnSuccessAddListener listener){
         DocumentReference doc_ref = database.getDocument(participant.getUsername());
-        doc_ref.update("list", FieldValue.arrayUnion(object));
+        doc_ref.update("list", FieldValue.arrayUnion(object)).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    listener.onSuccess(MoodHistoryList.this, true);
+                }
+                else{
+                    listener.onSuccess(MoodHistoryList.this, false);
+                }
+            }
+        });
     }
 }

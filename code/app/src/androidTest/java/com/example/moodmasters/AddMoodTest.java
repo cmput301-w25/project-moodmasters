@@ -15,11 +15,10 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
-import com.example.moodmasters.Views.SignupLoginScreenActivity;
+import com.example.moodmasters.Views.LoginSignupScreen.LoginSignupScreenActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -36,8 +35,8 @@ import java.util.Objects;
 @LargeTest
 public class AddMoodTest {
     @Rule
-    public ActivityScenarioRule<SignupLoginScreenActivity> scenario = new
-            ActivityScenarioRule<SignupLoginScreenActivity>(SignupLoginScreenActivity.class);
+    public ActivityScenarioRule<LoginSignupScreenActivity> scenario = new
+            ActivityScenarioRule<LoginSignupScreenActivity>(LoginSignupScreenActivity.class);
 
     @BeforeClass
     public static void setup(){

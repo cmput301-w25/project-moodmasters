@@ -115,6 +115,11 @@ public class MoodEvent{
         }
     }
 
+    /**
+     * Gets a String representation of a mood event for debugging purposes
+     * @return
+     *  The String for the mood event
+     */
     public String getMoodEventString(){
         String public_string;
         if (is_public){
@@ -212,34 +217,58 @@ public class MoodEvent{
     public void setIsPublic(boolean is_public) {
         this.is_public = is_public;
     }
-
+    /**
+     * location getter
+     */
     public LatLng getLocation() {
         return location;
     }
 
+    /**
+     * location setter
+     */
     public void setLocation(LatLng location) {
         this.location = location;
     }
-
+    /**
+     * username getter
+     */
     public String getUsername() {
         return username;
     }
-
+    /**
+     * username setter
+     */
     public void setUsername(String username) {
         this.username = username;
     }
+    /**
+     * encoded photo getter
+     */
     public String getPhotoString(){
         return photo_string;
     }
+    /**
+     * encoded photo setter
+     */
     public void setPhotoString(String new_photo_string){
         photo_string = new_photo_string;
     }
+    /**
+     * comments array getter
+     */
     public ArrayList<Comment> getComments(){
         return comments;
     }
+    /**
+     * comments array setter
+     */
     public void setComments(ArrayList<Comment> new_comments){
         comments = new_comments;
     }
+    /**
+     * add comment to the comments array
+     */
     public void addComment(Comment comment){
         comments.add(comment);
     }

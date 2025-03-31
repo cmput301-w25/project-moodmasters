@@ -12,6 +12,9 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstract class that will be super class for any class related to aggregate mood events
+ * */
 public abstract class MoodEventList extends MVCBackendList<MoodEvent> {
 
     private final FilterMoodEventList filter;

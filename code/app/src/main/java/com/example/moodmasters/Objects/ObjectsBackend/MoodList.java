@@ -27,11 +27,11 @@ public class MoodList extends MVCBackendList<Mood> {
         super(init_list);
     }
 
-    public void addDatabaseData(MVCDatabase database, Object object){
+    public void addDatabaseData(MVCDatabase database, Object object, OnSuccessAddListener listener){
         // doesn't need database connectivity
     }
 
-    public void removeDatabaseData(MVCDatabase database, Object object){
+    public void removeDatabaseData(MVCDatabase database, Object object, OnSuccessRemoveListener listener){
         // doesn't need database connectivity
     }
 

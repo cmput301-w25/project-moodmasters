@@ -25,6 +25,8 @@ public class MVCController{
          *  The app context that can be used to bring up new UI elements like fragments and activities
          * @param model
          *  The model that the controller can interact with for possible data manipulation
+         * @param controller
+         *  The controller responsible for executing the MVCEvent in the first place
          * */
         public void executeEvent(Context context, MVCModel model, MVCController controller);
     }
@@ -46,7 +48,11 @@ public class MVCController{
         model.createBackendObject(create);
     }
 
-    // should be creating via MVCEvent instead
+    /**
+     * Removes an object from the backend
+     * @param remove
+     *  The object to remove from the backend
+     * */
     public void removeBackendObject(BackendObject.State remove){
         model.removeBackendObject(remove);
     }
@@ -98,6 +104,13 @@ public class MVCController{
         model.removeView(view);
     }
 
+    /**
+     * Checks whether the backend object exists or not
+     * @param backend_object
+     *  The backend object to check for existence
+     * @return
+     *  Returns a boolean representing whether the backend object exists
+     * */
     public boolean existsBackendObject(BackendObject.State backend_object){
         return model.existsBackendObject(backend_object);
     }
@@ -111,7 +124,6 @@ public class MVCController{
      *  Context of the app
      * */
     public void execute(MVCEvent event, Context context){
-        model.setLastEvent(event);
         event.executeEvent(context, model, this);
     }
 }

@@ -3,7 +3,9 @@ package com.example.moodmasters.Objects.ObjectsApp;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 
 import java.util.HashMap;
-
+/**
+ * Class that represents a comment a user can type on a mood event
+ * */
 public class Comment {
     private String username;
     private String content;
@@ -21,18 +23,35 @@ public class Comment {
         this.timestamp = (String) map.get("timestamp");
     }
 
-    // Getter methods
+    /**
+     * Gets the comment's poster's name
+     * @return
+     *  Returns String for username
+     * */
     public String getUsername() {
         return username;
     }
-
+    /**
+     * Gets the comments content
+     * @return
+     *  Returns String for the comments content
+     * */
     public String getContent() {
         return content;
     }
+    /**
+     * Gets the comment's timestamp
+     * @return
+     *  Returns String for when the comment was posted
+     * */
     public String getTimestamp() {
         return timestamp;
     }
-
+    /**
+     * Gets a full string representation of the comment
+     * @return
+     *  Returns String for the whole comment
+     * */
     public String createString(){
         return username + "\n" + timestamp + "\n" + content;
     }
