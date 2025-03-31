@@ -54,7 +54,7 @@ public class SearchFollowTest {
     @Before
     public void navigateToMainScreen() throws InterruptedException {
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_8"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_8"));
@@ -104,7 +104,7 @@ public class SearchFollowTest {
     }
 
     @Test
-    public void testSearchAndFollow() {
+    public void testSearchAndFollow() throws InterruptedException {
         // Search for self
         onView(withId(R.id.mood_following_list_button)).perform(ViewActions.click());
         onView(withId(R.id.user_search_button)).perform(ViewActions.click());
@@ -117,7 +117,7 @@ public class SearchFollowTest {
         onView(withId(R.id.backButton)).perform(ViewActions.click());
         onView(withId(R.id.options_logout_button)).perform(ViewActions.click());
         onView(withId(R.id.signup_login_change_button)).perform(ViewActions.click());
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         onView(withId(R.id.signup_login_enter_username)).perform(ViewActions.typeText("user_9"));
         onView(withId(R.id.signup_login_enter_username)).perform(closeSoftKeyboard());
         onView(withId(R.id.signup_login_enter_password)).perform(ViewActions.typeText("user_9"));
