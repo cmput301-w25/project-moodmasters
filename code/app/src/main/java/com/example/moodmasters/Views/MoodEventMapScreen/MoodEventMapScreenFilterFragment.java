@@ -5,9 +5,11 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.moodmasters.Events.MoodEventMapScreen.MoodEventMapScreenFilterEvent;
@@ -50,13 +52,27 @@ public class MoodEventMapScreenFilterFragment extends DialogFragment implements 
             ((ViewGroup) view).removeView(recency_location_checkbox);
         }
 
-        return builder.setView(view)
-                .setNegativeButton("Cancel",  (dialog, which) -> {
-                    controller.removeBackendView(MoodEventMapScreenFilterFragment.this);          /*TODO: MVCEvent for this*/
+
+        AlertDialog dialog = builder
+                .setView(view)
+                .setNegativeButton("Cancel", (dialogInterface, which) -> {
+                    controller.removeBackendView(MoodEventMapScreenFilterFragment.this);
                 })
-                .setPositiveButton("Add", (dialog, which) -> {
+                .setPositiveButton("Filter", (dialogInterface, which) -> {
                     controller.execute(new MoodEventMapScreenFilterEvent(view, MoodEventMapScreenFilterFragment.this), getContext());
                 })
                 .create();
+
+        dialog.setOnShowListener(dialogInterface -> {
+            Button positive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            Button negative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+            // Change the button colors to @color/button_color
+            int color = ContextCompat.getColor(getContext(), R.color.button_color);
+            positive.setTextColor(color);
+            negative.setTextColor(color);
+        });
+
+        return dialog;
     }
 }
