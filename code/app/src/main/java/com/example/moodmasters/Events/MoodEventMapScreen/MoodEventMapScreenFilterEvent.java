@@ -1,4 +1,4 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.MoodEventMapScreen;
 
 import android.content.Context;
 import android.view.View;
@@ -11,10 +11,10 @@ import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.FilterMoodEventMapFragment;
 
-public class MoodEventMapFilterEvent implements MVCController.MVCEvent{
+public class MoodEventMapScreenFilterEvent implements MVCController.MVCEvent{
     private final View fragment_view;
     private final FilterMoodEventMapFragment dialog_fragment;
-    public MoodEventMapFilterEvent(View init_fragment_view, FilterMoodEventMapFragment init_dialog_fragment){
+    public MoodEventMapScreenFilterEvent(View init_fragment_view, FilterMoodEventMapFragment init_dialog_fragment){
         fragment_view = init_fragment_view;
         dialog_fragment = init_dialog_fragment;
     }

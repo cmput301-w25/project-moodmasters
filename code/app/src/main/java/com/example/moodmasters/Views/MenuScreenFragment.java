@@ -10,8 +10,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.moodmasters.Events.LogOutEvent;
-import com.example.moodmasters.Events.UserSearchEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenLogOutEvent;
 import com.example.moodmasters.Events.MoodFollowingListEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
@@ -32,7 +31,7 @@ public class MenuScreenFragment extends DialogFragment implements MVCView {
 
         Button logout_button = view.findViewById(R.id.options_logout_button);
         logout_button.setOnClickListener(v ->{
-            controller.execute(new LogOutEvent(), getContext());
+            controller.execute(new LoginSignupScreenLogOutEvent(), getContext());
         });
 
         Button mood_following_list_button = view.findViewById(R.id.options_followed_moods_button);

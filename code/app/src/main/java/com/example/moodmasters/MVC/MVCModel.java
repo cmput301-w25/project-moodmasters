@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.example.moodmasters.Events.LoginScreenOkEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
@@ -59,7 +59,7 @@ public class MVCModel{
          */
         dependencies.putIfAbsent(backend_object, new ArrayList<MVCView>());
         if (backend_object == BackendObject.State.USER){
-            Participant user = new Participant(LoginScreenOkEvent.getUsername());
+            Participant user = new Participant(LoginSignupScreenOkEvent.getUsername());
             backend_objects.put(backend_object, user);
             user.setDatabaseData(database, this);
         }

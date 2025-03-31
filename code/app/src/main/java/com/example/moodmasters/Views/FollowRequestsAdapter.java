@@ -9,9 +9,8 @@ import android.widget.TextView;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
-import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.R;
-import com.example.moodmasters.Events.LoginScreenOkEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class FollowRequestsAdapter extends BaseAdapter{
         this.db = db;
 
         // Retrieve the logged-in user's username correctly
-        this.currentUsername = LoginScreenOkEvent.getUsername();
+        this.currentUsername = LoginSignupScreenOkEvent.getUsername();
 
         if (this.currentUsername == null || this.currentUsername.isEmpty()) {
             Toast.makeText(context, "Error: Could not retrieve current user!", Toast.LENGTH_SHORT).show();

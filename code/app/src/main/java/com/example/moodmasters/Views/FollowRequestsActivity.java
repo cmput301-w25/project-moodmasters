@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.example.moodmasters.Events.LogOutEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenLogOutEvent;
 import com.example.moodmasters.Events.ShowFollowRequestsEvent;
 import com.example.moodmasters.Events.ShowMapEvent;
 import com.example.moodmasters.Events.ShowMoodFollowingEvent;
@@ -91,7 +91,7 @@ public class FollowRequestsActivity extends AppCompatActivity implements MVCView
             int itemId = item.getItemId();
 
             if (itemId == R.id.options_logout_button) {
-                controller.execute(new LogOutEvent(), this);
+                controller.execute(new LoginSignupScreenLogOutEvent(), this);
                 return true;
             }
 

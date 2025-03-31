@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Events.LoginScreenOkEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
@@ -47,7 +47,7 @@ public class SignupLoginScreenActivity extends AppCompatActivity implements MVCV
 
 
         ok_button.setOnClickListener(v -> {
-            controller.execute(new LoginScreenOkEvent(), this);
+            controller.execute(new LoginSignupScreenOkEvent(), this);
         });
 
         // Toggle between Login and Sign Up

@@ -1,11 +1,9 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.AlterMoodEventScreen;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.icu.util.Calendar;
-import android.widget.Button;
-import android.util.Pair;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,11 +27,10 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
-public class AddMoodEventConfirmEvent implements MVCController.MVCEvent {
+
+public class AlterMoodEventScreenAddEvent implements MVCController.MVCEvent {
     private boolean photo_added;
-    public AddMoodEventConfirmEvent(boolean init_photo_added){
+    public AlterMoodEventScreenAddEvent(boolean init_photo_added){
         photo_added = init_photo_added;
     }
     @Override

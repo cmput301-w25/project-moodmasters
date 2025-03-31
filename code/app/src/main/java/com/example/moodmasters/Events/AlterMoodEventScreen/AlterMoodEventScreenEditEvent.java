@@ -1,9 +1,8 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.AlterMoodEventScreen;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Pair;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,11 +22,11 @@ import com.example.moodmasters.R;
 import com.example.moodmasters.Views.AlterMoodEventActivity;
 import com.google.android.gms.maps.model.LatLng;
 
-public class EditMoodEventConfirmEvent implements MVCController.MVCEvent {
+public class AlterMoodEventScreenEditEvent implements MVCController.MVCEvent {
     private MoodEvent mood_event;
     private int position;
     private boolean photo_added;
-    public EditMoodEventConfirmEvent(MoodEvent init_mood_event, int init_position, boolean init_photo_added){
+    public AlterMoodEventScreenEditEvent(MoodEvent init_mood_event, int init_position, boolean init_photo_added){
         mood_event = init_mood_event;
         position = init_position;
         photo_added = init_photo_added;

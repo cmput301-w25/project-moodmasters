@@ -1,7 +1,6 @@
 package com.example.moodmasters.Views;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -10,7 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.moodmasters.Events.LoginScreenOkEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.FollowRequest;
@@ -51,7 +50,7 @@ public class ViewProfileActivity extends AppCompatActivity implements MVCView {
         moodListView = findViewById(R.id.mood_list_view);
         db = FirebaseFirestore.getInstance();
         targetUsername = getIntent().getStringExtra("selectedUser");
-        currentUsername = LoginScreenOkEvent.getUsername();
+        currentUsername = LoginSignupScreenOkEvent.getUsername();
 
 
         adapter = new ViewProfileAdapter(this);

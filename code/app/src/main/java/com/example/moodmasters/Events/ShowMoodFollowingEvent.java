@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.Views.MoodEventsMapActivity;
 import com.example.moodmasters.Views.MoodFollowingListActivity;
 
 import java.util.Objects;

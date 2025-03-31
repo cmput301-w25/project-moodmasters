@@ -11,10 +11,8 @@ import android.widget.Toast;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Views.MoodEventsMapActivity;
+import com.example.moodmasters.Views.MoodEventMapActivity;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class ShowMapEvent implements MVCController.MVCEvent {
@@ -27,6 +25,6 @@ public class ShowMapEvent implements MVCController.MVCEvent {
             return;
         }
 
-        context.startActivity(new Intent(context, MoodEventsMapActivity.class));
+        context.startActivity(new Intent(context, MoodEventMapActivity.class));
     }
 }

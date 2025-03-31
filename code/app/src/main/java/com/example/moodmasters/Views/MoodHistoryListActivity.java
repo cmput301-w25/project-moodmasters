@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Events.LogOutEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenLogOutEvent;
 import com.example.moodmasters.Events.MoodHistoryListShowFilterEvent;
 import com.example.moodmasters.Events.MoodHistoryListAddEvent;
 import com.example.moodmasters.Events.ShowFollowRequestsEvent;
@@ -17,17 +17,12 @@ import com.example.moodmasters.Events.ShowMoodFollowingEvent;
 import com.example.moodmasters.Events.ShowProfileStatisticsEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
-import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
-import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MoodHistoryListActivity extends AppCompatActivity implements MVCView {
@@ -97,7 +92,7 @@ public class MoodHistoryListActivity extends AppCompatActivity implements MVCVie
             int itemId = item.getItemId();
 
             if (itemId == R.id.options_logout_button) {
-                controller.execute(new LogOutEvent(), this);
+                controller.execute(new LoginSignupScreenLogOutEvent(), this);
                 return true;
             }
 

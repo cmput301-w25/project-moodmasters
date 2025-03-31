@@ -1,6 +1,5 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.LoginSignupScreen;
 
-import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static androidx.core.content.ContextCompat.getSystemService;
 
@@ -12,26 +11,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
 import com.example.moodmasters.Views.SignupLoginScreenActivity;
 import com.example.moodmasters.Views.MoodHistoryListActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.security.InvalidParameterException;
 import java.util.Objects;
 
-public class LoginScreenOkEvent implements MVCController.MVCEvent {
+public class LoginSignupScreenOkEvent implements MVCController.MVCEvent {
     private static String username;
     private String password;
     private boolean signup;

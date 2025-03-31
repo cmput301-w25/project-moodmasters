@@ -1,4 +1,4 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.AlterMoodEventScreen;
 
 import android.content.Context;
 import android.widget.Button;

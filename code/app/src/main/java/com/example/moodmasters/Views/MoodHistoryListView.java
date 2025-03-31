@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.moodmasters.Events.LoginScreenOkEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
 import com.example.moodmasters.Events.MoodHistoryListClickMoodEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
@@ -36,7 +36,7 @@ public class MoodHistoryListView implements MVCView {
         TextView followingNumber = ((MoodHistoryListActivity) context).findViewById(R.id.following_number);
         TextView usernameLabel = ((MoodHistoryListActivity) context).findViewById(R.id.user_mood_history_label);
 
-        String username = LoginScreenOkEvent.getUsername();
+        String username = LoginSignupScreenOkEvent.getUsername();
         usernameLabel.setText(username);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -120,7 +120,7 @@ public class MoodHistoryListView implements MVCView {
     }
 
     public void refreshFollowerCounts() {
-        String username = LoginScreenOkEvent.getUsername();
+        String username = LoginSignupScreenOkEvent.getUsername();
         TextView followersNumber = ((MoodHistoryListActivity) context).findViewById(R.id.followers_number);
         TextView followingNumber = ((MoodHistoryListActivity) context).findViewById(R.id.following_number);
 

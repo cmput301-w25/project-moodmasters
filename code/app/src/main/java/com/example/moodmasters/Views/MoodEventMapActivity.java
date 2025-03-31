@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.moodmasters.Events.LogOutEvent;
-import com.example.moodmasters.Events.MoodEventMapShowFilterEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenLogOutEvent;
+import com.example.moodmasters.Events.MoodEventMapScreen.MoodEventMapScreenShowFilterEvent;
 import com.example.moodmasters.Events.ShowFollowRequestsEvent;
 import com.example.moodmasters.Events.ShowMapEvent;
 import com.example.moodmasters.Events.ShowMoodFollowingEvent;
@@ -32,7 +32,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MoodEventsMapActivity extends AppCompatActivity implements OnMapReadyCallback, MVCView {
+public class MoodEventMapActivity extends AppCompatActivity implements OnMapReadyCallback, MVCView {
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap google_map;
     private Location location;
@@ -67,15 +67,15 @@ public class MoodEventsMapActivity extends AppCompatActivity implements OnMapRea
 
         MapView map_view = findViewById(R.id.map_screen_map_view);
         map_view.onCreate(savedInstanceState);
-        map_view.getMapAsync(MoodEventsMapActivity.this);
+        map_view.getMapAsync(MoodEventMapActivity.this);
 
         ImageButton filter_button = findViewById(R.id.map_screen_filter_button);
         filter_button.setOnClickListener(v -> {
             if (location == null){
-                controller.execute(new MoodEventMapShowFilterEvent(false), this);
+                controller.execute(new MoodEventMapScreenShowFilterEvent(false), this);
             }
             else {
-                controller.execute(new MoodEventMapShowFilterEvent(true), this);
+                controller.execute(new MoodEventMapScreenShowFilterEvent(true), this);
             }
         });
         getLastLocation();
@@ -112,8 +112,8 @@ public class MoodEventsMapActivity extends AppCompatActivity implements OnMapRea
         task.addOnSuccessListener(new OnSuccessListener<Location>(){
             @Override
             public void onSuccess(Location location){
-                MoodEventsMapActivity.this.location = location;
-                controller.addBackendView(MoodEventsMapActivity.this, BackendObject.State.MOODMAP);
+                MoodEventMapActivity.this.location = location;
+                controller.addBackendView(MoodEventMapActivity.this, BackendObject.State.MOODMAP);
             }
         });
     }
@@ -127,7 +127,7 @@ public class MoodEventsMapActivity extends AppCompatActivity implements OnMapRea
             else{
                 Toast.makeText(this, "Location Permissions Denied, Your Location and Location Filtering will be turned off", Toast.LENGTH_SHORT).show();
                 location = null;
-                controller.addBackendView(MoodEventsMapActivity.this, BackendObject.State.MOODMAP);
+                controller.addBackendView(MoodEventMapActivity.this, BackendObject.State.MOODMAP);
 
             }
         }
@@ -145,7 +145,7 @@ public class MoodEventsMapActivity extends AppCompatActivity implements OnMapRea
             int itemId = item.getItemId();
 
             if (itemId == R.id.options_logout_button) {
-                controller.execute(new LogOutEvent(), this);
+                controller.execute(new LoginSignupScreenLogOutEvent(), this);
                 return true;
             }
 

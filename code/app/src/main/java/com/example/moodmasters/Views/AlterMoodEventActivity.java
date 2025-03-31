@@ -19,11 +19,11 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.moodmasters.Events.AddMoodEventConfirmEvent;
-import com.example.moodmasters.Events.AlterMoodEventCancelEvent;
-import com.example.moodmasters.Events.AlterMoodEventScreenUnsetLocationEvent;
-import com.example.moodmasters.Events.EditMoodEventConfirmEvent;
-import com.example.moodmasters.Events.MoodEventViewingEditEvent;
+import com.example.moodmasters.Events.AlterMoodEventScreen.AlterMoodEventScreenAddEvent;
+import com.example.moodmasters.Events.AlterMoodEventScreen.AlterMoodEventScreenCancelEvent;
+import com.example.moodmasters.Events.AlterMoodEventScreen.AlterMoodEventScreenUnsetLocationEvent;
+import com.example.moodmasters.Events.AlterMoodEventScreen.AlterMoodEventScreenEditEvent;
+import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScreenEditEvent;
 import com.example.moodmasters.Events.UploadPhotoEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
@@ -85,7 +85,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         });
 
         confirm_button.setOnClickListener(v -> {
-            controller.execute(new AddMoodEventConfirmEvent(photo_added), this);
+            controller.execute(new AlterMoodEventScreenAddEvent(photo_added), this);
         });
     }
 
@@ -94,8 +94,8 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
         TextView label_view = findViewById(R.id.alter_mood_main_label);
         label_view.setText("Edit MoodEvent");
 
-        MoodEvent current_mood_event = MoodEventViewingEditEvent.getMoodEvent();
-        int position = MoodEventViewingEditEvent.getPosition();
+        MoodEvent current_mood_event = MoodEventViewingScreenEditEvent.getMoodEvent();
+        int position = MoodEventViewingScreenEditEvent.getPosition();
 
         Spinner emotions_spinner = findViewById(R.id.alter_mood_emotion_spinner);
         ArrayAdapter<String> emotions_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, emotions_list);
@@ -145,7 +145,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
 
 
         confirm_button.setOnClickListener(v -> {
-            controller.execute(new EditMoodEventConfirmEvent(current_mood_event, position, photo_added), this);
+            controller.execute(new AlterMoodEventScreenEditEvent(current_mood_event, position, photo_added), this);
         });
     }
 
@@ -180,7 +180,7 @@ public class AlterMoodEventActivity extends AppCompatActivity implements MVCView
 
         Button cancel_button = findViewById(R.id.alter_mood_cancel_button);
         cancel_button.setOnClickListener(v -> {
-            controller.execute(new AlterMoodEventCancelEvent(), this);
+            controller.execute(new AlterMoodEventScreenCancelEvent(), this);
         });
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})

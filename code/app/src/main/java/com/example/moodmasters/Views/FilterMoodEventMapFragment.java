@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.moodmasters.Events.MoodEventMapFilterEvent;
+import com.example.moodmasters.Events.MoodEventMapScreen.MoodEventMapScreenFilterEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
@@ -55,7 +55,7 @@ public class FilterMoodEventMapFragment extends DialogFragment implements MVCVie
                     controller.removeBackendView(FilterMoodEventMapFragment.this);          /*TODO: MVCEvent for this*/
                 })
                 .setPositiveButton("Add", (dialog, which) -> {
-                    controller.execute(new MoodEventMapFilterEvent(view, FilterMoodEventMapFragment.this), getContext());
+                    controller.execute(new MoodEventMapScreenFilterEvent(view, FilterMoodEventMapFragment.this), getContext());
                 })
                 .create();
     }

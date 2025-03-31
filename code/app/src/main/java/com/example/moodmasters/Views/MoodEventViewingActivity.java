@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,11 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.moodmasters.Events.DeleteMoodEventConfirmEvent;
-import com.example.moodmasters.Events.ExitMoodEventViewingEvent;
-import com.example.moodmasters.Events.MoodEventViewCommentsEvent;
-import com.example.moodmasters.Events.MoodEventViewingEditEvent;
-import com.example.moodmasters.Events.MoodFollowingListClickMoodEvent;
+import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScreenDeleteEvent;
+import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScreenExitEvent;
+import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScreenCommentsEvent;
+import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScreenEditEvent;
+import com.example.moodmasters.Events.MoodFollowingListScreen.MoodFollowingListScreenClickMoodEvent;
 import com.example.moodmasters.Events.MoodHistoryListClickMoodEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
@@ -113,8 +112,8 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
             controller.addBackendView(this, BackendObject.State.MOODHISTORYLIST);
         }
         else if (mood_event_list_type.equals("MoodFollowingList")){
-            displayed_mood_event = MoodFollowingListClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
-            position = MoodFollowingListClickMoodEvent.getPosition();
+            displayed_mood_event = MoodFollowingListScreenClickMoodEvent.getMoodEvent();            /* while this is not ideal this is fine for now */
+            position = MoodFollowingListScreenClickMoodEvent.getPosition();
             controller.addBackendView(this, BackendObject.State.MOODFOLLOWINGLIST);
         }
         else{
@@ -129,18 +128,18 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         ImageButton view_comments_button = findViewById(R.id.view_mood_comments_button);
 
         exit_button.setOnClickListener(v -> {
-            controller.execute(new ExitMoodEventViewingEvent(), this);
+            controller.execute(new MoodEventViewingScreenExitEvent(), this);
         });
         if (mood_event_list_type.equals("MoodHistoryList")){
             edit_button.setOnClickListener(v -> {
                 edit_clicked = true;
                 comment_clicked = false;
-                controller.execute(new MoodEventViewingEditEvent(displayed_mood_event, position), this);
+                controller.execute(new MoodEventViewingScreenEditEvent(displayed_mood_event, position), this);
             });
             delete_button.setOnClickListener(v -> {
                 comment_clicked = false;
                 edit_clicked = false;
-                controller.execute(new DeleteMoodEventConfirmEvent(displayed_mood_event, position), this);
+                controller.execute(new MoodEventViewingScreenDeleteEvent(displayed_mood_event, position), this);
             });
         }
         else if (mood_event_list_type.equals("MoodFollowingList")){
@@ -157,7 +156,7 @@ public class MoodEventViewingActivity extends AppCompatActivity implements MVCVi
         view_comments_button.setOnClickListener(v -> {
             comment_clicked = true;
             edit_clicked = false;
-            controller.execute(new MoodEventViewCommentsEvent(displayed_mood_event, position, mood_event_list_type), this);
+            controller.execute(new MoodEventViewingScreenCommentsEvent(displayed_mood_event, position, mood_event_list_type), this);
         });
     }
 }

@@ -9,8 +9,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.moodmasters.Events.MoodFollowingListEvent;
-import com.example.moodmasters.Events.LogOutEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenLogOutEvent;
 import com.example.moodmasters.Events.ShowFollowRequestsEvent;
 import com.example.moodmasters.Events.ShowMapEvent;
 import com.example.moodmasters.Events.ShowMoodFollowingEvent;
@@ -91,7 +90,7 @@ public class MoodFollowingListActivity extends AppCompatActivity implements MVCV
             int itemId = item.getItemId();
 
             if (itemId == R.id.options_logout_button) {
-                controller.execute(new LogOutEvent(), this);
+                controller.execute(new LoginSignupScreenLogOutEvent(), this);
                 return true;
             }
 

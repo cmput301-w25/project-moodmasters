@@ -1,18 +1,14 @@
-package com.example.moodmasters.Events;
+package com.example.moodmasters.Events.LoginSignupScreen;
 
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.fragment.app.FragmentManager;
-
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
-import com.example.moodmasters.Views.MenuScreenFragment;
-import com.example.moodmasters.Views.MoodHistoryListActivity;
 import com.example.moodmasters.Views.SignupLoginScreenActivity;
 
-public class LogOutEvent implements MVCController.MVCEvent {
+public class LoginSignupScreenLogOutEvent implements MVCController.MVCEvent {
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller) {
         model.removeBackendObject(BackendObject.State.USER);

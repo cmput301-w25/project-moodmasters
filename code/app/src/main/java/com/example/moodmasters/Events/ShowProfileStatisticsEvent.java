@@ -7,10 +7,8 @@ import android.widget.Toast;
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Views.MoodEventsMapActivity;
 import com.example.moodmasters.Views.ProfileStatisticsActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShowProfileStatisticsEvent implements MVCController.MVCEvent {

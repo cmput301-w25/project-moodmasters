@@ -1,10 +1,8 @@
 package com.example.moodmasters.Views;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,22 +11,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.example.moodmasters.Events.CommentViewingScreen.CommentViewingScreenAddCommentEvent;
-import com.example.moodmasters.Events.CommentViewingScreen.CommentViewingScreenAddCommentEvent;
 import com.example.moodmasters.Events.CommentViewingScreen.CommentViewingScreenCancelEvent;
-import com.example.moodmasters.Events.MoodEventViewCommentsEvent;
+import com.example.moodmasters.Events.MoodEventViewingScreen.MoodEventViewingScreenCommentsEvent;
 import com.example.moodmasters.MVC.MVCModel;
 import com.example.moodmasters.MVC.MVCView;
 import com.example.moodmasters.Objects.ObjectsApp.Comment;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Objects.ObjectsApp.PhotoDecoderEncoder;
-import com.example.moodmasters.Objects.ObjectsApp.SocialSituation;
 import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.R;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +35,9 @@ public class CommentViewingActivity extends AppCompatActivity implements MVCView
     private String mood_event_list_type;
     public CommentViewingActivity(){
         super();
-        mood_event = MoodEventViewCommentsEvent.getMoodEvent();
-        position = MoodEventViewCommentsEvent.getPosition();
-        mood_event_list_type = MoodEventViewCommentsEvent.getMoodEventListType();
+        mood_event = MoodEventViewingScreenCommentsEvent.getMoodEvent();
+        position = MoodEventViewingScreenCommentsEvent.getPosition();
+        mood_event_list_type = MoodEventViewingScreenCommentsEvent.getMoodEventListType();
         comments_list = mood_event.getComments(); // new comment list on replacement
     }
     public void initialize(MVCModel model){
