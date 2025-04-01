@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * Class that is responsible for filtering mood event map lists
+ * */
 public class FilterMoodEventMap{
     private boolean mood_history_filter;
     private boolean mood_following_filter;

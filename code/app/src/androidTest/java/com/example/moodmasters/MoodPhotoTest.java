@@ -21,7 +21,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
-import com.example.moodmasters.Views.SignupLoginScreenActivity;
+import com.example.moodmasters.Views.LoginSignupScreen.LoginSignupScreenActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.junit.After;
@@ -40,8 +40,8 @@ import java.net.URL;
 public class MoodPhotoTest {
 
     @Rule
-    public ActivityScenarioRule<SignupLoginScreenActivity> scenarioRule =
-            new ActivityScenarioRule<>(SignupLoginScreenActivity.class);
+    public ActivityScenarioRule<LoginSignupScreenActivity> scenarioRule =
+            new ActivityScenarioRule<>(LoginSignupScreenActivity.class);
 
     @BeforeClass
     public static void setupFirestore() {

@@ -6,15 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.example.moodmasters.Events.LoginScreenOkEvent;
+import com.example.moodmasters.Events.LoginSignupScreen.LoginSignupScreenOkEvent;
 import com.example.moodmasters.Objects.ObjectsApp.Emotion;
 import com.example.moodmasters.Objects.ObjectsApp.Mood;
 import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
+import com.example.moodmasters.Objects.ObjectsBackend.Counters;
+import com.example.moodmasters.Objects.ObjectsBackend.FollowRequest;
+import com.example.moodmasters.Objects.ObjectsBackend.FollowRequestList;
+import com.example.moodmasters.Objects.ObjectsBackend.FollowerList;
 import com.example.moodmasters.Objects.ObjectsBackend.FollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodFollowingList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodHistoryList;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodList;
 import com.example.moodmasters.Objects.ObjectsBackend.Participant;
+import com.example.moodmasters.Objects.ObjectsBackend.UserSearch;
 import com.example.moodmasters.Objects.ObjectsMisc.BackendObject;
 import com.example.moodmasters.Objects.ObjectsBackend.MoodMap;
 import com.example.moodmasters.R;
@@ -29,7 +34,6 @@ public class MVCModel{
     private Map<BackendObject.State, MVCBackend> backend_objects;
     private Map<BackendObject.State, List<MVCView>> dependencies;
     private MVCDatabase database;
-    private MVCController.MVCEvent last_event;
 
     /**
      * Empty constructor for the Model, initializes all members to empty
@@ -59,9 +63,8 @@ public class MVCModel{
          */
         dependencies.putIfAbsent(backend_object, new ArrayList<MVCView>());
         if (backend_object == BackendObject.State.USER){
-            Participant user = new Participant(LoginScreenOkEvent.getUsername());
+            Participant user = new Participant(LoginSignupScreenOkEvent.getUsername());
             backend_objects.put(backend_object, user);
-            user.setDatabaseData(database, this);
         }
         else if (backend_object == BackendObject.State.MOODLIST){
             Mood happy = new Mood(Emotion.State.HAPPY, R.color.mood_happy_color, R.string.mood_emoji_happy);
@@ -77,10 +80,13 @@ public class MVCModel{
             backend_objects.put(backend_object, mood_list);
         }
         else if (backend_object == BackendObject.State.FOLLOWINGLIST){
-            FollowingList follow_list = ((Participant) backend_objects.get(BackendObject.State.USER)).getFollowingList();
-            backend_objects.put(backend_object, follow_list);
-            follow_list.setDatabaseData(database, this);
+            FollowingList following_list = ((Participant) backend_objects.get(BackendObject.State.USER)).getFollowingList();
+            backend_objects.put(backend_object, following_list);
+        }else if (backend_object == BackendObject.State.FOLLOWERLIST){
+            FollowerList follower_list = new FollowerList(((Participant) backend_objects.get(BackendObject.State.USER)).getUsername());
+            backend_objects.put(backend_object, follower_list);
         }
+
         else if (backend_object == BackendObject.State.MOODHISTORYLIST){
             Participant user = ((Participant) this.getBackendObject(BackendObject.State.USER));
             MoodHistoryList mood_history_list = user.getMoodHistoryList();
@@ -89,6 +95,22 @@ public class MVCModel{
         else if (backend_object == BackendObject.State.MOODFOLLOWINGLIST){
             FollowingList following_list = (FollowingList) backend_objects.get(BackendObject.State.FOLLOWINGLIST);
             backend_objects.put(backend_object, following_list.getMoodFollowingList());
+        }
+        else if (backend_object == BackendObject.State.COUNTERS){
+            Counters counters = new Counters(((Participant) backend_objects.get(BackendObject.State.USER)).getUsername());
+            backend_objects.put(backend_object, counters);
+        }
+        else if (backend_object == BackendObject.State.USERSEARCH){
+            UserSearch user_search = new UserSearch(((Participant) backend_objects.get(BackendObject.State.USER)).getUsername());
+            backend_objects.put(backend_object, user_search);
+        }
+        else if (backend_object == BackendObject.State.FOLLOWREQUEST){
+            FollowRequest follow_request = new FollowRequest(((Participant) backend_objects.get(BackendObject.State.USER)).getUsername());
+            backend_objects.put(backend_object, follow_request);
+        }
+        else if (backend_object == BackendObject.State.FOLLOWREQUESTLIST){
+            FollowRequestList follow_request_list = new FollowRequestList(((Participant) backend_objects.get(BackendObject.State.USER)).getUsername());
+            backend_objects.put(backend_object, follow_request_list);
         }
         else if (backend_object == BackendObject.State.MOODMAP){
             String username = ((Participant) backend_objects.get(BackendObject.State.USER)).getUsername();
@@ -131,7 +153,13 @@ public class MVCModel{
         backend_objects.remove(backend_object);
         dependencies.remove(backend_object);
     }
-
+    /**
+     * Checks if a backend object exists or not
+     * @param backend_object
+     *  The backend object to return from the Model
+     * @return
+     *  A boolean showing whether the backed object exists or not
+     * */
     public boolean existsBackendObject(BackendObject.State backend_object){
         MVCBackend object = backend_objects.get(backend_object);
         return object != null;
@@ -205,12 +233,6 @@ public class MVCModel{
         }
     }
 
-    public void setLastEvent(MVCController.MVCEvent new_event){
-        last_event = new_event;
-    }
-    public MVCController.MVCEvent getLastEvent(){
-        return last_event;
-    }
     /**
      * Adds a new object to a backend object only if that backend object is a List, if it isn't a exception is
      * thrown
@@ -219,14 +241,14 @@ public class MVCModel{
      * @param object
      *  The object to add to the backend object
      * */
-    public <T> void addToBackendList(BackendObject.State backend_object, T object){
+    public <T> void addToBackendList(BackendObject.State backend_object, T object, MVCDatabase.Add.OnSuccessAddListener listener){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
             throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         obj_list.addObject(object);
-        obj_list.addDatabaseData(database, object);
+        obj_list.addDatabaseData(database, object, listener);
         notifyViews(backend_object);
     }
     /**
@@ -237,14 +259,14 @@ public class MVCModel{
      * @param object
      *  The object to remove from the backend object
      * */
-    public <T> void removeFromBackendList(BackendObject.State backend_object, T object){
+    public <T> void removeFromBackendList(BackendObject.State backend_object, T object, MVCDatabase.Remove.OnSuccessRemoveListener listener){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
             throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
         }
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         obj_list.removeObject(object);
-        obj_list.removeDatabaseData(database, object);
+        obj_list.removeDatabaseData(database, object, listener);
         notifyViews(backend_object);
     }
     /**
@@ -255,7 +277,7 @@ public class MVCModel{
      * @param position
      *  Position in the backend object List to remove an object
      * */
-    public void removeFromBackendList(BackendObject.State backend_object, int position){
+    public void removeFromBackendList(BackendObject.State backend_object, int position, MVCDatabase.Remove.OnSuccessRemoveListener listener){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
             throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
@@ -263,7 +285,7 @@ public class MVCModel{
         MVCBackendList obj_list = (MVCBackendList) obj;
         Object object = obj_list.getObjectPosition(position);
         obj_list.removeObject(position);
-        obj_list.removeDatabaseData(database, object);
+        obj_list.removeDatabaseData(database, object, listener);
         notifyViews(backend_object);
     }
     /**
@@ -292,7 +314,7 @@ public class MVCModel{
      * @param new_object
      *  The replacer object for the object in the backend object
      * */
-    public <T> void replaceObjectBackendList(BackendObject.State backend_object, int position, T new_object){
+    public <T> void replaceObjectBackendList(BackendObject.State backend_object, int position, T new_object, MVCDatabase.Add.OnSuccessAddListener add_listener, MVCDatabase.Remove.OnSuccessRemoveListener remove_listener){
         MVCBackend obj = backend_objects.get(backend_object);
         if (!(obj instanceof MVCBackendList)){
             throw new IllegalArgumentException("Error: Trying to add object to non-list backend object " + BackendObject.getString(backend_object));
@@ -300,8 +322,8 @@ public class MVCModel{
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         Object old_object = obj_list.getObjectPosition(position);
         obj_list.replaceObjectPosition(position, new_object);
-        obj_list.removeDatabaseData(database, old_object);
-        obj_list.addDatabaseData(database, new_object);
+        obj_list.removeDatabaseData(database, old_object, remove_listener);
+        obj_list.addDatabaseData(database, new_object, add_listener);
         notifyViews(backend_object);
     }
     /**
@@ -317,7 +339,59 @@ public class MVCModel{
         MVCBackendList<T> obj_list = (MVCBackendList <T>) obj;
         return obj_list.getList();
     }
-
+    /**
+     * Fetches the database to update the backend object
+     * @param backend_object
+     *  The backend object to execute a database fetch for
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
+    public void fetchDatabaseDataBackendObject(BackendObject.State backend_object, MVCDatabase.Fetch.OnSuccessFetchListener listener){
+        MVCDatabase.Fetch fetch_object = (MVCDatabase.Fetch) backend_objects.get(backend_object);
+        fetch_object.fetchDatabaseData(database, this, listener);
+    }
+    /**
+     * Creates a new object in the database associated to the backend object
+     * @param backend_object
+     *  The backend object to execute a database create for
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
+    public void createDatabaseDataBackendObject(BackendObject.State backend_object, MVCDatabase.Create.OnSuccessCreateListener listener){
+        MVCDatabase.Create create_object = (MVCDatabase.Create) backend_objects.get(backend_object);
+        create_object.createDatabaseData(database, this, listener);
+    }
+    /**
+     * Removes a object from the database associated to the backend object
+     * @param backend_object
+     *  The backend object to execute a database remove for
+     * @param object
+     *  Object that will be removed
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
+    public <T> void removeDatabaseDataBackendObject(BackendObject.State backend_object, T object, MVCDatabase.Remove.OnSuccessRemoveListener listener){
+        MVCDatabase.Remove fetch_object = (MVCDatabase.Remove) backend_objects.get(backend_object);
+        fetch_object.removeDatabaseData(database, object, listener);
+    }
+    /**
+     * Adds a object from the database associated to the backend object
+     * @param backend_object
+     *  The backend object to execute a database add for
+     * @param object
+     *  Object that will be added
+     * @param listener
+     *  Listener that will be executed after the query is done
+     * */
+    public <T> void addDatabaseDataBackendObject(BackendObject.State backend_object, T object, MVCDatabase.Add.OnSuccessAddListener listener){
+        MVCDatabase.Add fetch_object = (MVCDatabase.Add) backend_objects.get(backend_object);
+        fetch_object.addDatabaseData(database, object, listener);
+    }
+    /**
+     * Returns the MVCDatabase instance
+     * @return
+     *  MVCDatabase instance
+     * */
     public MVCDatabase getDatabase(){
         return database;
     }

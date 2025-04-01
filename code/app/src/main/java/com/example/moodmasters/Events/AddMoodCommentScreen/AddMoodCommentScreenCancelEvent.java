@@ -1,21 +1,28 @@
 package com.example.moodmasters.Events.AddMoodCommentScreen;
 
 import android.content.Context;
-import android.content.Intent;
-import android.icu.util.Calendar;
 
 import com.example.moodmasters.MVC.MVCController;
 import com.example.moodmasters.MVC.MVCModel;
-import com.example.moodmasters.Objects.ObjectsApp.MoodEvent;
-import com.example.moodmasters.Views.AddCommentActivity;
+import com.example.moodmasters.Views.AddMoodCommentScreen.AddMoodCommentScreenActivity;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
+/**
+ * MVCEvent implementer responsible for handling the cancel event on the AddMoodCommentScreen
+ * */
 public class AddMoodCommentScreenCancelEvent implements MVCController.MVCEvent {
+    /**
+     * This function contains all the code that will be executed once the cancel button is hit (so just
+     * closing of the activity)
+     * @param context
+     *  The app context that can be used to bring up new UI elements like fragments and activities
+     * @param model
+     *  The model that the controller can interact with for possible data manipulation
+     * @param controller
+     *  The controller responsible for executing the MVCEvent in the first place
+     * */
     @Override
     public void executeEvent(Context context, MVCModel model, MVCController controller){
-        AddCommentActivity add_comment_activity = (AddCommentActivity) context;
+        AddMoodCommentScreenActivity add_comment_activity = (AddMoodCommentScreenActivity) context;
         add_comment_activity.finish();
     }
 }

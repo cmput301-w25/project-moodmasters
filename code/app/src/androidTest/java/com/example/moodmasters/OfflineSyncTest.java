@@ -17,7 +17,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.moodmasters.Views.SignupLoginScreenActivity;
+import com.example.moodmasters.Views.LoginSignupScreen.LoginSignupScreenActivity;
 import com.example.moodmasters.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,8 +38,8 @@ import java.util.Objects;
 public class OfflineSyncTest {
 
     @Rule
-    public ActivityScenarioRule<SignupLoginScreenActivity> scenario =
-            new ActivityScenarioRule<>(SignupLoginScreenActivity.class);
+    public ActivityScenarioRule<LoginSignupScreenActivity> scenario =
+            new ActivityScenarioRule<>(LoginSignupScreenActivity.class);
 
     @BeforeClass
     public static void setup() {
